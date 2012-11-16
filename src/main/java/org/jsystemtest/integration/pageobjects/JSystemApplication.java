@@ -1,33 +1,41 @@
 package org.jsystemtest.integration.pageobjects;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 
-import javax.swing.JButton;
-
-import jsystem.guiMapping.JsystemMapping;
+import jsystem.framework.report.ExtendTestListener;
+import jsystem.framework.report.ListenerstManager;
+import jsystem.framework.report.TestInfo;
+import jsystem.framework.scenario.JTestContainer;
+import jsystem.framework.scenario.flow_control.AntForLoop;
 import jsystem.treeui.TestRunner;
 import junit.framework.Assert;
-
-import org.jsystem.jemmy.tests.JFrameOperatorTest;
-import org.jsystemtest.integration.NameChooser;
-import org.jsystemtest.integration.TooltipChooser;
+import junit.framework.AssertionFailedError;
+import junit.framework.Test;
 
 import org.netbeans.jemmy.ClassReference;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
-public class JSystemApplication extends AbstractPageObject {
+public class JSystemApplication extends AbstractPageObject implements ExtendTestListener {
 
 	private JFrameOperator app;
+	private boolean runEnd = false;
+
+	public boolean isRunEnd() {
+		return runEnd;
+	}
+
+	public void setRunEnd(boolean runEnd) {
+		this.runEnd = runEnd;
+	}
 
 	public void launch() {
 		try {
 			new ClassReference(TestRunner.class.getName()).startApplication();
 			app = new JFrameOperator(jmap.getJSyetemMain());
 			Assert.assertNotNull("JSystem frame not captured", app);
+			ListenerstManager.getInstance().addListener(this);
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
@@ -43,6 +51,14 @@ public class JSystemApplication extends AbstractPageObject {
 		}
 	}
 
+	public MenuBar getMenuBar() {
+		return new MenuBar(app);
+	}
+
+	public MainToolBar getToolBar() {
+		return new MainToolBar(app);
+	}
+
 	public TestsTreeController getTestsTreeController() {
 		return new TestsTreeController(app);
 	}
@@ -51,59 +67,92 @@ public class JSystemApplication extends AbstractPageObject {
 		return new TestsTableController(app);
 	}
 
-	public MenuBar getMenuBar() {
-		return new MenuBar(app);
-	}
-
-	// main tool bar operations
-	public void pushNewScenarioButton() {
-		new JButtonOperator(app, new TooltipChooser(jmap.getNewScenarioButton())).push();
-	}
-
-	public void pushSaveScenarioButton() {
-		new JButtonOperator(app, new TooltipChooser(jmap.getSaveScenarioButton())).push();
-	}
-
-	public void pushAsSaveScenarioButton() {
-		new JButtonOperator(app, new TooltipChooser(jmap.getCopyScenarioButton())).push();
-	}
-
-	public void pushDeleteScenarioButton() {
-		new JButtonOperator(app, new TooltipChooser(jmap.getClearScenarioButton())).push();
-	}
-
-	public void pushFaildSequenceButton() {
-		new JButtonOperator(app, new TooltipChooser(jmap.getSaveFailedSequences())).push();
-	}
-
-	public void pushRefreshButton() {
-		new JButtonOperator(app, new TooltipChooser(jmap.getRefreshButton())).push();
-	}
-
-	// inner tool bar operations
-	public void pushPlayButton() {
-		new JButtonOperator(app, new TooltipChooser(jmap.getPlayButton())).push();
-	}
-
-	public void pushPauseButton() {
-		new JButtonOperator(app, new TooltipChooser(jmap.getPauseButton())).push();
-	}
-
-	public void pushStopButton() {
-		new JButtonOperator(app, new TooltipChooser(jmap.getStopButton())).push();
-	}
-
-	public void toggleDebug() {
-		JCheckBoxOperator jCheckBoxOperator = new JCheckBoxOperator(app, new TooltipChooser(jmap.getToggleDebugButton()));
-		if (jCheckBoxOperator.isSelected()) {
-			jCheckBoxOperator.setSelected(false);
-		} else {
-			jCheckBoxOperator.setSelected(true);
-		}
-	}
-
 	public JFileChooserOperator getFileChooserOerator() {
 		return new JFileChooserOperator(app);
+	}
+
+	@Override
+	public void addError(Test test, Throwable t) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void addFailure(Test test, AssertionFailedError t) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void endTest(Test test) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void startTest(Test test) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void addWarning(Test test) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void startTest(TestInfo testInfo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void endRun() {
+		System.out.println("endRun Event has fired");
+		runEnd = true;
+	}
+
+	@Override
+	public void startLoop(AntForLoop loop, int count) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void endLoop(AntForLoop loop, int count) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void startContainer(JTestContainer container) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void endContainer(JTestContainer container) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public int waitForRunEnd() {
+		while (!isRunEnd()) {}
+		runEnd = false;
+		return 0;
+	}
+
+	public int waitForRunEnd(long milliseconds) {
+		long entry = new Date().getTime();
+		while (!isRunEnd()) {
+			if(new Date().getTime() - entry > milliseconds) {
+				System.out.println("waitForRunEnd has timed out");
+				return -1;
+			}
+		}
+		runEnd = false;
+		return 0;
 	}
 
 }

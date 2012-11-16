@@ -1,6 +1,6 @@
 package org.jsystemtest.integration.pageobjects;
 
-import org.jsystemtest.integration.JsystemMapping;
+import jsystem.guiMapping.JsystemMapping;
 
 
 public abstract class AbstractPageObject {

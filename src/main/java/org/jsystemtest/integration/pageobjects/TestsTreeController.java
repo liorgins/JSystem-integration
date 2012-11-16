@@ -1,25 +1,27 @@
 package org.jsystemtest.integration.pageobjects;
 
-import org.jsystemtest.integration.TooltipChooser;
-import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JSplitPaneOperator;
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
-import org.netbeans.jemmy.util.NameComponentChooser;
+
 
 public class TestsTreeController extends AbstractPageObject{
 	
-	private JSplitPaneOperator testsTabOperator;
+	private JTabbedPaneOperator jTabbedPaneOperator;
+
 		
-	public TestsTreeController(JFrameOperator app) {
-		testsTabOperator = new JSplitPaneOperator(app, new NameComponentChooser("testsTreeTab"));	
+	public TestsTreeController(JFrameOperator app) {	
+		jTabbedPaneOperator = new JTabbedPaneOperator(app, 0);
+		
 	}
 	
-	public void addTestsToScenario() {
-		new JButtonOperator(testsTabOperator, new TooltipChooser(jmap.getAddTestsButton())).push();
+	public TestsTreeTab getTestsTreeTab() {
+		return new TestsTreeTab(jTabbedPaneOperator);
 	}
 	
-	public TestsTree getTestsTree() {
-		return new TestsTree(testsTabOperator);
+	
+	public TestsInfoTab getTestsInfoTab() {
+		return new TestsInfoTab(jTabbedPaneOperator);
 	}
+	
+	
 }

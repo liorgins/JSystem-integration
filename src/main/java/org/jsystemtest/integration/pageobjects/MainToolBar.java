@@ -1,6 +1,7 @@
 package org.jsystemtest.integration.pageobjects;
 
 import org.jsystemtest.integration.TooltipChooser;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -19,8 +20,9 @@ public class MainToolBar extends AbstractPageObject{
 			new JButtonOperator(app, new TooltipChooser(jmap.getNewScenarioButton())).push();
 		}
 
-		public void pushSaveScenarioButton() {
-			new JButtonOperator(app, new TooltipChooser(jmap.getSaveScenarioButton())).push();
+		public void pushSaveScenarioButton() throws InterruptedException {
+			JButtonOperator jButtonOperator = new JButtonOperator(app, new TooltipChooser(jmap.getSaveScenarioButton()));
+			waitEnableAndClick(jButtonOperator);
 		}
 
 		public void pushAsSaveScenarioButton() {
@@ -40,8 +42,9 @@ public class MainToolBar extends AbstractPageObject{
 		}
 
 		// inner tool bar operations
-		public void pushPlayButton() {
-			new JButtonOperator(app, new TooltipChooser(jmap.getPlayButton())).push();
+		public void pushPlayButton() throws InterruptedException {
+			JButtonOperator jButtonOperator = new JButtonOperator(app, new TooltipChooser(jmap.getPlayButton()));
+			waitEnableAndClick(jButtonOperator);
 		}
 
 		public void pushPauseButton() {
@@ -69,5 +72,17 @@ public class MainToolBar extends AbstractPageObject{
 //				return false;
 //			}
 //		}
+		
+		public void waitEnableAndClick(JButtonOperator jButtonOperator) {
+			if(jButtonOperator.isEnabled()) {
+				jButtonOperator.clickMouse();
+			}else{
+				while(!jButtonOperator.isEnabled()) {
+					new EventTool().waitNoEvent(500);
+					jButtonOperator.clickMouse();
+				}
+			}
+		}
+		
 
 }

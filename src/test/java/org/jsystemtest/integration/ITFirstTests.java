@@ -6,12 +6,12 @@ import junit.framework.Assert;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.MainToolBar;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
+import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 
-import utils.JSystemTestUtils;
 
 
 public class ITFirstTests {

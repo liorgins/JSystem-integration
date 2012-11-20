@@ -16,11 +16,11 @@ import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 
+import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
-import utils.JSystemTestUtils;
 
 public class JSystemApplication extends AbstractPageObject implements ExtendTestListener {
 

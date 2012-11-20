@@ -1,4 +1,4 @@
-package utils;
+package org.jsystemtest.integration.utils;
 
 import java.io.File;
 import java.io.FileFilter;

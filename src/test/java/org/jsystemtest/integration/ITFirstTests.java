@@ -21,7 +21,7 @@ public class ITFirstTests {
 	@BeforeClass
 	public static void prepareEnv() throws InterruptedException {
 		app = new JSystemApplication();
-		app.setJSystemProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.DEFAULT_SUT_FILE);
+		app.setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.DEFAULT_SUT_FILE);
 		app.launch();
 		
 	}

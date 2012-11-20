@@ -11,11 +11,11 @@ import jsystem.framework.report.TestInfo;
 import jsystem.framework.scenario.JTestContainer;
 import jsystem.framework.scenario.flow_control.AntForLoop;
 import jsystem.treeui.TestRunner;
-import jsystem.treeui.utilities.ApplicationUtilities;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 
+import org.jsystemtest.integration.PropertyPair;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
@@ -28,6 +28,8 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	private boolean runEnd = false;
 	public static final String CURRENT_WORKING_DIRECTORY = System.getProperty("user.dir");
 	public static final String DEFAULT_SUT_FILE = "default.xml";
+	public static final String TRUE = "true";
+	public static final String FALSE = "false";
 
 	
 	public void launch() {
@@ -63,14 +65,22 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	 * @param testsClassesPath  path to the classes directory or parent of that directory 
 	 * @param sutFileName
 	 */
-	public void setJSystemProperties(String testsClassesPath, String sutFileName) {
+	public void setJSystemStandartProperties(String testsClassesPath, String sutFileName) {
 		
 		JSystemProperties jSystemProperties = JSystemProperties.getInstance();
 		
 		String testDir = JSystemTestUtils.findValidClassDirectory(testsClassesPath);
-		
 		jSystemProperties.setPreference(FrameworkOptions.TESTS_CLASS_FOLDER, testDir);
 		jSystemProperties.setPreference(FrameworkOptions.USED_SUT_FILE, sutFileName);
+	}
+	
+	
+	public void setJSystemOptionalProperties(PropertyPair...props) {
+		JSystemProperties jSystemProperties = JSystemProperties.getInstance();
+		
+		for (PropertyPair propertyPair : props) {
+			jSystemProperties.setPreference(propertyPair.getkey(), propertyPair.getValue());
+		}
 	}
 
 	public MenuBar getMenuBar() {

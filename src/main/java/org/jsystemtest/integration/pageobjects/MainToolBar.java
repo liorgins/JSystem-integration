@@ -67,5 +67,8 @@ public class MainToolBar extends AbstractPageObject{
 			}
 		}
 		
+		public boolean isPlayButtonEnable() {
+			return new JButtonOperator(app, new TooltipChooser(jmap.getPlayButton())).isEnabled();
+		}
 
 }

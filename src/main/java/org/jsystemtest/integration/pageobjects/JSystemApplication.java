@@ -3,12 +3,15 @@ package org.jsystemtest.integration.pageobjects;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
+import jsystem.framework.FrameworkOptions;
+import jsystem.framework.JSystemProperties;
 import jsystem.framework.report.ExtendTestListener;
 import jsystem.framework.report.ListenerstManager;
 import jsystem.framework.report.TestInfo;
 import jsystem.framework.scenario.JTestContainer;
 import jsystem.framework.scenario.flow_control.AntForLoop;
 import jsystem.treeui.TestRunner;
+import jsystem.treeui.utilities.ApplicationUtilities;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
@@ -17,24 +20,24 @@ import org.netbeans.jemmy.ClassReference;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
+import utils.JSystemTestUtils;
+
 public class JSystemApplication extends AbstractPageObject implements ExtendTestListener {
 
 	private JFrameOperator app;
 	private boolean runEnd = false;
+	public static final String CURRENT_WORKING_DIRECTORY = System.getProperty("user.dir");
+	public static final String DEFAULT_SUT_FILE = "default.xml";
 
-	public boolean isRunEnd() {
-		return runEnd;
-	}
-
-	public void setRunEnd(boolean runEnd) {
-		this.runEnd = runEnd;
-	}
-
+	
 	public void launch() {
 		try {
+		
 			new ClassReference(TestRunner.class.getName()).startApplication();
+	
 			app = new JFrameOperator(jmap.getJSyetemMain());
 			Assert.assertNotNull("JSystem frame not captured", app);
+			
 			ListenerstManager.getInstance().addListener(this);
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
@@ -49,6 +52,25 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		if (app != null) {
 			app.close();
 		}
+	}
+	
+	
+	/**
+	 * 1. get instance of JSystem properties
+	 * 2. search for valid tests classes directory in the given path
+	 * 3. set the relevant properties 
+	 * 
+	 * @param testsClassesPath  path to the classes directory or parent of that directory 
+	 * @param sutFileName
+	 */
+	public void setJSystemProperties(String testsClassesPath, String sutFileName) {
+		
+		JSystemProperties jSystemProperties = JSystemProperties.getInstance();
+		
+		String testDir = JSystemTestUtils.findValidClassDirectory(testsClassesPath);
+		
+		jSystemProperties.setPreference(FrameworkOptions.TESTS_CLASS_FOLDER, testDir);
+		jSystemProperties.setPreference(FrameworkOptions.USED_SUT_FILE, sutFileName);
 	}
 
 	public MenuBar getMenuBar() {
@@ -153,6 +175,14 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		}
 		runEnd = false;
 		return 0;
+	}
+	
+	public boolean isRunEnd() {
+		return runEnd;
+	}
+
+	public void setRunEnd(boolean runEnd) {
+		this.runEnd = runEnd;
 	}
 
 }

@@ -1,6 +1,7 @@
-package org.jsystemtest.integration.pageobjects;
+package org.jsystemtest.integration.pageobjects.menus;
 
 
+import org.jsystemtest.integration.pageobjects.AbstractPageObject;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
 import org.netbeans.jemmy.operators.JMenuOperator;
 

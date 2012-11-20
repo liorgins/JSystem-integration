@@ -1,5 +1,12 @@
 package org.jsystemtest.integration.pageobjects;
 
+
+import org.jsystemtest.integration.pageobjects.menus.EditMenu;
+import org.jsystemtest.integration.pageobjects.menus.ExecutionMenu;
+import org.jsystemtest.integration.pageobjects.menus.FileMenu;
+import org.jsystemtest.integration.pageobjects.menus.HelpMenu;
+import org.jsystemtest.integration.pageobjects.menus.ToolsMenu;
+import org.jsystemtest.integration.pageobjects.menus.ViewMenu;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
 

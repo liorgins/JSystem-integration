@@ -1,37 +1,29 @@
  package org.jsystemtest.integration;
 
-import java.io.File;
-
-import jsystem.extensions.report.html.Report;
 import jsystem.extensions.report.xml.XmlReportHandler;
-import jsystem.framework.common.CommonResources;
 import junit.framework.Assert;
 
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
-import org.jsystemtest.integration.pageobjects.TestsTreeController;
 import org.jsystemtest.integration.pageobjects.MainToolBar;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTabbedPaneOperator;
+
+import utils.JSystemTestUtils;
 
 
 public class ITFirstTests {
 
 	private static JSystemApplication app;
 
-	
-	
 	@BeforeClass
 	public static void prepareEnv() throws InterruptedException {
 		app = new JSystemApplication();
+		app.setJSystemProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.DEFAULT_SUT_FILE);
 		app.launch();
+		
 	}
 	
 	/**
@@ -64,7 +56,7 @@ public class ITFirstTests {
 		MainToolBar toolBar  = app.getToolBar();
 		toolBar.pushSaveScenarioButton();
 		toolBar.pushPlayButton();			
-		Assert.assertEquals(0, app.waitForRunEnd(30000));
+		Assert.assertEquals(0, app.waitForRunEnd());
 		
 		Assert.assertEquals(6, XmlReportHandler.getInstance().getNumberOfTests());
 		Assert.assertEquals(2, XmlReportHandler.getInstance().getNumberOfTestsPass());
@@ -77,22 +69,14 @@ public class ITFirstTests {
 	@After
 	public void cleanTest() {
 		System.out.println("@After");
-		System.out.println("Cleanning generated scenarios");
-		File scenarioDirectory = new File("target/test-classes/jsystem-base-tests/target/classes/scenarios");
-		for(File file : scenarioDirectory.listFiles()) {
-			if(!file.getName().equals("default.xml") && !file.getName().equals("default.properties")) {
-				file.delete();
-				System.out.println(file.getName() + " has been deleted seccessfuly from /target/classes/scenarios");
-			}
-		}
 		
-		scenarioDirectory = new File("target/test-classes/jsystem-base-tests/src/main/resources/scenarios");
-		for(File file : scenarioDirectory.listFiles()) {
-			if(!file.getName().equals("default.xml") && !file.getName().equals("default.properties")) {
-				file.delete();
-				System.out.println(file.getName() + " has been deleted seccessfuly /src/main/resources/scenarios");
-			}
-		}
+		System.out.println("Cleanning generated scenarios");	
+		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
+		
+		System.out.println("Cleanning generated logs and properties files");
+		JSystemTestUtils.cleanPropertiesAndLogs(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}
+	
+
 
 }

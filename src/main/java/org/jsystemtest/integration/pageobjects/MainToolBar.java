@@ -3,7 +3,6 @@ package org.jsystemtest.integration.pageobjects;
 import org.jsystemtest.integration.TooltipChooser;
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 public class MainToolBar extends AbstractPageObject{
@@ -15,6 +14,7 @@ public class MainToolBar extends AbstractPageObject{
 	}
 	
 	//TODO add more methods to cover all the tool bar's functionality  
+	
 	// main tool bar operations
 		public void pushNewScenarioButton() {
 			new JButtonOperator(app, new TooltipChooser(jmap.getNewScenarioButton())).push();
@@ -55,23 +55,6 @@ public class MainToolBar extends AbstractPageObject{
 			new JButtonOperator(app, new TooltipChooser(jmap.getStopButton())).push();
 		}
 
-//		public void toggleDebug() {
-//			JCheckBoxOperator jCheckBoxOperator = new JCheckBoxOperator(app, new TooltipChooser(jmap.getToggleDebugButton()));
-//			if (isDebugMode()) {
-//				jCheckBoxOperator.setSelected(false);
-//			} else {
-//				jCheckBoxOperator.setSelected(true);
-//			}
-//		}
-//		
-//		public boolean isDebugMode() {
-//			JCheckBoxOperator jCheckBoxOperator = new JCheckBoxOperator(app, new TooltipChooser(jmap.getToggleDebugButton()));
-//			if (jCheckBoxOperator.isSelected()) {
-//				return true;
-//			} else {
-//				return false;
-//			}
-//		}
 		
 		public void waitEnableAndClick(JButtonOperator jButtonOperator) {
 			if(jButtonOperator.isEnabled()) {

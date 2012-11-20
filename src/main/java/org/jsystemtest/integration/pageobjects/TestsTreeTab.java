@@ -31,10 +31,6 @@ public class TestsTreeTab extends AbstractPageObject {
 		JSpinnerOperator jSpinnerOperator = new JSpinnerOperator(jSplitPaneOperator);
 		if(jSpinnerOperator.isEnabled() && num > 0) {
 			jSpinnerOperator.setValue(num);
-			
-			//			for(int i=0; i < num; i++) {
-//				jSpinnerOperator.getIncreaseOperator().clickMouse();	
-//			}
 		}
 	}
 	

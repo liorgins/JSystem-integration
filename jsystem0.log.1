@@ -193,3 +193,144 @@ java.lang.NullPointerException
 	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
 Nov 21, 2012 2:00:48 PM jsystem.treeui.TestRunner exit
 INFO: System exit 0
+Nov 21, 2012 6:33:14 PM jsystem.treeui.TestRunner$1 run
+WARNING: Splash screen not found
+Nov 21, 2012 6:33:15 PM jsystem.treeui.TestRunner startRunner
+FINE: Tree TestRunner is starting
+Nov 21, 2012 6:33:16 PM jsystem.treeui.client.RunnerEngineManager resetConnectionListener
+FINE: Monitor stopped 
+Nov 21, 2012 6:33:16 PM jsystem.treeui.client.ConnectionListener$ConnectionMonitor run
+INFO: Connection monitor thread is up... 
+Nov 21, 2012 6:33:16 PM jsystem.treeui.client.RunnerEngineManager resetConnectionListener
+FINE: Engine set 
+Nov 21, 2012 6:33:16 PM jsystem.treeui.client.ConnectionListener connect
+INFO: Connected to agent. 
+Nov 21, 2012 6:33:16 PM jsystem.treeui.client.RunnerEngineManager resetConnectionListener
+FINE: Connected 
+Nov 21, 2012 6:33:24 PM jsystem.framework.scenario.JTestContainer <init>
+FINE: JTest container : scenarios/ScenarioAsTest_SON
+Nov 21, 2012 6:33:24 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Loading scenario: scenarios/ScenarioAsTest_SON Took 0.013 seconds.
+Nov 21, 2012 6:33:25 PM jsystem.utils.UploadRunner validateUrl
+FINE: Failed validating url http://localhost:8080/report-service/index.html
+java.net.ConnectException: Connection refused: connect
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.PlainSocketImpl.doConnect(PlainSocketImpl.java:351)
+	at java.net.PlainSocketImpl.connectToAddress(PlainSocketImpl.java:213)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:200)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:366)
+	at java.net.Socket.connect(Socket.java:529)
+	at java.net.Socket.connect(Socket.java:478)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:163)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:388)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:523)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:227)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:300)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:317)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:970)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:911)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:836)
+	at jsystem.utils.UploadRunner.validateUrl(UploadRunner.java:107)
+	at jsystem.treeui.TestTreeView.validateUrl(TestTreeView.java:691)
+	at jsystem.treeui.TestTreeView.validateUrl(TestTreeView.java:698)
+	at jsystem.treeui.TestTreeView.refreshOpenReportsButton(TestTreeView.java:721)
+	at jsystem.treeui.TestTreeView.createToolBar(TestTreeView.java:451)
+	at jsystem.treeui.TestTreeView.<init>(TestTreeView.java:214)
+	at jsystem.treeui.TestRunner.startRunner(TestRunner.java:152)
+	at jsystem.treeui.TestRunner.main(TestRunner.java:487)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.netbeans.jemmy.ClassReference.invokeMethod(ClassReference.java:137)
+	at org.netbeans.jemmy.ClassReference.startApplication(ClassReference.java:101)
+	at org.netbeans.jemmy.ClassReference.startApplication(ClassReference.java:79)
+	at org.jsystemtest.integration.pageobjects.JSystemApplication.launch(JSystemApplication.java:41)
+	at org.jsystemtest.integration.ITScenarioAsTest.prepareEnv(ITScenarioAsTest.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:45)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:42)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:27)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:300)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Nov 21, 2012 6:33:25 PM jsystem.framework.sut.SutFactory init
+FINE: Use sut file: default.xml
+Nov 21, 2012 6:33:25 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Loading all assets tree Took 0.121 seconds.
+Nov 21, 2012 6:33:25 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Collecting System objects Took 0.032 seconds.
+Nov 21, 2012 6:33:26 PM jsystem.treeui.TestRunner runnerStartAdditionalOperations
+WARNING: Fail to locate script file for if execution: C:\workspace\jsystem-integration-test\scripts\
+Nov 21, 2012 6:33:27 PM jsystem.framework.scenario.JTestContainer <init>
+FINE: JTest container : scenarios\ScenarioAsTest_SON
+Nov 21, 2012 6:33:27 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Loading scenario: scenarios/ScenarioAsTest_SON Took 0.0 seconds.
+Nov 21, 2012 6:33:27 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Loading all assets tree Took 0.015 seconds.
+Nov 21, 2012 6:33:27 PM jsystem.treeui.WaitDialog launchWaitDialog
+FINE: WaitDialog - launching waitDialog with title Saving Scenario
+Nov 21, 2012 6:33:27 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Saving scenario scenarios/ScenarioAsTest_SON Took 0.016 seconds.
+Nov 21, 2012 6:33:27 PM jsystem.treeui.actionItems.SaveScenarioAction actionPerformed
+FINE: Save Scenario swing worker - closing waitDialog
+Nov 21, 2012 6:33:28 PM jsystem.treeui.WaitDialog launchWaitDialog
+FINE: WaitDialog - launching waitDialog with title Add Tests to Scenario...
+Nov 21, 2012 6:33:28 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:28 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:28 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:29 PM jsystem.treeui.WaitDialog launchWaitDialog
+FINE: WaitDialog - launching waitDialog with title Saving Scenario
+Nov 21, 2012 6:33:29 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Saving scenario scenarios/ScenarioAsTest_SON Took 0.037 seconds.
+Nov 21, 2012 6:33:29 PM jsystem.treeui.actionItems.SaveScenarioAction actionPerformed
+FINE: Save Scenario swing worker - closing waitDialog
+Nov 21, 2012 6:33:29 PM jsystem.framework.scenario.JTestContainer <init>
+FINE: JTest container : scenarios\ScenarioAsTest_PARENT
+Nov 21, 2012 6:33:29 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Loading all assets tree Took 0.017 seconds.
+Nov 21, 2012 6:33:30 PM jsystem.treeui.WaitDialog launchWaitDialog
+FINE: WaitDialog - launching waitDialog with title Saving Scenario
+Nov 21, 2012 6:33:30 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Saving scenario scenarios/ScenarioAsTest_PARENT Took 0.0090 seconds.
+Nov 21, 2012 6:33:30 PM jsystem.treeui.actionItems.SaveScenarioAction actionPerformed
+FINE: Save Scenario swing worker - closing waitDialog
+Nov 21, 2012 6:33:30 PM jsystem.treeui.WaitDialog launchWaitDialog
+FINE: WaitDialog - launching waitDialog with title Add Tests to Scenario...
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.JTestContainer <init>
+FINE: JTest container : scenarios\ScenarioAsTest_SON
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:30 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Loading scenario: scenarios/ScenarioAsTest_SON Took 0.096 seconds.
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.JTestContainer <init>
+FINE: JTest container : scenarios/ScenarioAsTest_SON
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:30 PM jsystem.utils.PerformanceUtil endMeasure
+INFO: Loading scenario: scenarios/ScenarioAsTest_SON Took 0.047 seconds.
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
+FINE: Unknown parameter type: junit.framework.TestResult for: TestResult

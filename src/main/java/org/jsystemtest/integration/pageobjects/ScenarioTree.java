@@ -18,16 +18,16 @@ public class ScenarioTree extends AbstractPageObject {
 		TreePath path = scenarioTreeOperator.getPathForRow(row);
 		scenarioTreeOperator.selectPath(path);
 	}
-	
+
 	public int getRowCount() {
 		return scenarioTreeOperator.getRowCount();
 	}
-	
+
 	public void markAsKnownIssue(int testIndex, boolean mark) throws Exception {
 		String menuItem = mark ? jmap.getScenarioMarkAsKnownIssueMenuItem() : jmap.getScenarioUnMarkAsKnownIssueMenuItem();
 		pushMenuItemForTest(testIndex, menuItem);
 	}
-	
+
 	/**
 	 * will open the selected sub scenario in it's own root
 	 * 
@@ -37,19 +37,18 @@ public class ScenarioTree extends AbstractPageObject {
 		pushMenuItemForTest(scenarioIndex, jmap.getNavigateToSubScenario());
 	}
 
-	
-	
-	/**
-	 * 1) locate a test by given index\String.<br>
-	 * 2) open pop-up menu<br>
-	 * 3) select given menuItem<br>
-	 * 
-	 * @param identifier
-	 *            Integer index \ String name
-	 * @param menuItem
-	 *            the menu item to push
-	 * @throws Exception
-	 */
+	public void markScenarioAsTest(int index, boolean mark) throws Exception {
+		String menuItem = mark ? jmap.getScenarioMarkAsTestMenuItem() : jmap.getScenarioUnMarkAsTestMenuItem();
+		Thread.sleep(2000);
+		pushMenuItemForTest(index, menuItem);
+	}
+
+	public void markAsNegative(int testIndex, boolean mark) throws Exception {
+		String menuItem = mark ? jmap.getMarkAsNegativeTestMenuItem() : jmap.getUnMarkAsNegativeTestMenuItem();
+		Thread.sleep(2000);
+		pushMenuItemForTest(testIndex, menuItem);
+	}
+
 	private void pushMenuItemForTest(int testIndex, final String menuItem) throws Exception {
 		JPopupMenuOperator pp = rightClickPopUpManu(testIndex);
 		pp.pushMenuNoBlock(menuItem);
@@ -65,4 +64,11 @@ public class ScenarioTree extends AbstractPageObject {
 		Thread.sleep(500);
 		return pp;
 	}
+
+	public int getScenarioDirectChildrenCount(int row) throws Exception {
+		TreePath path = scenarioTreeOperator.getPathForRow(row);
+		return scenarioTreeOperator.getChildPaths(path).length;
+	}
+	
 }
+

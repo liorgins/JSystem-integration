@@ -212,7 +212,6 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		Thread.sleep(500);
 		JDialogOperator jDialogOperator = new JDialogOperator("Delete Scenario");
 		new JButtonOperator(jDialogOperator, "OK").clickMouse();
-//		new EventTool().waitNoEvent(1000);
 		openScenario(rootScenario);
 	}
 	

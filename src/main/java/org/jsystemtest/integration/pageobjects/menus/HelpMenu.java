@@ -14,7 +14,7 @@ public class HelpMenu extends AbstractPageObject{
 	private JMenuOperator jMenuOperator;
 	
 	public HelpMenu(JMenuBarOperator jMenuBarOperator) {
-		jMenuOperator = new JMenuOperator(jMenuBarOperator, "HELP");
+		jMenuOperator = new JMenuOperator(jMenuBarOperator, HELP);
 	}
 	
 	public void aboutVersion () {

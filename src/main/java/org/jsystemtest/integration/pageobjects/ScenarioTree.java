@@ -5,7 +5,6 @@ import javax.swing.tree.TreePath;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
-import org.netbeans.jemmy.operators.Operator.StringComparator;
 
 public class ScenarioTree extends AbstractPageObject {
 
@@ -15,14 +14,9 @@ public class ScenarioTree extends AbstractPageObject {
 		this.scenarioTreeOperator = new JTreeOperator(app);
 	}
 
-	public int selectTestByRow(int row) {
-		int treeRowCount = scenarioTreeOperator.getRowCount();
-		if (row > treeRowCount || row < 0) {
-			return -1;
-		}
+	public void selectTestByRow(int row) {
 		TreePath path = scenarioTreeOperator.getPathForRow(row);
 		scenarioTreeOperator.selectPath(path);
-		return 0;
 	}
 	
 	public int getRowCount() {
@@ -33,6 +27,17 @@ public class ScenarioTree extends AbstractPageObject {
 		String menuItem = mark ? jmap.getScenarioMarkAsKnownIssueMenuItem() : jmap.getScenarioUnMarkAsKnownIssueMenuItem();
 		pushMenuItemForTest(testIndex, menuItem);
 	}
+	
+	/**
+	 * will open the selected sub scenario in it's own root
+	 * 
+	 * @throws Exception
+	 */
+	public void navigateToSubScenario(int scenarioIndex) throws Exception {
+		pushMenuItemForTest(scenarioIndex, jmap.getNavigateToSubScenario());
+	}
+
+	
 	
 	/**
 	 * 1) locate a test by given index\String.<br>
@@ -47,7 +52,6 @@ public class ScenarioTree extends AbstractPageObject {
 	 */
 	private void pushMenuItemForTest(int testIndex, final String menuItem) throws Exception {
 		JPopupMenuOperator pp = rightClickPopUpManu(testIndex);
-		Thread.sleep(500);
 		pp.pushMenuNoBlock(menuItem);
 	}
 

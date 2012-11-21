@@ -19,7 +19,6 @@ import junit.framework.Test;
 import org.jsystemtest.integration.PropertyPair;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.netbeans.jemmy.ClassReference;
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
@@ -203,7 +202,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		File scenariosFile = new File(JSystemProperties.getInstance().getPreference(FrameworkOptions.TESTS_CLASS_FOLDER), "scenarios");
 		JFileChooserOperator openScenarioFileChooser = getMenuBar().getFileMenu().openSceario();
 		openScenarioFileChooser.setCurrentDirectory(scenariosFile);
-		openScenarioFileChooser.chooseFile("markAsKnownIssue");
+		openScenarioFileChooser.chooseFile(rootScenario);
 	}
 	
 	public void clearScenario(String rootScenario) throws InterruptedException {
@@ -217,8 +216,11 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		openScenario(rootScenario);
 	}
 	
-	public void createCenario(String rootScenario) throws Exception {
-		openScenario(rootScenario);
+	public void createScenario(String rootScenario) throws Exception {
+		File scenariosFile = new File(JSystemProperties.getInstance().getPreference(FrameworkOptions.TESTS_CLASS_FOLDER), "scenarios");
+		JFileChooserOperator newScenarioFileChooser = getMenuBar().getFileMenu().newSceario();
+		newScenarioFileChooser.setCurrentDirectory(scenariosFile);
+		newScenarioFileChooser.chooseFile(rootScenario);
 		getToolBar().pushSaveScenarioButton();
 	}
 

@@ -1,158 +1,155 @@
 package org.jsystemtest.integration;
 
-import jsystem.agent.analyzers.BooleanAnalyzer;
 import jsystem.framework.FrameworkOptions;
+import junit.framework.Assert;
 
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
+import org.jsystemtest.integration.pageobjects.ScenarioTree;
+import org.jsystemtest.integration.pageobjects.TestsTableController;
+import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
 public class ITNavigateToSubScenario {
 	
-//	private final String scenario1 = "Scenario1";
-//	private final String scenario2 = "Scenario2";
-//	private final String scenario3 = "Scenario3";
-//	private final String scenario4 = "Scenario4";
-//	private final String leftDirection = "left";
-//	private final String rightDirection = "right";
-//
-//	private static JSystemApplication app;
-//	
-//	
-//	@BeforeClass
-//	public static void prepareEnv() throws InterruptedException {
-//		app = new JSystemApplication();
-//		app.setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.DEFAULT_SUT_FILE);
-//		app.setJSystemOptionalProperties(new PropertyPair(FrameworkOptions.AUTO_DELETE_NO_CONFIRMATION, JSystemApplication.TRUE), new PropertyPair(FrameworkOptions.AUTO_SAVE_NO_CONFIRMATION, JSystemApplication.TRUE));
-//		app.launch();
-//
-//	}
-//	
-//	@Before
-//	public void setUp()throws Exception{
-//		app.createScenario(scenario1);
-//		scenarioClient.createScenario(scenario2);
-//		scenarioClient.createScenario(scenario3);
-//		scenarioClient.createScenario(scenario4);
-//		applicationClient.saveScenario();
-//	}
-//	
-//	/**
-//	 * 1. select the root scenario and check that it is scenario4 and then make sure the 
-//	 *    navigate left button is enable, and that navigate right button is disabled.
-//	 * 2. move to scenario2 make sure it's scenario2 and and check that both right and left
-//	 *    navigate buttons are enabled.
-//	 * 3. push the right navigate button once and check that scenario is scenario3 and both buttons are enabled.
-//	 *    push the right navigate button once and check that scenario is scenario4 and right button is disabled.
-//	 *    push the left navigate button twice and check that scenario is scenario2 and both buttons are enabled.
-//	 * @throws Exception
-//	 */
-//	@Test
-//	public void moveBetweenCreatedScenarios()throws Exception{
-//		report.step("select the root scenario and check that it is scenario4 and then make sure the navigate left button is enable, and that navigate right button is disabled.");
-//		scenarioClient.selectTestRow(0);
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario4);
-//		boolean result = applicationClient.checkNavigateButtonIsEnabled(leftDirection);
-//		analyzer.setTestAgainstObject(result);
-//		analyzer.analyze(new BooleanAnalyzer(true,"left button is enabled as expected","left button is not enabled"));
-//		result = applicationClient.checkNavigateButtonIsEnabled(rightDirection);
-//		analyzer.setTestAgainstObject(result);
-//		analyzer.analyze(new BooleanAnalyzer(false,"right button is not enabled as expected","right button is enabled"));
-//		report.step("move to scenario2 make sure it's scenario2 and and check that both right and left navigate buttons are enabled.");
-//		applicationClient.pushButton(Buttons.PREVIOUS_SCENARIO.getName(),2);
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario2);
-//		report.step("push the right navigate button once and check that scenario is scenario3 and both buttons are enabled.\npush the right navigate button once and check that scenario is scenario4 and right button is disabled.\npush the left navigate button twice and check that scenario is scenario2 and both buttons are enabled.");
-//		applicationClient.pushButton(Buttons.NEXT_SCENARIO.getName());
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario3);
-//		result = applicationClient.checkNavigateButtonIsEnabled(leftDirection);
-//		analyzer.setTestAgainstObject(result);
-//		analyzer.analyze(new BooleanAnalyzer(true,"button navigate previous is enabled as expected","button navigate forward is disabled"));
-//		result = applicationClient.checkNavigateButtonIsEnabled(rightDirection);
-//		analyzer.setTestAgainstObject(result);
-//		analyzer.analyze(new BooleanAnalyzer(true,"button navigate previous is enabled as expected","button navigate forward is disabled"));
-//		applicationClient.pushButton(Buttons.NEXT_SCENARIO.getName());
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario4);
-//		result = applicationClient.checkNavigateButtonIsEnabled(leftDirection);
-//		analyzer.setTestAgainstObject(result);
-//		analyzer.analyze(new BooleanAnalyzer(true,"button navigate previous is enabled as expected","button navigate forward is disabled"));
-//		result = applicationClient.checkNavigateButtonIsEnabled(rightDirection);
-//		analyzer.setTestAgainstObject(result);
-//		analyzer.analyze(new BooleanAnalyzer(false,"button navigate previous is enabled as expected","button navigate forward is disabled"));
-//		applicationClient.pushButton(Buttons.PREVIOUS_SCENARIO.getName(),2);
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario2);
-//		result = applicationClient.checkNavigateButtonIsEnabled(leftDirection);
-//		analyzer.setTestAgainstObject(result);
-//		analyzer.analyze(new BooleanAnalyzer(true,"button navigate previous is enabled as expected","button navigate forward is disabled"));
-//		result = applicationClient.checkNavigateButtonIsEnabled(rightDirection);
-//		analyzer.setTestAgainstObject(result);
-//		analyzer.analyze(new BooleanAnalyzer(true,"button navigate previous is enabled as expected","button navigate forward is disabled"));
-//	}
-//	
-//	
-//	/**
-//	 * 1. to two steps back to scenario 2 and check it's really 2 as expected.
-//	 * 2. create a scenario midScenario, and check that scenario3 and scenario4 can't be navigated to anymore
-//	 * @throws Exception
-//	 */
-//	@Test
-//	public void goToScenario2AndCreateNewScenarioAndCheckThat3and4NoLongerExist()throws Exception{
-//		report.step("select the current scenario and check it's scenario4");
-//		scenarioClient.selectTestRow(0);
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario4);
-//		report.step("navigate twice backwords and check the scenario is scenario2");
-//		applicationClient.pushButton(Buttons.PREVIOUS_SCENARIO.getName(), 2);
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario2);
-//		report.step("create a scenario midScenario, and check that scenario3 and scenario4 can't be navigated to anymore");
-//		scenarioClient.createScenario("midScenario");
-//		boolean result = applicationClient.checkNavigateButtonIsEnabled(rightDirection);
-//		analyzer.setTestAgainstObject(result);
-//		analyzer.analyze(new BooleanAnalyzer(false,"the navigate to next scenario is disabled as expected","the navigate to next scenario is enabled"));
-//		result = applicationClient.checkNavigateButtonIsEnabled(leftDirection);
-//		analyzer.setTestAgainstObject(result);
-//		analyzer.analyze(new BooleanAnalyzer(true,"the navigate to previous scenario is enabled as expected","the navigate to previous scenario is disabled"));
-//		applicationClient.pushButton(Buttons.PREVIOUS_SCENARIO.getName());
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario2);
-//		applicationClient.pushButton(Buttons.NEXT_SCENARIO.getName());
-//		scenarioClient.checkCurrentScenarioIsMatched("midScenario");
-//	}
-//	
-//	/**
-//	 * 1. open scenario1 and add to it a sub scenario scenaroi2
-//	 * 2. select scenario2 and choose, Navigate to sub scenario
-//	 * 3. check that current scenario opened is scenario2 as expected.
-//	 * 4. navigate left once and check that current scenario is scenario1
-//	 * 5. navigate right once and check that current scenario is scenario2
-//	 * @throws Exception
-//	 */
-//	@Test
-//	public void createScenarioInSceanrioSelectChildScenarioAndNavigateToSubScenario()throws Exception{
-//		scenarioClient.openScenario(scenario1);
-//		scenarioClient.selectTestRow(0);
-//		scenarioClient.addTest(scenario2,TestType.SCENARIO.getType());
-//		applicationClient.saveScenario();
-//		scenarioClient.selectTestRow(1);
-//		scenarioClient.navigateToSubScenario(1);
-//		applicationClient.saveScenario();
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario2);
-//		applicationClient.pushButton(Buttons.PREVIOUS_SCENARIO.getName());
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario1);
-//		applicationClient.pushButton(Buttons.NEXT_SCENARIO.getName());
-//		scenarioClient.checkCurrentScenarioIsMatched(scenario2);
-//		System.out.println("");
-//	}
-//	@After
-//	public void tearDown()throws Exception{
-//		super.tearDown();
-//		scenarioClient.openScenario(scenario1);
-//		scenarioClient.deleteCurrentScenario();
-//		scenarioClient.openScenario(scenario2);
-//		scenarioClient.deleteCurrentScenario();
-//		scenarioClient.openScenario(scenario3);
-//		scenarioClient.deleteCurrentScenario();
-//		scenarioClient.openScenario(scenario4);
-//		scenarioClient.deleteCurrentScenario();
-//	}
+	private final String scenario1 = "Scenario1";
+	private final String scenario2 = "Scenario2";
+	private final String scenario3 = "Scenario3";
+	private final String scenario4 = "Scenario4";
+	private final String midScenario = "midSceanrio";
 
+
+	private static JSystemApplication app;
+	
+	
+	@BeforeClass
+	public static void prepareEnv() throws InterruptedException {
+		app = new JSystemApplication();
+		app.setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.DEFAULT_SUT_FILE);
+		app.setJSystemOptionalProperties(new PropertyPair(FrameworkOptions.AUTO_DELETE_NO_CONFIRMATION, JSystemApplication.TRUE),
+										 new PropertyPair(FrameworkOptions.AUTO_SAVE_NO_CONFIRMATION, JSystemApplication.TRUE));
+		app.launch();
+
+	}
+	
+	@Before
+	public void setUp()throws Exception{
+		app.createScenario(scenario1);
+		app.createScenario(scenario2);
+		app.createScenario(scenario3);
+		app.createScenario(scenario4);
+	}
+	
+	/**
+	 * 1. select the root scenario and check that it is scenario4 and then make sure the<br/> 
+	 *    navigate left button is enable, and that navigate right button is disabled.<br/> 
+	 * 2. move to scenario2 make sure it's scenario2 and and check that both right and left<br/> 
+	 *    navigate buttons are enabled.<br/> 
+	 * 3. push the right navigate button once and check that scenario is scenario3 and both buttons are enabled.<br/> 
+	 * 4. push the right navigate button once and check that scenario is scenario4 and right button is disabled.<br/> 
+	 * 5. push the left navigate button twice and check that scenario is scenario2 and both buttons are enabled.<br/> 
+	 * @throws Exception
+	 */
+	@Test
+	public void moveBetweenCreatedScenarios()throws Exception{
+		
+		TestsTableController testsTableController = app.getTestTableController();
+		testsTableController.getScenarioTree().selectTestByRow(0);	
+		Assert.assertEquals(scenario4, testsTableController.getCurrentScenarioName());		
+		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled("backward"));
+		Assert.assertEquals(false, testsTableController.isNavigateButtonEnabled("forward"));
+		
+		testsTableController.pushNavigateToScenarioButton("backward");
+		testsTableController.pushNavigateToScenarioButton("backward");
+		Assert.assertEquals(scenario2, testsTableController.getCurrentScenarioName());		
+		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled("backward"));
+		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled("forward"));
+		
+		testsTableController.pushNavigateToScenarioButton("forward");
+		Assert.assertEquals(scenario3, testsTableController.getCurrentScenarioName());		
+		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled("backward"));
+		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled("forward"));
+		
+		testsTableController.pushNavigateToScenarioButton("forward");
+		Assert.assertEquals(scenario4, testsTableController.getCurrentScenarioName());		
+		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled("backward"));
+		Assert.assertEquals(false, testsTableController.isNavigateButtonEnabled("forward"));
+		
+		testsTableController.pushNavigateToScenarioButton("backward");
+		testsTableController.pushNavigateToScenarioButton("backward");
+		Assert.assertEquals(scenario2, testsTableController.getCurrentScenarioName());		
+		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled("backward"));
+		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled("forward"));
+	}
+	
+	
+	/**
+	 * 1. to two steps back to scenario 2 and check it's really 2 as expected.
+	 * 2. create a scenario midScenario, and check that scenario3 and scenario4 can't be navigated to anymore
+	 * @throws Exception
+	 */
+	@Test
+	public void goToScenario2AndCreateNewScenarioAndCheckThat3and4NoLongerExist() throws Exception{
+		TestsTableController testsTableController = app.getTestTableController();
+
+		Assert.assertEquals(scenario4, testsTableController.getCurrentScenarioName());	
+		
+		testsTableController.pushNavigateToScenarioButton("backward");
+		testsTableController.pushNavigateToScenarioButton("backward");
+		Assert.assertEquals(scenario2, testsTableController.getCurrentScenarioName());
+		
+		app.createScenario(midScenario);
+		Assert.assertEquals(false, testsTableController.isNavigateButtonEnabled("forward"));
+		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled("backward"));
+		
+		testsTableController.pushNavigateToScenarioButton("backward");
+		Assert.assertEquals(scenario2, testsTableController.getCurrentScenarioName());
+		
+		testsTableController.pushNavigateToScenarioButton("forward");
+		Assert.assertEquals(midScenario, testsTableController.getCurrentScenarioName());
+	}
+	
+	/**
+	 * 1. open scenario1 and add to it a sub scenario scenaroi2
+	 * 2. select scenario2 and choose, Navigate to sub scenario 
+	 * 3. check that current scenario opened is scenario2 as expected.
+	 * 4. navigate left once and check that current scenario is scenario1
+	 * 5. navigate right once and check that current scenario is scenario2
+	 * @throws Exception
+	 */
+	@Test
+	public void createScenarioInSceanrioSelectChildScenarioAndNavigateToSubScenario()throws Exception{
+		
+		app.openScenario(scenario1);
+		TestsTableController testTableController = app.getTestTableController();
+		ScenarioTree scenarioTree = testTableController.getScenarioTree();
+		scenarioTree.selectTestByRow(0);
+		app.getTestsTreeController().getTestsTreeTab().addTest(scenario2, TestType.SCENARIO.getType(), 1);
+		app.getToolBar().pushSaveScenarioButton();
+		
+		scenarioTree.selectTestByRow(1);
+		scenarioTree.navigateToSubScenario(1);
+		
+		Assert.assertEquals(scenario2, testTableController.getCurrentScenarioName());	
+		
+		testTableController.pushNavigateToScenarioButton("backward");
+		Assert.assertEquals(scenario1, testTableController.getCurrentScenarioName());	
+		
+		testTableController.pushNavigateToScenarioButton("forward");
+		Assert.assertEquals(scenario2, testTableController.getCurrentScenarioName());	
+	}
+	
+	@After
+	public void cleanTest() {
+		System.out.println("@After");
+
+		System.out.println("Cleanning generated scenarios");
+		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
+
+		System.out.println("Cleanning generated logs and properties files");
+		JSystemTestUtils.cleanPropertiesAndLogs(JSystemApplication.CURRENT_WORKING_DIRECTORY);
+	}
 }

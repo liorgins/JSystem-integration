@@ -7,7 +7,6 @@ import javax.swing.tree.TreePath;
 import jsystem.utils.StringUtils;
 
 import org.jsystemtest.integration.TestType;
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JSplitPaneOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
 

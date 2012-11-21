@@ -1,7 +1,6 @@
 package org.jsystemtest.integration.pageobjects;
 
 import org.jsystemtest.integration.TooltipChooser;
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 

@@ -206,14 +206,20 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		openScenarioFileChooser.chooseFile("markAsKnownIssue");
 	}
 	
-	public void clearScenario(String rootScenario) {
+	public void clearScenario(String rootScenario) throws InterruptedException {
 		getTestTableController().getScenarioTree().selectTestByRow(0);
+		Thread.sleep(500);
 		getToolBar().pushDeleteScenarioButton();
-		new EventTool().waitNoEvent(1500);
+		Thread.sleep(500);
 		JDialogOperator jDialogOperator = new JDialogOperator("Delete Scenario");
 		new JButtonOperator(jDialogOperator, "OK").clickMouse();
-		new EventTool().waitNoEvent(1000);
+//		new EventTool().waitNoEvent(1000);
 		openScenario(rootScenario);
+	}
+	
+	public void createCenario(String rootScenario) throws Exception {
+		openScenario(rootScenario);
+		getToolBar().pushSaveScenarioButton();
 	}
 
 }

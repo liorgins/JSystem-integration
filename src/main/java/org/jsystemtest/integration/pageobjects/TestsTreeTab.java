@@ -22,9 +22,9 @@ public class TestsTreeTab extends AbstractPageObject {
 		return new TestsTree(jSplitPaneOperator);
 	}
 	
-	public void pushAddTestsButton() {
-		new JButtonOperator(jSplitPaneOperator, new TooltipChooser(jmap.getAddTestsButton())).pushNoBlock();
-		new EventTool().waitNoEvent(1000);
+	public void pushAddTestsButton() throws InterruptedException {
+		new JButtonOperator(jSplitPaneOperator, new TooltipChooser(jmap.getAddTestsButton())).clickMouse();
+		Thread.sleep(1000);
 	}
 	
 	public void setTestsNumberSpinner(int num) {
@@ -38,7 +38,7 @@ public class TestsTreeTab extends AbstractPageObject {
 		JComboBoxOperator filter = new JComboBoxOperator(jSplitPaneOperator, new TooltipChooser(jmap.getFilterToolTip()));
 		filter.addItem(textToSearch);
 		filter.selectItem(textToSearch);
-		new EventTool().waitNoEvent(1000);
+		Thread.sleep(1000);
 	}
 	
 	public void addTest(String node, String parentNode, int amount) throws Exception {

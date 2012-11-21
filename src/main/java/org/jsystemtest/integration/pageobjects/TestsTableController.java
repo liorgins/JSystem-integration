@@ -5,6 +5,7 @@ import org.jsystemtest.integration.TooltipChooser;
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.python.modules.thread;
 
 public class TestsTableController extends AbstractPageObject {
 
@@ -19,7 +20,7 @@ public class TestsTableController extends AbstractPageObject {
 		return new ScenarioTree(appOperator);
 	}
 	
-	public void removeAllTests() {
+	public void removeAllTests() throws InterruptedException {
 		ScenarioTree scenarioTree = getScenarioTree();
 		final int rowCount = scenarioTree.getRowCount();
 				
@@ -29,7 +30,7 @@ public class TestsTableController extends AbstractPageObject {
 			scenarioTree.selectTestByRow(i);
 			pushRemoveButton();
 			i--;
-			new EventTool().waitNoEvent(500);
+			Thread.sleep(500);
 		}
 	}
 	

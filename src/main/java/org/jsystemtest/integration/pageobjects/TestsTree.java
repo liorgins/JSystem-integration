@@ -50,7 +50,7 @@ public class TestsTree extends AbstractPageObject {
 		if (foundPath == null) {
 			throw new Exception("Path not found node: " + node);
 		}
-		new EventTool().waitNoEvent(500);
+		Thread.sleep(500);
 		if (foundPath != null) {
 			testsTreeOperator.expandPath(foundPath);
 			testsTreeOperator.selectPath(foundPath);

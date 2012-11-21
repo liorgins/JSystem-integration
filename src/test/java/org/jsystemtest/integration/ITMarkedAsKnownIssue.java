@@ -22,7 +22,9 @@ public class ITMarkedAsKnownIssue {
 	public static void prepareEnv() throws InterruptedException {
 		app = new JSystemApplication();
 		app.setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.DEFAULT_SUT_FILE);
-		app.setJSystemOptionalProperties(new PropertyPair(FrameworkOptions.AUTO_DELETE_NO_CONFIRMATION, JSystemApplication.TRUE), new PropertyPair(FrameworkOptions.AUTO_SAVE_NO_CONFIRMATION, JSystemApplication.TRUE));
+		app.setJSystemOptionalProperties(new PropertyPair(FrameworkOptions.AUTO_DELETE_NO_CONFIRMATION, JSystemApplication.TRUE),
+										 new PropertyPair(FrameworkOptions.AUTO_SAVE_NO_CONFIRMATION, JSystemApplication.TRUE)
+		);
 		app.launch();
 
 	}
@@ -44,12 +46,22 @@ public class ITMarkedAsKnownIssue {
 
 		app.getMenuBar().getFileMenu().saveScenario();
 	}
+	
+	/**
+	 * 1. select test that fail<br/>
+	 * 2. mark the test as known issue<br/>
+	 * 3. run scenario and verify that test reported warning
+	 * 
+	 * @throws Exception
+	 */
 
 	@Test
 	public void markOneFailAsKnownIssue() throws Exception {
+		
 		System.out.println("select a test that is a test that fails, and mark it as know issue");
 		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
 		scenarioTree.selectTestByRow(5);
+		
 		scenarioTree.markAsKnownIssue(5, true);
 		app.getToolBar().pushPlayButton();
 
@@ -59,8 +71,6 @@ public class ITMarkedAsKnownIssue {
 		int testWarn = XmlReportHandler.getInstance().getNumberOfTestsWarning();
 		Assert.assertEquals("TESTS RUN - Expected: 1 ,  Actual: " +  testFail, 1, testFail);
 		Assert.assertEquals("TESTS RUN - Expected: 3 ,  Actual: " +  testWarn, 3, testWarn);
-
-
 	}
 
 	@After

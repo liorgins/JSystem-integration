@@ -1,13 +1,11 @@
 package org.jsystemtest.integration.pageobjects;
 
-import java.awt.AWTEvent;
-
 import javax.swing.tree.TreePath;
 
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
+import org.netbeans.jemmy.operators.Operator.StringComparator;
 
 public class ScenarioTree extends AbstractPageObject {
 
@@ -47,8 +45,9 @@ public class ScenarioTree extends AbstractPageObject {
 	 *            the menu item to push
 	 * @throws Exception
 	 */
-	private void pushMenuItemForTest(int testIndex, String menuItem) throws Exception {
+	private void pushMenuItemForTest(int testIndex, final String menuItem) throws Exception {
 		JPopupMenuOperator pp = rightClickPopUpManu(testIndex);
+		Thread.sleep(500);
 		pp.pushMenuNoBlock(menuItem);
 	}
 
@@ -59,7 +58,7 @@ public class ScenarioTree extends AbstractPageObject {
 		}
 
 		JPopupMenuOperator pp = new JPopupMenuOperator(scenarioTreeOperator.callPopupOnPath(foundPath));
-		new EventTool().waitNoEvent(AWTEvent.MOUSE_EVENT_MASK);
+		Thread.sleep(500);
 		return pp;
 	}
 }

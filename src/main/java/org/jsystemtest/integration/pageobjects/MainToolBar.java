@@ -56,12 +56,12 @@ public class MainToolBar extends AbstractPageObject{
 		}
 
 		
-		public void waitEnableAndClick(JButtonOperator jButtonOperator) {
+		public void waitEnableAndClick(JButtonOperator jButtonOperator) throws InterruptedException {
 			if(jButtonOperator.isEnabled()) {
 				jButtonOperator.clickMouse();
 			}else{
 				while(!jButtonOperator.isEnabled()) {
-					new EventTool().waitNoEvent(500);
+					Thread.sleep(500);
 					jButtonOperator.clickMouse();
 				}
 			}

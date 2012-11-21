@@ -34,6 +34,6 @@ public class TestsTableController extends AbstractPageObject {
 	}
 	
 	public void pushRemoveButton() {
-		new JButtonOperator(appOperator, new TooltipChooser("Remove")).pushNoBlock();
+		new JButtonOperator(appOperator, new TooltipChooser("Remove")).clickMouse();
 	}
 }

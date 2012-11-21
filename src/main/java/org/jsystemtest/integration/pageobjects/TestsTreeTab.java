@@ -40,4 +40,10 @@ public class TestsTreeTab extends AbstractPageObject {
 		filter.selectItem(textToSearch);
 		new EventTool().waitNoEvent(1000);
 	}
+	
+	public void addTest(String node, String parentNode, int amount) throws Exception {
+		getTestTree().selectPathByNodeAndParentNode(node, parentNode);
+		setTestsNumberSpinner(amount);
+		pushAddTestsButton();
+	}
 }

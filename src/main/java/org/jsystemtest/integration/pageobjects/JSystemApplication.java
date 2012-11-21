@@ -1,5 +1,6 @@
 package org.jsystemtest.integration.pageobjects;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
@@ -18,6 +19,9 @@ import junit.framework.Test;
 import org.jsystemtest.integration.PropertyPair;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.netbeans.jemmy.ClassReference;
+import org.netbeans.jemmy.EventTool;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -193,6 +197,23 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 
 	public void setRunEnd(boolean runEnd) {
 		this.runEnd = runEnd;
+	}
+
+	public void openScenario(String rootScenario) {
+		File scenariosFile = new File(JSystemProperties.getInstance().getPreference(FrameworkOptions.TESTS_CLASS_FOLDER), "scenarios");
+		JFileChooserOperator openScenarioFileChooser = getMenuBar().getFileMenu().openSceario();
+		openScenarioFileChooser.setCurrentDirectory(scenariosFile);
+		openScenarioFileChooser.chooseFile("markAsKnownIssue");
+	}
+	
+	public void clearScenario(String rootScenario) {
+		getTestTableController().getScenarioTree().selectTestByRow(0);
+		getToolBar().pushDeleteScenarioButton();
+		new EventTool().waitNoEvent(1500);
+		JDialogOperator jDialogOperator = new JDialogOperator("Delete Scenario");
+		new JButtonOperator(jDialogOperator, "OK").clickMouse();
+		new EventTool().waitNoEvent(1000);
+		openScenario(rootScenario);
 	}
 
 }

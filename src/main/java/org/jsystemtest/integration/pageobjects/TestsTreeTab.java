@@ -13,7 +13,7 @@ public class TestsTreeTab extends AbstractPageObject {
 	private JSplitPaneOperator jSplitPaneOperator; 
 	
 	public TestsTreeTab(JTabbedPaneOperator jTabbedPaneOperator) {
-		
+		jTabbedPaneOperator.selectPage(0);
 		jSplitPaneOperator = new JSplitPaneOperator(jTabbedPaneOperator, 0);
 	}
 	
@@ -41,6 +41,7 @@ public class TestsTreeTab extends AbstractPageObject {
 	}
 	
 	public void addTest(String node, String parentNode, int amount) throws Exception {
+		TestsTreeController.showTab(0);
 		getTestTree().selectPathByNodeAndParentNode(node, parentNode);
 		setTestsNumberSpinner(amount);
 		pushAddTestsButton();

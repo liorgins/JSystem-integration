@@ -334,3 +334,56 @@ Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
 FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
 Nov 21, 2012 6:33:30 PM jsystem.framework.scenario.RunnerTest loadParameters
 FINE: Unknown parameter type: junit.framework.TestResult for: TestResult
+Nov 26, 2012 3:13:55 PM jsystem.treeui.TestRunner$1 run
+WARNING: Splash screen not found
+Nov 26, 2012 3:13:56 PM jsystem.treeui.TestRunner startRunner
+FINE: Tree TestRunner is starting
+Nov 26, 2012 3:13:57 PM jsystem.extensions.report.html.HtmlTestReporter <init>
+INFO: Logs were found without a backup, creating a backup of logs and deleting old logs...
+Nov 26, 2012 3:13:57 PM jsystem.treeui.client.RunnerEngineManager resetConnectionListener
+FINE: Monitor stopped 
+Nov 26, 2012 3:13:57 PM jsystem.treeui.client.RunnerEngineManager resetConnectionListener
+FINE: Engine set 
+Nov 26, 2012 3:13:57 PM jsystem.treeui.client.ConnectionListener$ConnectionMonitor run
+INFO: Connection monitor thread is up... 
+Nov 26, 2012 3:13:57 PM jsystem.treeui.client.ConnectionListener connect
+INFO: Connected to agent. 
+Nov 26, 2012 3:13:57 PM jsystem.treeui.client.RunnerEngineManager resetConnectionListener
+FINE: Connected 
+Nov 26, 2012 3:14:00 PM jsystem.runner.agent.server.RunnerEngineImpl close
+FINE: Failed stopping execution
+java.lang.NullPointerException
+	at jsystem.treeui.client.JSystemAgentClientsPool.getClients(JSystemAgentClientsPool.java:109)
+	at jsystem.treeui.client.ApplicationRunnerEngineImpl.executeOnAgents(ApplicationRunnerEngineImpl.java:64)
+	at jsystem.treeui.client.ApplicationRunnerEngineImpl.stop(ApplicationRunnerEngineImpl.java:38)
+	at jsystem.runner.agent.server.RunnerEngineImpl.close(RunnerEngineImpl.java:324)
+	at jsystem.treeui.TestRunner.exit(TestRunner.java:219)
+	at jsystem.treeui.TestRunner.updateLock(TestRunner.java:382)
+	at jsystem.treeui.TestRunner.startRunner(TestRunner.java:130)
+	at jsystem.treeui.TestRunner.main(TestRunner.java:487)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.netbeans.jemmy.ClassReference.invokeMethod(ClassReference.java:137)
+	at org.netbeans.jemmy.ClassReference.startApplication(ClassReference.java:101)
+	at org.netbeans.jemmy.ClassReference.startApplication(ClassReference.java:79)
+	at org.jsystemtest.integration.pageobjects.JSystemApplication.launch(JSystemApplication.java:41)
+	at org.jsystemtest.integration.ITScenarioAsTest.prepareEnv(ITScenarioAsTest.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:45)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:42)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:27)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:300)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Nov 26, 2012 3:14:00 PM jsystem.treeui.TestRunner exit
+INFO: System exit 0

@@ -8,6 +8,8 @@ import junit.framework.Assert;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestsTableController;
+import org.jsystemtest.integration.pageobjects.TestsTree;
+import org.jsystemtest.integration.pageobjects.TestsTreeController;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.junit.After;
@@ -120,6 +122,56 @@ public class ITScenarioAsTest {
 	}
 
 	
+	/**
+	 * Test the test map and unmap and that a ScenarioTest is counted as one test
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void checkMappingAndTestCount() throws Exception{
+	
+		app.openScenario(sonScenario);
+		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
+		int numOfSonTests = scenarioTree.getScenarioDirectChildrenCount(0);
+		scenarioTree.mapTest(1, false, false);
+		numOfSonTests--;
+		playAnalyze(numOfSonTests);
+	
+		app.openScenario(parentScenario);
+		app.getTestsTreeController().getTestsTreeTab().addTest("reportSuccess", "TestsExamples", 1);
+		app.getToolBar().pushSaveScenarioButton();
+		int numOfParentTests = scenarioTree.getScenarioDirectChildrenCount(0);
+		numOfSonTests = scenarioTree.getScenarioDirectChildrenCount(1);
+		Assert.assertEquals (4, numOfParentTests -1 + numOfSonTests);
+	
+		scenarioTree.markScenarioAsTest(1, true);
+		scenarioTree.mapTest(1, false, false);
+		numOfParentTests = scenarioTree.getScenarioDirectChildrenCount(0);
+		playAnalyze(numOfParentTests -1);
+
+		scenarioTree.mapTest(1, true, false);
+		numOfParentTests = scenarioTree.getScenarioDirectChildrenCount(0);
+		playAnalyze(numOfParentTests);
+
+		scenarioTree.markScenarioAsTest(1, false);
+		scenarioTree.mapTest(1, false, true);
+		playAnalyze(numOfParentTests - 1);
+		
+		scenarioTree.mapTest(1, true, true);
+		numOfParentTests = scenarioTree.getScenarioDirectChildrenCount(0);
+		numOfSonTests = scenarioTree.getScenarioDirectChildrenCount(1);
+		int totalTests = numOfParentTests - 1 +numOfSonTests;
+		playAnalyze(totalTests);
+	}
+	
+	private void playAnalyze(int expectedTest) throws Exception{
+		app.getToolBar().pushSaveScenarioButton();
+		app.getToolBar().pushPlayButton();
+		Assert.assertEquals(0, app.waitForRunEnd());
+		int testExecuted = XmlReportHandler.getInstance().getNumberOfTests();
+		Assert.assertEquals("TESTS RUN - Executed: ", expectedTest, testExecuted);
+	}
+
 	@After
 	public void cleanTest() {
 		System.out.println("@After");

@@ -1,10 +1,13 @@
 package org.jsystemtest.integration.pageobjects;
 
+import java.util.logging.Level;
+
 import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
+import org.python.modules.thread;
 
 public class ScenarioTree extends AbstractPageObject {
 
@@ -48,6 +51,24 @@ public class ScenarioTree extends AbstractPageObject {
 		Thread.sleep(2000);
 		pushMenuItemForTest(testIndex, menuItem);
 	}
+	
+	
+	/**
+	 * @param row test row index 
+	 * @param map true map, false unmap
+	 * @param isScenario true for scenario, false for test
+	 * @throws Exception
+	 */
+	public void mapTest(int row, boolean map, boolean isScenario) throws Exception {
+		String menuItemText = "";
+		
+		if(isScenario) {
+			menuItemText = map ? jmap.getTestMapAllMenuItem() : jmap.getTestUnmapAllMenuItem();
+		}else {
+			menuItemText = map ? jmap.getTestMapMenuItem() : jmap.getTestUnmapMenuItem();
+		}
+		pushMenuItemForTest(row, menuItemText);
+	}
 
 	private void pushMenuItemForTest(int testIndex, final String menuItem) throws Exception {
 		JPopupMenuOperator pp = rightClickPopUpManu(testIndex);
@@ -60,8 +81,9 @@ public class ScenarioTree extends AbstractPageObject {
 			throw new Exception("Path not found test index: " + testIndex);
 		}
 
+		Thread.sleep(200);
 		JPopupMenuOperator pp = new JPopupMenuOperator(scenarioTreeOperator.callPopupOnPath(foundPath));
-		Thread.sleep(500);
+		Thread.sleep(200);
 		return pp;
 	}
 
@@ -69,6 +91,7 @@ public class ScenarioTree extends AbstractPageObject {
 		TreePath path = scenarioTreeOperator.getPathForRow(row);
 		return scenarioTreeOperator.getChildPaths(path).length;
 	}
+
 	
 }
 

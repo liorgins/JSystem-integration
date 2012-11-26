@@ -6,7 +6,7 @@ import org.netbeans.jemmy.operators.JTabbedPaneOperator;
 
 public class TestsTreeController extends AbstractPageObject{
 	
-	private JTabbedPaneOperator jTabbedPaneOperator;
+	private static JTabbedPaneOperator jTabbedPaneOperator;
 
 		
 	public TestsTreeController(JFrameOperator app) {	
@@ -21,6 +21,10 @@ public class TestsTreeController extends AbstractPageObject{
 	
 	public TestsInfoTab getTestsInfoTab() {
 		return new TestsInfoTab(jTabbedPaneOperator);
+	}
+	
+	public static void showTab(int index) {
+		jTabbedPaneOperator.selectPage(index);
 	}
 	
 	

@@ -4,44 +4,46 @@ import org.jsystemtest.integration.TooltipChooser;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
-import org.netbeans.jemmy.operators.JSplitPaneOperator;
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
 
 
 public class TestsTreeTab extends AbstractPageObject {
 	
-	private JSplitPaneOperator jSplitPaneOperator; 
+	private JTabbedPaneOperator testsTreeTab; 
 	
 	public TestsTreeTab(JTabbedPaneOperator jTabbedPaneOperator) {
-		jTabbedPaneOperator.selectPage(0);
-		jSplitPaneOperator = new JSplitPaneOperator(jTabbedPaneOperator, 0);
+		testsTreeTab = jTabbedPaneOperator;
 	}
 	
 	public TestsTree getTestTree() {
-		return new TestsTree(jSplitPaneOperator);
+		testsTreeTab.selectPage(0);
+		return new TestsTree(testsTreeTab);
 	}
 	
 	public void pushAddTestsButton() throws InterruptedException {
-		new JButtonOperator(jSplitPaneOperator, new TooltipChooser(jmap.getAddTestsButton())).clickMouse();
+		testsTreeTab.selectPage(0);
+		new JButtonOperator(testsTreeTab, new TooltipChooser(jmap.getAddTestsButton())).clickMouse();
 		Thread.sleep(1000);
 	}
 	
 	public void setTestsNumberSpinner(int num) {
-		JSpinnerOperator jSpinnerOperator = new JSpinnerOperator(jSplitPaneOperator);
+		testsTreeTab.selectPage(0);
+		JSpinnerOperator jSpinnerOperator = new JSpinnerOperator(testsTreeTab);
 		if(jSpinnerOperator.isEnabled() && num > 0) {
 			jSpinnerOperator.setValue(num);
 		}
 	}
 	
 	public void search(final String textToSearch) throws Exception {
-		JComboBoxOperator filter = new JComboBoxOperator(jSplitPaneOperator, new TooltipChooser(jmap.getFilterToolTip()));
+		testsTreeTab.selectPage(0);
+		JComboBoxOperator filter = new JComboBoxOperator(testsTreeTab, new TooltipChooser(jmap.getFilterToolTip()));
 		filter.addItem(textToSearch);
 		filter.selectItem(textToSearch);
 		Thread.sleep(1000);
 	}
 	
 	public void addTest(String node, String parentNode, int amount) throws Exception {
-		TestsTreeController.showTab(0);
+		testsTreeTab.selectPage(0);
 		getTestTree().selectPathByNodeAndParentNode(node, parentNode);
 		setTestsNumberSpinner(amount);
 		pushAddTestsButton();

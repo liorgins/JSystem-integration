@@ -1,13 +1,10 @@
 package org.jsystemtest.integration.pageobjects;
 
-import java.util.logging.Level;
-
 import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
-import org.python.modules.thread;
 
 public class ScenarioTree extends AbstractPageObject {
 

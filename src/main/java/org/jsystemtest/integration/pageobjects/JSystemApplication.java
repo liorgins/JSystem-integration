@@ -2,13 +2,14 @@ package org.jsystemtest.integration.pageobjects;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jsystem.framework.FrameworkOptions;
 import jsystem.framework.JSystemProperties;
 import jsystem.framework.report.ExtendTestListener;
 import jsystem.framework.report.ListenerstManager;
-import jsystem.framework.report.TestInfo;
 import jsystem.framework.scenario.JTestContainer;
 import jsystem.framework.scenario.flow_control.AntForLoop;
 import jsystem.treeui.TestRunner;
@@ -17,8 +18,10 @@ import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 
 import org.jsystemtest.integration.PropertyPair;
+import org.jsystemtest.integration.RunnerComponentChooser;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.netbeans.jemmy.ClassReference;
+import org.netbeans.jemmy.DialogWaiter;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
@@ -136,11 +139,6 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 
 	}
 
-	@Override
-	public void startTest(TestInfo testInfo) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void endRun() {
@@ -221,6 +219,71 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		newScenarioFileChooser.setCurrentDirectory(scenariosFile);
 		newScenarioFileChooser.chooseFile(rootScenario);
 		getToolBar().pushSaveScenarioButton();
+	}
+	
+	public boolean checkIfWarningDialogOpenedAndCloseIt() {
+		JDialogOperator dialogOperator = getDialogIfExists("Warning", 3000);
+		if (dialogOperator != null) {
+			dialogOperator.close();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public JDialogOperator getDialogIfExists(String title, int secondsToWait){
+		DialogWaiter waiter = new DialogWaiter();
+		waiter.getTimeouts().setTimeout("DialogWaiter.WaitDialogTimeout", secondsToWait * 1000);
+		JDialogOperator dialog;
+		try{
+			waiter.waitDialog(new RunnerComponentChooser(title));
+			dialog = new JDialogOperator(new RunnerComponentChooser(title));
+		}catch (Exception e) {
+			return null;
+		}
+		return dialog;
+	}
+	
+	public boolean setScenarioFilesReadable(final String scenarioName, final boolean readable) throws Exception {
+		List<File> scenarioFiles = getScenarioFiles(scenarioName);
+		for (File scenarioFile : scenarioFiles) {
+			System.out.println("Setting scenario file " + scenarioFile + " permissions");
+			if (!scenarioFile.exists()) {
+				System.out.println("Scenario file " + scenarioFile + " is not exist");
+				return false;
+			}
+			if (!readable) {
+				if (!scenarioFile.setReadOnly()) {
+					System.out.println("Failed to set file to read only");
+					return false;
+				}
+			} else {
+				System.out.println("Unsupported operation");
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public List<File> getScenarioFiles(String scenarioName) throws Exception {
+		// TODO: Can be replaced with scenario.getScenarioFiles() call in the
+		// handler side
+		List<File> scenarioFileList = new ArrayList<File>();
+		final String testsClassFolder = JSystemProperties.getInstance().getPreference(FrameworkOptions.TESTS_CLASS_FOLDER);
+		scenarioFileList.add(new File(testsClassFolder + File.separator + "scenarios", scenarioName + ".xml"));
+		scenarioFileList.add(new File(testsClassFolder + File.separator + "scenarios", scenarioName + ".properties"));
+		return scenarioFileList;
+	}
+
+	@Override
+	public void startTest(jsystem.framework.report.TestInfo testInfo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void saveScenarioAs(String newScenarioName) {
+		JFileChooserOperator jFileChooserOperator = getMenuBar().getFileMenu().saveScenarioAs();
+		jFileChooserOperator.chooseFile(newScenarioName);
 	}
 
 }

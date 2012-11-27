@@ -18,14 +18,12 @@ public class TestsTreeController extends AbstractPageObject{
 		return new TestsTreeTab(jTabbedPaneOperator);
 	}
 	
-	
-	public TestsInfoTab getTestsInfoTab() {
-		return new TestsInfoTab(jTabbedPaneOperator);
+	public ReporterTab getReporterTab() {
+		return new ReporterTab(jTabbedPaneOperator);
 	}
 	
-	public static void showTab(int index) {
-		jTabbedPaneOperator.selectPage(index);
+	public TestInfoTab getTestInfoTab() {
+		return new TestInfoTab(jTabbedPaneOperator);
 	}
-	
-	
+		
 }

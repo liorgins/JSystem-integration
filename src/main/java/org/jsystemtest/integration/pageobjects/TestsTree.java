@@ -8,6 +8,7 @@ import jsystem.utils.StringUtils;
 
 import org.jsystemtest.integration.TestType;
 import org.netbeans.jemmy.operators.JSplitPaneOperator;
+import org.netbeans.jemmy.operators.JTabbedPaneOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
 
 
@@ -15,8 +16,8 @@ public class TestsTree extends AbstractPageObject {
 
 	private JTreeOperator testsTreeOperator;
 
-	public TestsTree(JSplitPaneOperator testsTabOperator) {
-		testsTreeOperator = new JTreeOperator(testsTabOperator);
+	public TestsTree(JTabbedPaneOperator testsTreeTab) {
+		testsTreeOperator = new JTreeOperator(testsTreeTab);
 	}
 
 	public int selectTestByRow(int row) {
@@ -57,8 +58,6 @@ public class TestsTree extends AbstractPageObject {
 		return 0;
 	}
 	
-	
-
 	
 	public void selectPathByNodeAndParentNode(String node, String parentNode) throws Exception {
 		TreePath treePath = getTreePath(node, parentNode);

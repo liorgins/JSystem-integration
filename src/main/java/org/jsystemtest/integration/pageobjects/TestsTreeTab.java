@@ -3,6 +3,7 @@ package org.jsystemtest.integration.pageobjects;
 import org.jsystemtest.integration.TooltipChooser;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
+import org.netbeans.jemmy.operators.JEditorPaneOperator;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
 
@@ -34,12 +35,13 @@ public class TestsTreeTab extends AbstractPageObject {
 		}
 	}
 	
-	public void search(final String textToSearch) throws Exception {
+	public int search(final String textToSearch) throws Exception {
 		testsTreeTab.selectPage(0);
 		JComboBoxOperator filter = new JComboBoxOperator(testsTreeTab, new TooltipChooser(jmap.getFilterToolTip()));
 		filter.addItem(textToSearch);
 		filter.selectItem(textToSearch);
 		Thread.sleep(1000);
+		return getTestTree().getTreeLeafCount();
 	}
 	
 	public void addTest(String node, String parentNode, int amount) throws Exception {
@@ -47,5 +49,12 @@ public class TestsTreeTab extends AbstractPageObject {
 		getTestTree().selectPathByNodeAndParentNode(node, parentNode);
 		setTestsNumberSpinner(amount);
 		pushAddTestsButton();
+	}
+
+	public String getCurrentBuildingBlockInformation() {
+		testsTreeTab.selectPage(0);
+		JEditorPaneOperator nodeInformation = new JEditorPaneOperator(testsTreeTab, new TooltipChooser(
+				jmap.getBuildingBlockInformationToolTip()));
+		return nodeInformation.getText();
 	}
 }

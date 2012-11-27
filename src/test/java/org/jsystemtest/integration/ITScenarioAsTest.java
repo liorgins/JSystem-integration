@@ -8,8 +8,6 @@ import junit.framework.Assert;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestsTableController;
-import org.jsystemtest.integration.pageobjects.TestsTree;
-import org.jsystemtest.integration.pageobjects.TestsTreeController;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.junit.After;

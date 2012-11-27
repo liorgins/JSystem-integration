@@ -1,8 +1,10 @@
 package org.jsystemtest.integration.pageobjects;
 
+import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
+import org.netbeans.jemmy.operators.JTextAreaOperator;
 
 public class TestInfoTab extends AbstractPageObject {
 
@@ -104,6 +106,26 @@ public class TestInfoTab extends AbstractPageObject {
 			}
 		}
 		return returnValue;
+	}
+	
+	public void setTestUserDocumentation(String documentation) throws Exception {
+		infoTabbedPaneOperator.selectPage(2);
+		JTabbedPaneOperator docTab = new JTabbedPaneOperator(infoTabbedPaneOperator, 0);
+		docTab.selectPage(1);
+
+		JTextAreaOperator textAreaOperator = new JTextAreaOperator(docTab);
+		textAreaOperator.setText(documentation);
+		Thread.sleep(1000);
+		new JButtonOperator(infoTabbedPaneOperator, "Apply").clickMouse();
+	}
+
+	public String getTestUserDocumentationForSelectedBlock() throws Exception {
+		infoTabbedPaneOperator.selectPage(2);
+		JTabbedPaneOperator docTab = new JTabbedPaneOperator(infoTabbedPaneOperator, 0);
+		docTab.selectPage(1);
+
+		JTextAreaOperator textAreaOperator = new JTextAreaOperator(docTab);
+		return textAreaOperator.getText();
 	}
 
 }

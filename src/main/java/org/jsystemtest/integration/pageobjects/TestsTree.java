@@ -2,12 +2,12 @@ package org.jsystemtest.integration.pageobjects;
 
 import java.util.Random;
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import jsystem.utils.StringUtils;
 
 import org.jsystemtest.integration.TestType;
-import org.netbeans.jemmy.operators.JSplitPaneOperator;
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
 
@@ -148,5 +148,10 @@ public class TestsTree extends AbstractPageObject {
 			throw new Exception("Path not found node: " + node + ", parrent: " + parentNode);
 		}
 		return foundPath;
+	}
+	
+	public int getTreeLeafCount() {
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode) testsTreeOperator.getModel().getRoot();
+		return root.getLeafCount();
 	}
 }

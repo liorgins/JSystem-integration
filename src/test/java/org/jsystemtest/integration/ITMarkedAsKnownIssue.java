@@ -40,9 +40,9 @@ public class ITMarkedAsKnownIssue {
 		app.clearScenario(rootScenario);
 
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
-		testsTreeTab.addTest("reportSuccess", "TestsExamples", 2);
-		testsTreeTab.addTest("reportWarning", "TestsExamples", 2);
-		testsTreeTab.addTest("reportFailure", "TestsExamples", 2);
+		testsTreeTab.addTest("reportSuccess", "Example", 2);
+		testsTreeTab.addTest("reportWarning", "Example", 2);
+		testsTreeTab.addTest("reportFailure", "Example", 2);
 
 		app.getMenuBar().getFileMenu().saveScenario();
 	}

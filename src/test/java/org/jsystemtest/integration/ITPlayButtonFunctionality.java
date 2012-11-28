@@ -34,7 +34,7 @@ public class ITPlayButtonFunctionality {
 	public void checkPlayButtonEnabledDisabled() throws Exception{
 		
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
-		testsTreeTab.getTestTree().selectPathByNodeAndParentNode("reportSuccess", "TestsExamples");
+		testsTreeTab.getTestTree().selectPathByNodeAndParentNode("reportSuccess", "Example");
 		testsTreeTab.setTestsNumberSpinner(5);
 		testsTreeTab.pushAddTestsButton();
 	

@@ -110,6 +110,16 @@ public class Example extends SystemTestCase4 {
 	public void testWithParameterProvider() {
 
 	}
+	
+	/**
+	 * test with javadoc
+	 */
+	@Test
+	@TestProperties(name = "Test with javadoc")
+	public void testWithJavadoc() {
+
+	}
+
 
 	public File getFile() {
 		return file;

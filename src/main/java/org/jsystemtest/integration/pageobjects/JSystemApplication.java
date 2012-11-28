@@ -33,6 +33,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	private JFrameOperator app;
 	private boolean runEnd = false;
 	public static final String CURRENT_WORKING_DIRECTORY = System.getProperty("user.dir");
+	public static final String LOCAL_JSYSTEM_LOG_FILE_NAME = "jsystem0.log";
 	public static final String DEFAULT_SUT_FILE = "default.xml";
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
@@ -56,10 +57,30 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		}
 	}
 
-	public void close() {
-		if (app != null) {
-			app.close();
+	public void exitThroughMenu() throws InterruptedException {
+		getMenuBar().getFileMenu().Exit();
+		
+	}
+	
+	public int closeAndGetErrorLevel() throws InterruptedException {
+		File logFile = new File(CURRENT_WORKING_DIRECTORY, LOCAL_JSYSTEM_LOG_FILE_NAME);
+		long mark = 0;
+		if (logFile.exists()) {
+			mark = logFile.length();
 		}
+		
+		exitThroughMenu();
+		
+		int errorLevel = -1;
+		if (logFile.exists()) {
+			String newText = JSystemTestUtils.readFromPosition(logFile, mark);
+			int pos = newText.indexOf("System exit") + ("System exit".length());
+			String errorLevelString = newText.substring(pos);
+			errorLevel = Integer.parseInt(errorLevelString);
+		}
+		
+		System.out.println("System exit with error level: " + errorLevel);
+		return errorLevel;	
 	}
 	
 	

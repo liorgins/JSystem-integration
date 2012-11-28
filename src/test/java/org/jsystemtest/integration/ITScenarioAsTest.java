@@ -45,7 +45,7 @@ public class ITScenarioAsTest {
 	
 		app.createScenario(sonScenario);
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
-		testsTreeTab.addTest("reportSuccess", "TestsExamples", 3);
+		testsTreeTab.addTest("reportSuccess", "Example", 3);
 		
 		app.createScenario(parentScenario);
 		testsTreeTab.addTest(sonScenario,  TestType.SCENARIO.getType() , 1);
@@ -59,7 +59,7 @@ public class ITScenarioAsTest {
 	public void checkNegativeScenarioAsTest() throws Exception {
 		
 		app.openScenario(sonScenario);
-		app.getTestsTreeController().getTestsTreeTab().addTest("reportFailure", "TestsExamples", 1);
+		app.getTestsTreeController().getTestsTreeTab().addTest("reportFailure", "Example", 1);
 		app.getToolBar().pushSaveScenarioButton();
 		
 		app.openScenario(parentScenario);
@@ -101,7 +101,7 @@ public class ITScenarioAsTest {
 		int initialSonCount = scenarioTree.getScenarioDirectChildrenCount(1);
 
 		scenarioTree.selectTestByRow(1);
-		app.getTestsTreeController().getTestsTreeTab().addTest("reportSuccess", "TestsExamples", 1);
+		app.getTestsTreeController().getTestsTreeTab().addTest("reportSuccess", "Example", 1);
 		app.getToolBar().pushSaveScenarioButton();
 		
 		int newParentCount = scenarioTree.getScenarioDirectChildrenCount(0);
@@ -136,7 +136,7 @@ public class ITScenarioAsTest {
 		playAnalyze(numOfSonTests);
 	
 		app.openScenario(parentScenario);
-		app.getTestsTreeController().getTestsTreeTab().addTest("reportSuccess", "TestsExamples", 1);
+		app.getTestsTreeController().getTestsTreeTab().addTest("reportSuccess", "Example", 1);
 		app.getToolBar().pushSaveScenarioButton();
 		int numOfParentTests = scenarioTree.getScenarioDirectChildrenCount(0);
 		numOfSonTests = scenarioTree.getScenarioDirectChildrenCount(1);

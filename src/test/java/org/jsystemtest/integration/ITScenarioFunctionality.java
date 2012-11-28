@@ -39,7 +39,7 @@ public class ITScenarioFunctionality {
 		
 		app.createScenario("checkPreventAddingScenarioToItselfScnario");
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
-		testsTreeTab.addTest("reportSuccess", "TestsExamples", 3);
+		testsTreeTab.addTest("reportSuccess", "Example", 3);
 		
 		testsTreeTab.addTest("checkPreventAddingScenarioToItselfScnario", TestType.SCENARIO.getType(), 1);
 		
@@ -68,14 +68,14 @@ public class ITScenarioFunctionality {
 		final String subScenarioName = "sonScenario";
 		app.createScenario(subScenarioName);
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
-		testsTreeTab.addTest("reportSuccess", "TestsExamples", 3);
+		testsTreeTab.addTest("reportSuccess", "Example", 3);
 		app.getToolBar().pushSaveScenarioButton();
 
 		final String originalScenarioName = "saveAsScenarioOriginal";
 		app.createScenario(originalScenarioName);
 		testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
-		testsTreeTab.addTest("reportSuccess", "TestsExamples", 3);
-		testsTreeTab.addTest("testWithParameters", "TestsExamples", 1);
+		testsTreeTab.addTest("reportSuccess", "Example", 3);
+		testsTreeTab.addTest("testWithParameters", "Example", 1);
 		testsTreeTab.addTest(subScenarioName, TestType.SCENARIO.getType(), 1);
 
 		final String expectedOriginalValue = "original";

@@ -1,6 +1,8 @@
 package org.jsystemtest.integration.pageobjects.menus;
 
 import org.jsystemtest.integration.pageobjects.AbstractPageObject;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
 import org.netbeans.jemmy.operators.JMenuOperator;
@@ -48,8 +50,11 @@ public class FileMenu extends AbstractPageObject {
 		return new JFileChooserOperator();
 	}
 	
-	public void Exit() {
+	public void Exit() throws InterruptedException {
 		jMenuOperator.pushMenuNoBlock(FILE + "|" + jmap.getExitButton());
+		Thread.sleep(200);
+		JDialogOperator dialog = new JDialogOperator("Exit Confirmation");
+		new JButtonOperator(dialog, "Yes").clickMouse();
 	}
 
 }

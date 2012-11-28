@@ -1,16 +1,17 @@
 package org.jsystemtest.integration;
 
 import jsystem.framework.FrameworkOptions;
-import jsystem.framework.analyzer.AnalyzerException;
 import junit.framework.Assert;
 
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
+import org.jsystemtest.integration.utils.JSystemTestUtils;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ITTestTreeFunctionality {
-	
+
 	private static JSystemApplication app;
 
 	@BeforeClass
@@ -22,16 +23,8 @@ public class ITTestTreeFunctionality {
 		app.launch();
 
 	}
-	
+
 	/**
-	 * Tests that documentation of test and scenario is shown correctly in the
-	 * information view. <br>
-	 * <li>Select test in the test tree</li> <li>
-	 * Assert that the information view shows the test documentation.</li>
-	 * 
-	 * <li>Create new scenario</li> <li>
-	 * Add user documentation</li> <li>Select scenario in the tests tree</li>
-	 * <li>Assert that the information view shows the scenario documentation.</li>
 	 * 
 	 * @throws Exception
 	 */
@@ -42,25 +35,23 @@ public class ITTestTreeFunctionality {
 	}
 
 	/**
-	 * Test user documentation
+	 * 
 	 * 
 	 * @throws Exception
-	 * @throws AnalyzerException
 	 */
-	private void testTestDocumentation() throws Exception, AnalyzerException {
+	private void testTestDocumentation() throws Exception {
+
+		final String expectedTestDocumentation = "test     with javadoc";
+
 		System.out.println("Testing test documentation");
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
-		testsTreeTab.getTestTree().selectPathByNodeAndParentNode("", "");
+		testsTreeTab.getTestTree().selectPathByNodeAndParentNode("testWithJavadoc", "Example");
 		String bbInfo = testsTreeTab.getCurrentBuildingBlockInformation();
-
-		// This is not exactly the text of the documentation. We are adding
-		// spaces because the HTML edit component changes the string a little
-		// bit.
 		bbInfo = bbInfo.replaceAll("\n", "");
-		final String expectedTestDocumentation = "This     is the documentation of test testWithDocumentations  ";
-		Assert.assertEquals(expectedTestDocumentation, bbInfo);
+		boolean contains = bbInfo.contains(expectedTestDocumentation);
+		Assert.assertEquals(true, contains);
 	}
-	
+
 	/**
 	 * Tests scenario user documentation
 	 */
@@ -68,24 +59,23 @@ public class ITTestTreeFunctionality {
 		System.out.println("Testing scenario documentation");
 		final String subScenarioName = "scenarioWithUserDoc";
 		app.createScenario(subScenarioName);
-		app.getTestsTreeController().getTestsTreeTab().addTest("reportSuccess", "TestsExamples", 3);
+		app.getTestsTreeController().getTestsTreeTab().addTest("reportSuccess", "Example", 3);
 		final String userDoc = "scenario expected documentation";
 		app.getTestTableController().getScenarioTree().selectTestByRow(0);
 		app.getTestsTreeController().getTestInfoTab().setTestUserDocumentation(userDoc);
 		app.getToolBar().pushSaveScenarioButton();
-		
+
+		final String expectedScenarioUserDoc = "scenario     expected documentation";
+
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
-		testsTreeTab.getTestTree().selectPathByNodeAndParentNode("", "");
+		testsTreeTab.getTestTree().selectPathByNodeAndParentNode(subScenarioName, "scenarios");
 		String bbInfo = testsTreeTab.getCurrentBuildingBlockInformation();
 
-		// This is not exactly the text of the documentation. We are adding
-		// spaces because the HTML edit component changes the string a little
-		// bit.
 		bbInfo = bbInfo.replaceAll("\n", "");
-		final String expectedTestDocumentation = "scenario     expected documentation  ";
-		Assert.assertEquals(expectedTestDocumentation, bbInfo);
+		boolean contains = bbInfo.contains(expectedScenarioUserDoc);
+		Assert.assertEquals(true, contains);
 	}
-	
+
 	/**
 	 * Tests that the tests tree search works and supports OR, AND operators.
 	 * 
@@ -95,7 +85,7 @@ public class ITTestTreeFunctionality {
 	public void testSearchBox() throws Exception {
 		System.out.println("Testing tests tree search box");
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
-		
+
 		int searchCount = testsTreeTab.search("report");
 		Assert.assertEquals(5, searchCount);
 
@@ -111,5 +101,15 @@ public class ITTestTreeFunctionality {
 		testsTreeTab.search("");
 	}
 
+	@After
+	public void cleanTest() {
+		System.out.println("@After");
+
+		System.out.println("Cleanning generated scenarios");
+		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
+
+		System.out.println("Cleanning generated logs and properties files");
+		JSystemTestUtils.cleanPropertiesAndLogs(JSystemApplication.CURRENT_WORKING_DIRECTORY);
+	}
 
 }

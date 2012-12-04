@@ -43,21 +43,21 @@ public class ITScenarioAsTest extends AbstractJSystemIT{
 	 */
 	@Test
 	public void checkNegativeScenarioAsTest() throws Exception {
-//		classFixture();
-//		app.openScenario(sonScenario);
-//		app.getTestsTreeController().getTestsTreeTab().addTest("reportFailure", "Example", 1);
-//		app.getToolBar().pushSaveScenarioButton();
-//		
-//		app.openScenario(parentScenario);
-//		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
-//		scenarioTree.markScenarioAsTest(1,true);
-//		scenarioTree.markAsNegative(1, true);
-//		
-//		app.getToolBar().pushPlayButton();
-//		
-//		Assert.assertEquals(0, app.waitForRunEnd());
-//		int testpass = XmlReportHandler.getInstance().getNumberOfTestsPass();
-//		Assert.assertEquals("TESTS RUN - PASS: ", 1, testpass);
+		classFixture();
+		app.openScenario(sonScenario);
+		app.getTestsTreeController().getTestsTreeTab().addTest("reportFailure", "Example", 1);
+		app.getToolBar().pushSaveScenarioButton();
+		
+		app.openScenario(parentScenario);
+		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
+		scenarioTree.markScenarioAsTest(1,true);
+		scenarioTree.markAsNegative(1, true);
+		
+		app.getToolBar().pushPlayButton();
+		
+		Assert.assertEquals(0, app.waitForRunEnd());
+		int testpass = XmlReportHandler.getInstance().getNumberOfTestsPass();
+		Assert.assertEquals("TESTS RUN - PASS: ", 1, testpass);
 	}
 	
 	/**

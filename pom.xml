@@ -65,12 +65,12 @@
 		<dependency>
 			<groupId>org.jsystemtest</groupId>
 			<artifactId>jsystemApp</artifactId>
-			<version>6.0.00-rc-2</version>
+			<version>6.0.00-rc-3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jsystemtest</groupId>
 			<artifactId>jsystemAnt</artifactId>
-			<version>6.0.00-rc-2</version>
+			<version>6.0.00-rc-3-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

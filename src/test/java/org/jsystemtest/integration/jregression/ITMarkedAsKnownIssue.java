@@ -50,9 +50,10 @@ public class ITMarkedAsKnownIssue extends AbstractJSystemIT {
 		app.getToolBar().pushPlayButton();
 
 		Assert.assertEquals(0, app.waitForRunEnd());
-		
+		int testPass = XmlReportHandler.getInstance().getNumberOfTestsPass();
 		int testFail = XmlReportHandler.getInstance().getNumberOfTestsFail();
 		int testWarn = XmlReportHandler.getInstance().getNumberOfTestsWarning();
+		Assert.assertEquals("TESTS RUN - Expected: 2 ,  Actual: " +  testPass, 2, testPass);
 		Assert.assertEquals("TESTS RUN - Expected: 1 ,  Actual: " +  testFail, 1, testFail);
 		Assert.assertEquals("TESTS RUN - Expected: 3 ,  Actual: " +  testWarn, 3, testWarn);
 	}

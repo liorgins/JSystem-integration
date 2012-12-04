@@ -1,11 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jsystemtest</groupId>
-  <artifactId>jsystem-integration-test</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-  <build>
-  	<plugins>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jsystemtest</groupId>
+	<artifactId>jsystem-integration-test</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<build>
+		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
@@ -30,31 +31,47 @@
 				</configuration>
 			</plugin>
 		</plugins>
-  
-  
-  </build>
-  
-  <dependencies>
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  		<version>4.10</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.netbeans</groupId>
-  		<artifactId>jemmy</artifactId>
-  		<version>2.2.7.5</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.jsystemtest</groupId>
-  		<artifactId>jsystemApp</artifactId>
-  		<version>6.0.00-rc-2</version>
-  	</dependency>
-  	  	<dependency>
-  		<groupId>org.jsystemtest</groupId>
-  		<artifactId>jsystemAnt</artifactId>
-  		<version>6.0.00-rc-2</version>
-  	</dependency>
-  	
-  </dependencies>
+
+
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.1.2.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>3.1.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.gatein.common</groupId>
+			<artifactId>common-logging</artifactId>
+			<version>2.0.4-GA</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.netbeans</groupId>
+			<artifactId>jemmy</artifactId>
+			<version>2.2.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jsystemtest</groupId>
+			<artifactId>jsystemApp</artifactId>
+			<version>6.0.00-rc-2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jsystemtest</groupId>
+			<artifactId>jsystemAnt</artifactId>
+			<version>6.0.00-rc-2</version>
+		</dependency>
+
+	</dependencies>
 </project>

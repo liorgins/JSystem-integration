@@ -24,7 +24,7 @@ public class MainToolBar extends AbstractPageObject{
 			waitEnableAndClick(jButtonOperator);
 		}
 
-		public void pushAsSaveScenarioButton() {
+		public void pushSaveAsScenarioButton() {
 			new JButtonOperator(app, new TooltipChooser(jmap.getCopyScenarioButton())).push();
 		}
 
@@ -36,8 +36,9 @@ public class MainToolBar extends AbstractPageObject{
 			new JButtonOperator(app, new TooltipChooser(jmap.getSaveFailedSequences())).push();
 		}
 
-		public void pushRefreshButton() {
+		public void pushRefreshButton() throws InterruptedException {
 			new JButtonOperator(app, new TooltipChooser(jmap.getRefreshButton())).push();
+			Thread.sleep(2000);
 		}
 
 		// inner tool bar operations

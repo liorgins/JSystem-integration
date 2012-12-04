@@ -1,28 +1,12 @@
-package org.jsystemtest.integration;
+package org.jsystemtest.integration.jregression;
 
-import jsystem.framework.FrameworkOptions;
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.pageobjects.JSystemApplication;
+import org.jsystemtest.integration.AbstractJSystemIT;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
-import org.jsystemtest.integration.utils.JSystemTestUtils;
-import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ITTestTreeFunctionality {
-
-	private static JSystemApplication app;
-
-	@BeforeClass
-	public static void prepareEnv() throws InterruptedException {
-		app = new JSystemApplication();
-		app.setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.DEFAULT_SUT_FILE);
-		app.setJSystemOptionalProperties(new PropertyPair(FrameworkOptions.AUTO_DELETE_NO_CONFIRMATION, JSystemApplication.TRUE),
-				new PropertyPair(FrameworkOptions.AUTO_SAVE_NO_CONFIRMATION, JSystemApplication.TRUE));
-		app.launch();
-
-	}
+public class ITTestTreeFunctionality extends AbstractJSystemIT {
 
 	/**
 	 * 
@@ -90,26 +74,14 @@ public class ITTestTreeFunctionality {
 		Assert.assertEquals(5, searchCount);
 
 		searchCount = testsTreeTab.search("with");
-		Assert.assertEquals(3, searchCount);
+		Assert.assertEquals(5, searchCount);
 
 		searchCount = testsTreeTab.search("with AND report");
 		Assert.assertEquals(1, searchCount);
 
 		searchCount = testsTreeTab.search("with OR report OR default");
-		Assert.assertEquals(8, searchCount);
+		Assert.assertEquals(10, searchCount);
 
 		testsTreeTab.search("");
 	}
-
-	@After
-	public void cleanTest() {
-		System.out.println("@After");
-
-		System.out.println("Cleanning generated scenarios");
-		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
-
-		System.out.println("Cleanning generated logs and properties files");
-		JSystemTestUtils.cleanPropertiesAndLogs(JSystemApplication.CURRENT_WORKING_DIRECTORY);
-	}
-
 }

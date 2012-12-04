@@ -1,33 +1,16 @@
-package org.jsystemtest.integration;
+package org.jsystemtest.integration.jregression;
 
-import jsystem.framework.FrameworkOptions;
 import jsystem.framework.TestProperties;
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.pageobjects.JSystemApplication;
+import org.jsystemtest.integration.AbstractJSystemIT;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestInfoTab;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
-import org.jsystemtest.integration.utils.JSystemTestUtils;
-import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ITScenariosUserDocumentationTests {
+public class ITScenariosUserDocumentationTests extends AbstractJSystemIT {
 
-private static JSystemApplication app;
-	
-	@BeforeClass
-	public static void prepareEnv() throws InterruptedException {
-		app = new JSystemApplication();
-		app.setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.DEFAULT_SUT_FILE);
-		app.setJSystemOptionalProperties(new PropertyPair(FrameworkOptions.AUTO_DELETE_NO_CONFIRMATION, JSystemApplication.TRUE),
-										 new PropertyPair(FrameworkOptions.AUTO_SAVE_NO_CONFIRMATION, JSystemApplication.TRUE),
-										 new PropertyPair(FrameworkOptions.SCENARIO_AS_TEST, JSystemApplication.TRUE));
-		app.launch();
-
-	}
-	
 	/**
 	 * <b>Tests user documentation</b><br>
 	 * <li>Create sub scenario</li><br>
@@ -44,16 +27,16 @@ private static JSystemApplication app;
 	@Test
 	@TestProperties(paramsInclude = { "" })
 	public void scenarioUserDocSanity() throws Exception {
-		
-		ScenarioTree scenarioTree  = app.getTestTableController().getScenarioTree();
+
+		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
 		TestInfoTab testInfoTab = app.getTestsTreeController().getTestInfoTab();
-		
+
 		System.out.println("Creating sub scenario");
 		final String subScenarioName = "docSanitySubScenario";
 		app.createScenario(subScenarioName);
 		testsTreeTab.addTest("reportSuccess", "Example", 3);
-		
+
 		final String sonOriginalExpectedDoc = "Son original expected documantation";
 		scenarioTree.selectTestByRow(0);
 		testInfoTab.setTestUserDocumentation(sonOriginalExpectedDoc);
@@ -63,7 +46,7 @@ private static JSystemApplication app;
 		final String rootScenarioName = "docSanityRootScenario";
 		app.createScenario(rootScenarioName);
 		scenarioTree.selectTestByRow(0);
-		
+
 		testsTreeTab.addTest(subScenarioName, "scenarios", 3);
 		scenarioTree.markScenarioAsTest(1, true);
 
@@ -107,18 +90,5 @@ private static JSystemApplication app;
 		scenarioTree.selectTestByRow(6);
 		actualSubScenarioDoc = testInfoTab.getTestUserDocumentationForSelectedBlock();
 		Assert.assertEquals(expectedSonUserDocPrefix + "3", actualSubScenarioDoc);
-	}
-
-	
-	
-	@After
-	public void cleanTest() {
-		System.out.println("@After");
-
-		System.out.println("Cleanning generated scenarios");
-		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
-
-		System.out.println("Cleanning generated logs and properties files");
-		JSystemTestUtils.cleanPropertiesAndLogs(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}
 }

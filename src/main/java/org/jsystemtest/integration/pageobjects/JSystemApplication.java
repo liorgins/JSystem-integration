@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import jsystem.framework.FrameworkOptions;
 import jsystem.framework.JSystemProperties;
 import jsystem.framework.report.ExtendTestListener;
@@ -27,7 +30,6 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
-
 public class JSystemApplication extends AbstractPageObject implements ExtendTestListener {
 
 	private JFrameOperator app;
@@ -37,74 +39,75 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	public static final String DEFAULT_SUT_FILE = "default.xml";
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
+	private boolean isRunning = false;
 
-	
-	public void launch() {
-		try {
+	public boolean isRunninig() {
+		return isRunning;
+	}
+
+	@PostConstruct
+	public void postConstuct() {
+		System.out.println("***************************************JSYSTEMAPPLICATION: In POST CONSTRUCT");
+		setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.DEFAULT_SUT_FILE);
+		setJSystemOptionalProperties(new PropertyPair(FrameworkOptions.AUTO_DELETE_NO_CONFIRMATION, JSystemApplication.TRUE),
+				new PropertyPair(FrameworkOptions.AUTO_SAVE_NO_CONFIRMATION, JSystemApplication.TRUE));
+	}
+
+	@PreDestroy
+	public void preDestroy() {
+		System.out.println("***************************************JSYSTEMAPPLICATION: In PRE DESTROY");
 		
-			new ClassReference(TestRunner.class.getName()).startApplication();
-	
-			app = new JFrameOperator(jmap.getJSyetemMain());
-			Assert.assertNotNull("JSystem frame not captured", app);
-			
-			ListenerstManager.getInstance().addListener(this);
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		System.out.println("Cleanning generated scenarios");
+		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
+
+		System.out.println("Cleanning generated logs and properties files");
+		JSystemTestUtils.cleanPropertiesAndLogs(JSystemApplication.CURRENT_WORKING_DIRECTORY);
+	}
+
+	public void launch() {
+		if (!isRunning) {
+			try {
+
+				new ClassReference(TestRunner.class.getName()).startApplication();
+				isRunning = true;
+				app = new JFrameOperator(jmap.getJSyetemMain());
+				Assert.assertNotNull("JSystem frame not captured", app);
+				ListenerstManager.getInstance().addListener(this);
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public void exitThroughMenu() throws InterruptedException {
 		getMenuBar().getFileMenu().Exit();
-		
+
 	}
-	
-	public int closeAndGetErrorLevel() throws InterruptedException {
-		File logFile = new File(CURRENT_WORKING_DIRECTORY, LOCAL_JSYSTEM_LOG_FILE_NAME);
-		long mark = 0;
-		if (logFile.exists()) {
-			mark = logFile.length();
-		}
-		
-		exitThroughMenu();
-		
-		int errorLevel = -1;
-		if (logFile.exists()) {
-			String newText = JSystemTestUtils.readFromPosition(logFile, mark);
-			int pos = newText.indexOf("System exit") + ("System exit".length());
-			String errorLevelString = newText.substring(pos);
-			errorLevel = Integer.parseInt(errorLevelString);
-		}
-		
-		System.out.println("System exit with error level: " + errorLevel);
-		return errorLevel;	
-	}
-	
-	
+
 	/**
-	 * 1. get instance of JSystem properties
-	 * 2. search for valid tests classes directory in the given path
-	 * 3. set the relevant properties 
+	 * 1. get instance of JSystem properties 2. search for valid tests classes
+	 * directory in the given path 3. set the relevant properties
 	 * 
-	 * @param testsClassesPath  path to the classes directory or parent of that directory 
+	 * @param testsClassesPath
+	 *            path to the classes directory or parent of that directory
 	 * @param sutFileName
 	 */
 	public void setJSystemStandartProperties(String testsClassesPath, String sutFileName) {
-		
+
 		JSystemProperties jSystemProperties = JSystemProperties.getInstance();
-		
+
 		String testDir = JSystemTestUtils.findValidClassDirectory(testsClassesPath);
 		jSystemProperties.setPreference(FrameworkOptions.TESTS_CLASS_FOLDER, testDir);
 		jSystemProperties.setPreference(FrameworkOptions.USED_SUT_FILE, sutFileName);
 	}
-	
-	
-	public void setJSystemOptionalProperties(PropertyPair...props) {
+
+	public void setJSystemOptionalProperties(PropertyPair... props) {
 		JSystemProperties jSystemProperties = JSystemProperties.getInstance();
-		
+
 		for (PropertyPair propertyPair : props) {
 			jSystemProperties.setPreference(propertyPair.getkey(), propertyPair.getValue());
 		}
@@ -160,7 +163,6 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 
 	}
 
-
 	@Override
 	public void endRun() {
 		System.out.println("endRun Event has fired");
@@ -192,7 +194,8 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	}
 
 	public int waitForRunEnd() {
-		while (!isRunEnd()) {}
+		while (!isRunEnd()) {
+		}
 		runEnd = false;
 		return 0;
 	}
@@ -200,7 +203,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	public int waitForRunEnd(long milliseconds) {
 		long entry = new Date().getTime();
 		while (!isRunEnd()) {
-			if(new Date().getTime() - entry > milliseconds) {
+			if (new Date().getTime() - entry > milliseconds) {
 				System.out.println("waitForRunEnd has timed out");
 				return -1;
 			}
@@ -208,7 +211,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		runEnd = false;
 		return 0;
 	}
-	
+
 	public boolean isRunEnd() {
 		return runEnd;
 	}
@@ -217,13 +220,14 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		this.runEnd = runEnd;
 	}
 
-	public void openScenario(String rootScenario) {
+	public void openScenario(String rootScenario) throws InterruptedException {
 		File scenariosFile = new File(JSystemProperties.getInstance().getPreference(FrameworkOptions.TESTS_CLASS_FOLDER), "scenarios");
 		JFileChooserOperator openScenarioFileChooser = getMenuBar().getFileMenu().openSceario();
 		openScenarioFileChooser.setCurrentDirectory(scenariosFile);
 		openScenarioFileChooser.chooseFile(rootScenario);
+		Thread.sleep(750);
 	}
-	
+
 	public void clearScenario(String rootScenario) throws InterruptedException {
 		getTestTableController().getScenarioTree().selectTestByRow(0);
 		Thread.sleep(500);
@@ -233,7 +237,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		new JButtonOperator(jDialogOperator, "OK").clickMouse();
 		openScenario(rootScenario);
 	}
-	
+
 	public void createScenario(String rootScenario) throws Exception {
 		File scenariosFile = new File(JSystemProperties.getInstance().getPreference(FrameworkOptions.TESTS_CLASS_FOLDER), "scenarios");
 		JFileChooserOperator newScenarioFileChooser = getMenuBar().getFileMenu().newSceario();
@@ -241,7 +245,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		newScenarioFileChooser.chooseFile(rootScenario);
 		getToolBar().pushSaveScenarioButton();
 	}
-	
+
 	public boolean checkIfWarningDialogOpenedAndCloseIt() {
 		JDialogOperator dialogOperator = getDialogIfExists("Warning", 3000);
 		if (dialogOperator != null) {
@@ -251,20 +255,20 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 			return false;
 		}
 	}
-	
-	public JDialogOperator getDialogIfExists(String title, int secondsToWait){
+
+	public JDialogOperator getDialogIfExists(String title, int secondsToWait) {
 		DialogWaiter waiter = new DialogWaiter();
 		waiter.getTimeouts().setTimeout("DialogWaiter.WaitDialogTimeout", secondsToWait * 1000);
 		JDialogOperator dialog;
-		try{
+		try {
 			waiter.waitDialog(new RunnerComponentChooser(title));
 			dialog = new JDialogOperator(new RunnerComponentChooser(title));
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 		return dialog;
 	}
-	
+
 	public boolean setScenarioFilesReadable(final String scenarioName, final boolean readable) throws Exception {
 		List<File> scenarioFiles = getScenarioFiles(scenarioName);
 		for (File scenarioFile : scenarioFiles) {
@@ -285,7 +289,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		}
 		return true;
 	}
-	
+
 	public List<File> getScenarioFiles(String scenarioName) throws Exception {
 		// TODO: Can be replaced with scenario.getScenarioFiles() call in the
 		// handler side
@@ -299,7 +303,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	@Override
 	public void startTest(jsystem.framework.report.TestInfo testInfo) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void saveScenarioAs(String newScenarioName) {

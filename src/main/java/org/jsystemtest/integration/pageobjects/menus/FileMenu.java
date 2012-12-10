@@ -50,9 +50,12 @@ public class FileMenu extends AbstractPageObject {
 		return new JFileChooserOperator();
 	}
 	
-	public void Exit() throws InterruptedException {
+	public void Exit()  {
 		jMenuOperator.pushMenuNoBlock(FILE + "|" + jmap.getExitButton());
-		Thread.sleep(200);
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+		}
 		JDialogOperator dialog = new JDialogOperator("Exit Confirmation");
 		new JButtonOperator(dialog, "Yes").clickMouse();
 	}

@@ -20,6 +20,8 @@ import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 
+import org.jsystemtest.integration.ExitException;
+import org.jsystemtest.integration.NoExitSecurityManager;
 import org.jsystemtest.integration.PropertyPair;
 import org.jsystemtest.integration.RunnerComponentChooser;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
@@ -40,6 +42,10 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
 	private boolean isRunning = false;
+
+	public void setRunning(boolean isRunning) {
+		this.isRunning = isRunning;
+	}
 
 	public boolean isRunninig() {
 		return isRunning;
@@ -86,9 +92,27 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		}
 	}
 
-	public void exitThroughMenu() throws InterruptedException {
+	public void exitThroughMenu()  {
 		getMenuBar().getFileMenu().Exit();
 
+	}
+	
+	public int exitVirtualyhroughMenu() {
+		System.setSecurityManager(new NoExitSecurityManager());
+		int errorLevel = -1;
+		try {
+			System.out.println("*************** performing exit");
+			exitThroughMenu();
+		} catch (SecurityException e) {
+			System.out.println("SecurityException cought");
+			//TODO extract the status from e!!!
+		} finally {
+			setRunning(false);
+			System.out.println("**************Removing the noExitSecurityManager");
+			System.setSecurityManager(null);
+		}
+		
+		return errorLevel;
 	}
 
 	/**
@@ -196,11 +220,15 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 
 	}
 
-	public int waitForRunEnd() {
+	public void waitForRunEnd() {
 		while (!isRunEnd()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		runEnd = false;
-		return 0;
 	}
 
 	public int waitForRunEnd(long milliseconds) {

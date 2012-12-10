@@ -1,7 +1,12 @@
 package org.jsystemtest.integration;
 
+import jsystem.framework.common.CommonResources;
+import jsystem.framework.report.RunnerListenersManager;
+import jsystem.utils.FileLock;
+
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -18,7 +23,10 @@ public class AbstractJSystemIT {
 	
 	@Before
 	public void setup() throws Exception {
+		
+		System.out.println("@Before from Abstaract Class*****************Try Launch()");
 		app.launch();
+	
 	}
 	
 	@AfterClass
@@ -30,5 +38,10 @@ public class AbstractJSystemIT {
 
 		System.out.println("Cleanning generated logs and properties files");
 		JSystemTestUtils.cleanPropertiesAndLogs(JSystemApplication.CURRENT_WORKING_DIRECTORY);
+	}
+	
+	@After
+	public void afterFromAbstract() {
+		System.out.println("************* @After from abstarct class");
 	}
 }

@@ -4,7 +4,12 @@
 	<groupId>org.jsystemtest</groupId>
 	<artifactId>jsystem-integration-test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
+	<repositories>
+		<repository>
+			<id>Top-Q</id>
+			<url>http://80.74.108.9/content/groups/public/</url>
+		</repository>
+	</repositories>
 	<build>
 		<plugins>
 			<plugin>
@@ -30,6 +35,27 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<id>create-runner</id>
+						<phase>package</phase>
+						<configuration>
+						<finalName>../thirdparty</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/main/assembly/create-env.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 
 
@@ -71,6 +97,12 @@
 			<groupId>org.jsystemtest</groupId>
 			<artifactId>jsystemAnt</artifactId>
 			<version>6.0.00-rc-3-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>ant</groupId>
+			<artifactId>ant-full</artifactId>
+			<version>1.7.0</version>
+			<type>zip</type>
 		</dependency>
 
 	</dependencies>

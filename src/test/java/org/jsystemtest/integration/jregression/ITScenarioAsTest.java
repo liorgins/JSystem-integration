@@ -55,7 +55,7 @@ public class ITScenarioAsTest extends AbstractJSystemIT{
 		
 		app.getToolBar().pushPlayButton();
 		
-		Assert.assertEquals(0, app.waitForRunEnd());
+		app.waitForRunEnd();
 		int testpass = XmlReportHandler.getInstance().getNumberOfTestsPass();
 		Assert.assertEquals("TESTS RUN - PASS: ", 1, testpass);
 	}
@@ -153,7 +153,7 @@ public class ITScenarioAsTest extends AbstractJSystemIT{
 	private void playAnalyze(int expectedTest) throws Exception{
 		app.getToolBar().pushSaveScenarioButton();
 		app.getToolBar().pushPlayButton();
-		Assert.assertEquals(0, app.waitForRunEnd());
+		app.waitForRunEnd();
 		int testExecuted = XmlReportHandler.getInstance().getNumberOfTests();
 		Assert.assertEquals("TESTS RUN - Executed: ", expectedTest, testExecuted);
 	}

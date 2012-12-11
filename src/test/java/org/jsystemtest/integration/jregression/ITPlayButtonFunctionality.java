@@ -3,23 +3,38 @@ package org.jsystemtest.integration.jregression;
 import junit.framework.Assert;
 
 import org.jsystemtest.integration.AbstractJSystemIT;
+import org.junit.Before;
 import org.junit.Test;
 
 
 public class ITPlayButtonFunctionality extends AbstractJSystemIT {
 	
 	/**
-	 * 1. add 5 test to scenario tree and check that 5 test are checked
-	 * 2. check that play button is enabled
-	 * 3. delete the tests 
-	 * 4. check that play button is disabled
+	 * 1. open the default scenario.
+	 * 2. clear it.
+	 * 3. add 5 tests that pass to scenario.
+	 * 
+	 * @throws Exception
+	 */
+	@Before
+	public void fixture() throws Exception {
+		
+		app.openScenario("default");
+		
+		app.clearCurrentRootScenario("default");
+		
+		app.getTestsTreeController().getTestsTreeTab().addTest("reportSuccess", "Example", 5);
+	}
+	
+	/**
+	 * 1. check that play button is enabled
+	 * 2. delete the tests 
+	 * 3. check that play button is disabled
 	 * 
 	 * @throws Exception 
 	 */
 	@Test
 	public void checkPlayButtonEnabledDisabled() throws Exception{
-		
-		app.getTestsTreeController().getTestsTreeTab().addTest("reportSuccess", "Example", 5);
 		
 		Assert.assertEquals(true, app.getToolBar().isPlayButtonEnable());
 

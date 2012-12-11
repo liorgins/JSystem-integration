@@ -4,8 +4,12 @@ import junit.framework.Assert;
 
 import org.jsystemtest.integration.AbstractJSystemIT;
 import org.jsystemtest.integration.TestType;
+import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestsTableController;
+import org.jsystemtest.integration.utils.JSystemTestUtils;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ITNavigateToSubScenario extends AbstractJSystemIT {
@@ -17,7 +21,8 @@ public class ITNavigateToSubScenario extends AbstractJSystemIT {
 	private final String scenario4 = "Scenario4";
 	private final String midScenario = "midSceanrio";
 
-	private void classfixture() throws Exception {
+	@Before
+	public void classfixture() throws Exception {
 		app.createScenario(scenario1);
 		app.createScenario(scenario2);
 		app.createScenario(scenario3);
@@ -41,9 +46,10 @@ public class ITNavigateToSubScenario extends AbstractJSystemIT {
 	 * 
 	 * @throws Exception
 	 */
+	
 	@Test
 	public void moveBetweenCreatedScenarios() throws Exception {
-		classfixture();
+
 		TestsTableController testsTableController = app.getTestTableController();
 		testsTableController.getScenarioTree().selectTestByRow(0);
 		Assert.assertEquals(scenario4, testsTableController.getCurrentScenarioName());
@@ -76,15 +82,19 @@ public class ITNavigateToSubScenario extends AbstractJSystemIT {
 	/**
 	 * 1. to two steps back to scenario 2 and check it's really 2 as expected.
 	 * 2. create a scenario midScenario, and check that scenario3 and scenario4
-	 * can't be navigated to anymore
+	 *    can't be navigated to anymore
 	 * 
 	 * @throws Exception
 	 */
+	
 	@Test
 	public void goToScenario2AndCreateNewScenarioAndCheckThat3and4NoLongerExist() throws Exception {
 
 		TestsTableController testsTableController = app.getTestTableController();
 
+		testsTableController.pushNavigateToScenarioButton(TestsTableController.BACKWARD);
+		testsTableController.pushNavigateToScenarioButton(TestsTableController.BACKWARD);
+		
 		Assert.assertEquals(scenario2, testsTableController.getCurrentScenarioName());
 
 		app.createScenario(midScenario);
@@ -99,11 +109,11 @@ public class ITNavigateToSubScenario extends AbstractJSystemIT {
 	}
 
 	/**
-	 * 1. open scenario1 and add to it a sub scenario scenaroi2 2. select
-	 * scenario2 and choose, Navigate to sub scenario 3. check that current
-	 * scenario opened is scenario2 as expected. 4. navigate left once and check
-	 * that current scenario is scenario1 5. navigate right once and check that
-	 * current scenario is scenario2
+	 * 1. open scenario1 and add to it as sub scenario the scenario2
+	 * 2. select scenario2 and choose, Navigate to sub scenario
+	 * 3. check that current scenario opened is scenario2 as expected.
+	 * 4. navigate left once and check that current scenario is scenario1 
+	 * 5. navigate right once and check that current scenario is scenario2
 	 * 
 	 * @throws Exception
 	 */
@@ -127,6 +137,12 @@ public class ITNavigateToSubScenario extends AbstractJSystemIT {
 
 		testTableController.pushNavigateToScenarioButton(TestsTableController.FORWARD);
 		Assert.assertEquals(scenario2, testTableController.getCurrentScenarioName());
+	}
+	
+	@After
+	public void cleanGeneratedScenarios() {
+		System.out.println("Cleanning generated scenarios");
+		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}
 
 }

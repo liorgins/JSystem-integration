@@ -6,6 +6,7 @@ import junit.framework.Assert;
 import org.jsystemtest.integration.AbstractJSystemIT;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ITMarkedAsKnownIssue extends AbstractJSystemIT {
@@ -13,13 +14,15 @@ public class ITMarkedAsKnownIssue extends AbstractJSystemIT {
 	private final String rootScenario = "markedAsTestScenario";
 
 	/**
-	 * 1. open new scenario
-	 * 2. add some test to it 
-	 * 3. save scenario
+	 * 1. open new scenario.
+	 * 2. add some test to it.
+	 * 3. save scenario.
 	 */
-	public void classFixture() throws Exception {
+	@Before
+	public void testFixture() throws Exception {
+		
 		app.openScenario(rootScenario);
-		app.clearScenario(rootScenario);
+		app.clearCurrentRootScenario(rootScenario);
 
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
 		testsTreeTab.addTest("reportSuccess", "Example", 2);
@@ -30,9 +33,9 @@ public class ITMarkedAsKnownIssue extends AbstractJSystemIT {
 	}
 	
 	/**
-	 * 1. select test that fail<br/>
-	 * 2. mark the test as known issue<br/>
-	 * 3. run scenario and verify that test reported warning
+	 * 1. select test that fail.
+	 * 2. mark the test as known issue.
+	 * 3. run scenario and verify that test reported warning.
 	 * 
 	 * @throws Exception
 	 */
@@ -40,15 +43,15 @@ public class ITMarkedAsKnownIssue extends AbstractJSystemIT {
 	@Test
 	public void markOneFailAsKnownIssue() throws Exception {
 		
-		classFixture();
-		
-		System.out.println("select a test that is a test that fails, and mark it as know issue");
+		System.out.println("STEP: select test that fail");
 		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
 		scenarioTree.selectTestByRow(5);
 		
+		System.out.println("STEP: mark the test as known issue");
 		scenarioTree.markAsKnownIssue(5, true);
-		app.getToolBar().pushPlayButton();
-		app.waitForRunEnd();
+		
+		System.out.println("STEP: run scenario and verify that test reported warning");
+		app.playAndWaitForRunEnd();
 		Assert.assertEquals(2, XmlReportHandler.getInstance().getNumberOfTestsPass());
 		Assert.assertEquals(1, XmlReportHandler.getInstance().getNumberOfTestsFail());
 		Assert.assertEquals(3,  XmlReportHandler.getInstance().getNumberOfTestsWarning());

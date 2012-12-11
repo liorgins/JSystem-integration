@@ -6,42 +6,44 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import jsystem.framework.common.CommonResources;
+import jsystem.utils.FileLock;
+
 public class JSystemTestUtils {
 
-	
 	/**
-	 * clear all scenarios from project except the default scenario 
+	 * clear all scenarios from project except the default scenario
 	 * 
 	 * @param path
 	 */
-	public static void cleanScenarios( String path ) {
+	public static void cleanScenarios(String path) {
 
-        File root = new File( path );
-        File[] list = root.listFiles();
+		File root = new File(path);
+		File[] list = root.listFiles();
 
-        for ( File f : list ) {
-            if ( f.isDirectory() ) {
-                cleanScenarios(f.getAbsolutePath());
-            }
-            else {
-            	if(root.getName().equals("scenarios") && (!f.getName().equals("default.xml") && !f.getName().equals("default.properties"))) {
-            		f.delete();
-            		System.out.println( "File: " + f.getAbsoluteFile() + " has been deleted");
-            	}
-                
-            }
-        }
-    }
+		for (File f : list) {
+			if (f.isDirectory()) {
+				cleanScenarios(f.getAbsolutePath());
+			} else {
+				if (root.getName().equals("scenarios") && (!f.getName().equals("default.xml") && !f.getName().equals("default.properties"))) {
+					f.delete();
+					System.out.println("File: " + f.getAbsoluteFile() + " has been deleted");
+				}
+
+			}
+		}
+	}
+
 	/**
 	 * clear all properties and log files generated during jsystem run
 	 * 
 	 * @param path
 	 */
-	public static void cleanPropertiesAndLogs(String path ) { 
+	public static void cleanPropertiesAndLogs(String path) {
 		File projectDir = new File(path);
-		
-		FilenameFilter genFilter = new  FilenameFilter() {
-			
+
+		FilenameFilter genFilter = new FilenameFilter() {
+
 			@Override
 			public boolean accept(File dir, String name) {
 				return name.endsWith(".properties") || name.endsWith(".properties.bu") || name.endsWith(".log");
@@ -50,10 +52,10 @@ public class JSystemTestUtils {
 		for (File file : projectDir.listFiles(genFilter)) {
 			System.out.println(file.getName() + " has been deleted seccessfuly from project root");
 			file.delete();
-			
+
 		}
 	}
-	
+
 	public static String findValidClassDirectory(String parentPath) {
 		if (!verifyClassesDirectory(parentPath)) {
 			File parentFile = new File(parentPath);
@@ -110,7 +112,7 @@ public class JSystemTestUtils {
 		}
 		return result;
 	}
-	
+
 	public static String readFromPosition(final File file, final long fromPosition) {
 		RandomAccessFile rfile = null;
 		StringBuilder sb = null;
@@ -136,6 +138,17 @@ public class JSystemTestUtils {
 
 		return sb.toString();
 	}
-
-
+	
+	
+	/**
+	 * Use this method if you shutdown jsystem but not the jvm.
+	 * In that case the the .runner.lock file will prevent you from starting jsystem again
+	 * there for you must release the lock on that file.
+	 * 
+	 * @throws Exception
+	 */
+	public static void releaseRunnerLock() throws Exception {
+		FileLock lock = FileLock.getFileLock(CommonResources.LOCK_FILE);
+		lock.releaseLock();
+	}
 }

@@ -97,30 +97,30 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 
 	}
 	
-	public int exitVirtualyhroughMenu() {
+	public int exitVirtualyThroughMenu() {
 		System.setSecurityManager(new NoExitSecurityManager());
 		int errorLevel = -1;
 		try {
 			System.out.println("*************** performing exit");
 			exitThroughMenu();
-		} catch (SecurityException e) {
+		} catch (Exception e) {
 			System.out.println("SecurityException cought");
-			//TODO extract the status from e!!!
+			errorLevel = ((ExitException)e).getStatus();
 		} finally {
 			setRunning(false);
 			System.out.println("**************Removing the noExitSecurityManager");
-			System.setSecurityManager(null);
+			
 		}
 		
 		return errorLevel;
 	}
 
 	/**
-	 * 1. get instance of JSystem properties 2. search for valid tests classes
-	 * directory in the given path 3. set the relevant properties
+	 * 1. get instance of JSystem properties
+	 * 2. search for valid tests classes directory in the given path 
+	 * 3. set the relevant properties
 	 * 
-	 * @param testsClassesPath
-	 *            path to the classes directory or parent of that directory
+	 * @param testsClassesPath - A path to the classes directory or parent of that directory
 	 * @param sutFileName
 	 */
 	public void setJSystemStandartProperties(String testsClassesPath, String sutFileName) {
@@ -259,7 +259,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		Thread.sleep(750);
 	}
 
-	public void clearScenario(String rootScenario) throws InterruptedException {
+	public void clearCurrentRootScenario(String rootScenario) throws InterruptedException {
 		getTestTableController().getScenarioTree().selectTestByRow(0);
 		Thread.sleep(500);
 		getToolBar().pushDeleteScenarioButton();
@@ -340,6 +340,11 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	public void saveScenarioAs(String newScenarioName) {
 		JFileChooserOperator jFileChooserOperator = getMenuBar().getFileMenu().saveScenarioAs();
 		jFileChooserOperator.chooseFile(newScenarioName);
+	}
+	
+	public void playAndWaitForRunEnd() throws Exception{
+		getToolBar().pushPlayButton();
+		waitForRunEnd();
 	}
 
 }

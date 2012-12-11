@@ -1,9 +1,5 @@
 package org.jsystemtest.integration;
 
-import jsystem.framework.common.CommonResources;
-import jsystem.framework.report.RunnerListenersManager;
-import jsystem.utils.FileLock;
-
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.junit.After;

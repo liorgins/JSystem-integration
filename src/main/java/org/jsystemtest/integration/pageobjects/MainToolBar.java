@@ -42,7 +42,7 @@ public class MainToolBar extends AbstractPageObject{
 		}
 
 		// inner tool bar operations
-		public void pushPlayButton() throws InterruptedException {
+		public void pushPlayButton() throws Exception {
 			JButtonOperator jButtonOperator = new JButtonOperator(app, new TooltipChooser(jmap.getPlayButton()));
 			waitEnableAndClick(jButtonOperator);
 		}

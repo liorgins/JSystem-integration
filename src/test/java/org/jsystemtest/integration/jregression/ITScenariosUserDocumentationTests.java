@@ -12,17 +12,16 @@ import org.junit.Test;
 public class ITScenariosUserDocumentationTests extends AbstractJSystemIT {
 
 	/**
-	 * <b>Tests user documentation</b><br>
-	 * <li>Create sub scenario</li><br>
-	 * <li>Adds user doc to the sub scenario</li><br>
-	 * <li>Create root scenario</li><br>
-	 * <li>Add the sub scenario three times to the root scenario</li><br>
-	 * <li>Asserts the sub scenarios user documentation</li><br>
-	 * <li>Marks one of the sub scenarios as test</li><br>
-	 * <li>Sets different user doc to each one of the sub scenarios</li><br>
-	 * <li>Loads the sub scenario and asserts the original user documentation</li>
-	 * <br>
-	 * <li>Loads the root scenario and asserts the user documentation</li><br>
+	 * 1.Tests user documentation.<br>
+	 * 2.Create sub scenario.<br>
+	 * 3.Adds user doc to the sub scenario.<br>
+	 * 4.Create root scenario.<br>
+	 * 5.Add the sub scenario three times to the root scenario.<br>
+	 * 6.Asserts the sub scenarios user documentation.<br>
+	 * 7.Marks one of the sub scenarios as test.<br>
+	 * 8.Sets different user doc to each one of the sub scenarios.<br>
+	 * 9.Loads the sub scenario and asserts the original user documentation.<br>
+	 * 10.Loads the root scenario and asserts the user documentation.<br>
 	 */
 	@Test
 	@TestProperties(paramsInclude = { "" })

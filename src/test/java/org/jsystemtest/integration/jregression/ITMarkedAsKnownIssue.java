@@ -3,13 +3,13 @@ package org.jsystemtest.integration.jregression;
 import jsystem.extensions.report.xml.XmlReportHandler;
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstracITJSystem;
+import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ITMarkedAsKnownIssue extends AbstracITJSystem {
+public class ITMarkedAsKnownIssue extends AbstractITJSystem {
 
 	private final String rootScenario = "markedAsTestScenario";
 

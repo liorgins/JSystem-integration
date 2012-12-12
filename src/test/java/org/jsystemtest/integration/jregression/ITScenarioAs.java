@@ -3,7 +3,7 @@ package org.jsystemtest.integration.jregression;
 import jsystem.extensions.report.xml.XmlReportHandler;
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstracITJSystem;
+import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.TestType;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
@@ -14,7 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ITScenarioAs extends AbstracITJSystem {
+public class ITScenarioAs extends AbstractITJSystem {
 
 	private static String sonScenario = "ScenarioAsTest_SON";
 	private static String parentScenario = "ScenarioAsTest_PARENT";

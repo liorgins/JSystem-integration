@@ -2,11 +2,11 @@ package org.jsystemtest.integration.jregression;
 
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstracITJSystem;
+import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.junit.Test;
 
-public class ITTestTreeFunctionality extends AbstracITJSystem {
+public class ITTestTreeFunctionality extends AbstractITJSystem {
 
 	final String expectedTestDocumentation = "test     with javadoc";
 	final String expectedScenarioUserDoc = "scenario     expected documentation";

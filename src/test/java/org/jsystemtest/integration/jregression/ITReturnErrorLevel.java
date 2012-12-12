@@ -5,7 +5,7 @@ import java.io.File;
 import jsystem.framework.report.RunnerListenersManager;
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstracITJSystem;
+import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.NoExitSecurityManager;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
@@ -14,7 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ITReturnErrorLevel extends AbstracITJSystem {
+public class ITReturnErrorLevel extends AbstractITJSystem {
 
 	private static int errorLevelpos = -1;
 	private static File logFile;

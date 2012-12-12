@@ -3,13 +3,13 @@ package org.jsystemtest.integration.jregression;
 import jsystem.extensions.report.xml.XmlReportHandler;
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstractJSystemIT;
+import org.jsystemtest.integration.AbstracITJSystem;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ITMarkedAsKnownIssue extends AbstractJSystemIT {
+public class ITMarkedAsKnownIssue extends AbstracITJSystem {
 
 	private final String rootScenario = "markedAsTestScenario";
 
@@ -54,7 +54,6 @@ public class ITMarkedAsKnownIssue extends AbstractJSystemIT {
 		app.playAndWaitForRunEnd();
 		Assert.assertEquals(2, XmlReportHandler.getInstance().getNumberOfTestsPass());
 		Assert.assertEquals(1, XmlReportHandler.getInstance().getNumberOfTestsFail());
-		Assert.assertEquals(3,  XmlReportHandler.getInstance().getNumberOfTestsWarning());
+		Assert.assertEquals(3, XmlReportHandler.getInstance().getNumberOfTestsWarning());
 	}
-
 }

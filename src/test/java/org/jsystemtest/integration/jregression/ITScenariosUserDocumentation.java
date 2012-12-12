@@ -3,13 +3,13 @@ package org.jsystemtest.integration.jregression;
 import jsystem.framework.TestProperties;
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstractJSystemIT;
+import org.jsystemtest.integration.AbstracITJSystem;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestInfoTab;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.junit.Test;
 
-public class ITScenariosUserDocumentationTests extends AbstractJSystemIT {
+public class ITScenariosUserDocumentation extends AbstracITJSystem {
 
 	/**
 	 * 1.Tests user documentation.<br>

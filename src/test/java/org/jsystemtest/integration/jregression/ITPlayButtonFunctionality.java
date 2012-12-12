@@ -2,12 +2,12 @@ package org.jsystemtest.integration.jregression;
 
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstractJSystemIT;
+import org.jsystemtest.integration.AbstracITJSystem;
 import org.junit.Before;
 import org.junit.Test;
 
 
-public class ITPlayButtonFunctionality extends AbstractJSystemIT {
+public class ITPlayButtonFunctionality extends AbstracITJSystem {
 	
 	/**
 	 * 1. open the default scenario.

@@ -3,7 +3,7 @@ package org.jsystemtest.integration.jregression;
 import jsystem.extensions.report.xml.XmlReportHandler;
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstractJSystemIT;
+import org.jsystemtest.integration.AbstracITJSystem;
 import org.jsystemtest.integration.TestType;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
@@ -14,7 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ITScenarioAsTest extends AbstractJSystemIT {
+public class ITScenarioAs extends AbstracITJSystem {
 
 	private static String sonScenario = "ScenarioAsTest_SON";
 	private static String parentScenario = "ScenarioAsTest_PARENT";
@@ -44,7 +44,7 @@ public class ITScenarioAsTest extends AbstractJSystemIT {
 	 * @throws Exception
 	 */
 	@Test
-	public void checkNegativeScenarioAsTest() throws Exception {
+	public void checkNegativeScenarioAs() throws Exception {
 
 		app.openScenario(sonScenario);
 		app.getTestsTreeController().getTestsTreeTab().addTest("reportFailure", "Example", 1);
@@ -72,7 +72,7 @@ public class ITScenarioAsTest extends AbstractJSystemIT {
 	 */
 
 	@Test
-	public void checkAddingTestToScenarioTest() throws Exception {
+	public void checkAddingTestToScenarioAs() throws Exception {
 
 		addTestToSonAndAnalyze(false);
 
@@ -181,7 +181,7 @@ public class ITScenarioAsTest extends AbstractJSystemIT {
 	}
 
 	@After
-	public void cleanTest() {
+	public void clean() {
 		System.out.println("Cleanning generated scenarios");
 		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}

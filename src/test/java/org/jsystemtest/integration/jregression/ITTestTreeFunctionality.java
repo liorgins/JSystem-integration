@@ -2,11 +2,11 @@ package org.jsystemtest.integration.jregression;
 
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstractJSystemIT;
+import org.jsystemtest.integration.AbstracITJSystem;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.junit.Test;
 
-public class ITTestTreeFunctionality extends AbstractJSystemIT {
+public class ITTestTreeFunctionality extends AbstracITJSystem {
 
 	final String expectedTestDocumentation = "test     with javadoc";
 	final String expectedScenarioUserDoc = "scenario     expected documentation";
@@ -21,7 +21,7 @@ public class ITTestTreeFunctionality extends AbstractJSystemIT {
 	 * @throws Exception
 	 */
 	@Test
-	public void testBuildingBlockInfoView() throws Exception {
+	public void buildingBlockInfoView() throws Exception {
 		analyzeTestDocumentation();
 		analyzeScenarioDocumentation();
 	}
@@ -35,7 +35,7 @@ public class ITTestTreeFunctionality extends AbstractJSystemIT {
 	 * @throws Exception
 	 */
 	@Test
-	public void testSearchBox() throws Exception {
+	public void searchBox() throws Exception {
 
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
 		int searchCount = testsTreeTab.search("report");

@@ -5,7 +5,7 @@ import java.io.File;
 import jsystem.framework.report.RunnerListenersManager;
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstractJSystemIT;
+import org.jsystemtest.integration.AbstracITJSystem;
 import org.jsystemtest.integration.NoExitSecurityManager;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
@@ -14,13 +14,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ITReturnErrorLevelTests extends AbstractJSystemIT {
+public class ITReturnErrorLevel extends AbstracITJSystem {
 
 	private static int errorLevelpos = -1;
 	private static File logFile;
 
 	@Before
-	public void beforeTest() throws Exception {
+	public void before() throws Exception {
 		System.out.println("**************** @Before From Test Class");
 		RunnerListenersManager.hadFailure = false;
 		RunnerListenersManager.hadWarning = false;
@@ -40,7 +40,7 @@ public class ITReturnErrorLevelTests extends AbstractJSystemIT {
 	 * @throws Throwable
 	 */
 	@Test
-	public void testFailureErrorLevel() throws Exception {
+	public void failureErrorLevel() throws Exception {
 
 		System.out.println("Creating and running scenario with error tests");
 		app.createScenario("FailureErrorLevel");
@@ -72,7 +72,7 @@ public class ITReturnErrorLevelTests extends AbstractJSystemIT {
 	 * @throws Exception
 	 */
 	@Test
-	public void testWarningErrorLevel() throws Exception {
+	public void warningErrorLevel() throws Exception {
 
 		System.out.println("Creating and running scenario with error tests");
 		app.createScenario("WarningErrorLevel");
@@ -102,7 +102,7 @@ public class ITReturnErrorLevelTests extends AbstractJSystemIT {
 	 * @throws Exception
 	 */
 	@Test
-	public void testSuccessErrorLevel() throws Exception {
+	public void successErrorLevel() throws Exception {
 
 		System.out.println("Creating and running scenario with only passing tests");
 		app.createScenario("PassErrorLevel");
@@ -145,7 +145,7 @@ public class ITReturnErrorLevelTests extends AbstractJSystemIT {
 	}
 
 	@After
-	public void afterTest() throws Exception {
+	public void after() throws Exception {
 		System.out.println("************* @After from Test Class");
 		System.setSecurityManager(null);
 		JSystemTestUtils.releaseRunnerLock();

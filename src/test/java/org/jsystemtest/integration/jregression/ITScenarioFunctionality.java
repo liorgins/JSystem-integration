@@ -3,13 +3,13 @@ package org.jsystemtest.integration.jregression;
 import jsystem.extensions.report.xml.XmlReportHandler;
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstractJSystemIT;
+import org.jsystemtest.integration.AbstracITJSystem;
 import org.jsystemtest.integration.TestType;
 import org.jsystemtest.integration.pageobjects.TestInfoTab;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.junit.Test;
 
-public class ITScenarioFunctionality extends AbstractJSystemIT {
+public class ITScenarioFunctionality extends AbstracITJSystem {
 
 	final String subScenarioName = "sonScenario";
 	final String originalScenarioName = "saveAsScenarioOriginal";
@@ -52,7 +52,7 @@ public class ITScenarioFunctionality extends AbstractJSystemIT {
 	 * @throws Exception
 	 * */
 	@Test
-	public void testSaveAs() throws Exception {
+	public void saveAs() throws Exception {
 
 		app.createScenario(subScenarioName);
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();

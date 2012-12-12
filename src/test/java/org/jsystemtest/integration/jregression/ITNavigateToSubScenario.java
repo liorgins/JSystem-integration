@@ -2,7 +2,7 @@ package org.jsystemtest.integration.jregression;
 
 import junit.framework.Assert;
 
-import org.jsystemtest.integration.AbstractJSystemIT;
+import org.jsystemtest.integration.AbstracITJSystem;
 import org.jsystemtest.integration.TestType;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
@@ -12,7 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ITNavigateToSubScenario extends AbstractJSystemIT {
+public class ITNavigateToSubScenario extends AbstracITJSystem {
 
 
 	private final String scenario1 = "Scenario1";

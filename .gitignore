@@ -28,3 +28,9 @@ runnerState.properties
 log
 myFile.txt
 *.xml.versionsBackup
+.testPropertiesFile_Empty
+jsystem0.log.*
+
+#Project specific files
+src\test\resources\jsystem-base-tests\target
+src\test\resources\jsystem-base-tests\lib

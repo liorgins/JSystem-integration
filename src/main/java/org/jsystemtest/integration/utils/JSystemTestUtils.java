@@ -1,10 +1,13 @@
 package org.jsystemtest.integration.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.lang.management.ManagementFactory;
 
 import jsystem.framework.common.CommonResources;
 import jsystem.utils.FileLock;
@@ -150,5 +153,41 @@ public class JSystemTestUtils {
 	public static void releaseRunnerLock() throws Exception {
 		FileLock lock = FileLock.getFileLock(CommonResources.LOCK_FILE);
 		lock.releaseLock();
+	}
+	
+	public static boolean killRunnerProcess() throws Exception {
+
+		String pid = ManagementFactory.getRuntimeMXBean().getName();
+		pid = pid.split("@")[0];
+		//jemmySupport.report("pid is " + pid);
+		if ("linux".equalsIgnoreCase(System.getProperty("os.name"))) {
+			String s = null;
+			Process p = Runtime.getRuntime().exec("kill -9 " + pid);
+			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+			if ((s = stdError.readLine()) != null) {
+				//jemmySupport.report("an error occured trying to execute kill process.");
+				//jemmySupport.report("the error details are: " + s);
+				//jemmySupport.report("error were printed to error stream.");
+				return false;
+			}
+		//	jemmySupport.report("on linux, returning successfully after kill the process");
+			return true;
+		} else if ("windows".equalsIgnoreCase(System.getProperty("os.name"))) {
+			String s = null;
+			Process p = Runtime.getRuntime().exec("taskkill /PID " + pid);
+			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+			if ((s = stdError.readLine()) != null) {
+				//jemmySupport.report("an error occured trying to execute kill process.");
+				//jemmySupport.report("the error details are: " + s);
+				//jemmySupport.report("error were printed to error stream.");
+				return false;
+			}
+			//jemmySupport.report("on linux, returning successfully after kill the process");
+			return true;
+		} else {
+			throw new Exception("system is not supported yes.\nonly Windows and Linux are supported");
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package org.jsystemtest.integration.jregression;
 
 import jsystem.extensions.report.xml.XmlReportHandler;
+import jsystem.framework.TestProperties;
 import junit.framework.Assert;
 
 import org.jsystemtest.integration.AbstractITJSystem;
@@ -44,6 +45,7 @@ public class ITScenarioAs extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
+	@TestProperties(name = "Check negative scenario as test")
 	public void checkNegativeScenarioAs() throws Exception {
 
 		app.openScenario(sonScenario);
@@ -72,6 +74,7 @@ public class ITScenarioAs extends AbstractITJSystem {
 	 */
 
 	@Test
+	@TestProperties(name = "Check adding test to scenario as test")
 	public void checkAddingTestToScenarioAs() throws Exception {
 
 		addTestToSonAndAnalyze(false);
@@ -129,6 +132,7 @@ public class ITScenarioAs extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
+	@TestProperties(name = "Check mapping test count")
 	public void checkMappingAndTestCount() throws Exception {
 		app.openScenario(sonScenario);
 		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();

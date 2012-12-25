@@ -1,5 +1,6 @@
 package org.jsystemtest.integration.jregression;
 
+import jsystem.framework.TestProperties;
 import junit.framework.Assert;
 
 import org.jsystemtest.integration.AbstractITJSystem;
@@ -48,6 +49,7 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 	 */
 	
 	@Test
+	@TestProperties(name = "Move between created scenarios")
 	public void moveBetweenCreatedScenarios() throws Exception {
 
 		TestsTableController testsTableController = app.getTestTableController();
@@ -88,6 +90,7 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 	 */
 	
 	@Test
+	@TestProperties(name = "Go to dcenario2 and create new scenario and check that 3 and 4 no longer exist")
 	public void goToScenario2AndCreateNewScenarioAndCheckThat3and4NoLongerExist() throws Exception {
 
 		TestsTableController testsTableController = app.getTestTableController();
@@ -118,6 +121,7 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
+	@TestProperties(name = "Create scenario in sceanrio select child scenario and navigate to subScenario")
 	public void createScenarioInSceanrioSelectChildScenarioAndNavigateToSubScenario() throws Exception {
 
 		app.openScenario(scenario1);

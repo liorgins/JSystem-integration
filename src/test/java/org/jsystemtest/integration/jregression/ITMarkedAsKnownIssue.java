@@ -1,6 +1,7 @@
 package org.jsystemtest.integration.jregression;
 
 import jsystem.extensions.report.xml.XmlReportHandler;
+import jsystem.framework.TestProperties;
 import junit.framework.Assert;
 
 import org.jsystemtest.integration.AbstractITJSystem;
@@ -41,6 +42,7 @@ public class ITMarkedAsKnownIssue extends AbstractITJSystem {
 	 */
 
 	@Test
+	@TestProperties(name = "mark one fail as known issue")
 	public void markOneFailAsKnownIssue() throws Exception {
 		
 		System.out.println("STEP: select test that fail");

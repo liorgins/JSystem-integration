@@ -65,4 +65,9 @@ public class TestsTableController extends AbstractPageObject {
 	public String getCurrentScenarioName() {
 		return JSystemProperties.getInstance().getPreference(FrameworkOptions.CURRENT_SCENARIO).substring("scenarios".length() + 1);
 	}
+	
+	public void pushAddNotificationEvent() throws InterruptedException {
+		new JButtonOperator(appOperator, new TooltipChooser(jmap.getPublishEventButton())).clickMouse();
+		Thread.sleep(500);
+	}
 }

@@ -24,7 +24,7 @@ public class ITScenariosUserDocumentation extends AbstractITJSystem {
 	 * 10.Loads the root scenario and asserts the user documentation.<br>
 	 */
 	@Test
-	@TestProperties(paramsInclude = { "" })
+	@TestProperties(name = "Scenario user doc sanity")
 	public void scenarioUserDocSanity() throws Exception {
 
 		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();

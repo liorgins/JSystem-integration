@@ -24,7 +24,7 @@ public class TestsTreeTab extends AbstractPageObject {
 	public void pushAddTestsButton() throws InterruptedException {
 		testsTreeTab.selectPage(0);
 		new JButtonOperator(testsTreeTab, new TooltipChooser(jmap.getAddTestsButton())).clickMouse();
-		Thread.sleep(1000);
+		Thread.sleep(1250);
 	}
 	
 	public void setTestsNumberSpinner(int num) {

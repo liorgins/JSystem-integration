@@ -24,6 +24,12 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>**/ITPlayButtonFunctionality.java</exclude>
+						<exclude>**/ITScenarioFunctionality.java</exclude>
+					</excludes>
+				</configuration>
 
 			</plugin>
 			<plugin>
@@ -46,7 +52,7 @@
 						<id>create-runner</id>
 						<phase>package</phase>
 						<configuration>
-						<finalName>../thirdparty</finalName>
+							<finalName>../thirdparty</finalName>
 							<appendAssemblyId>false</appendAssemblyId>
 							<descriptors>
 								<descriptor>src/main/assembly/create-env.xml</descriptor>
@@ -92,6 +98,7 @@
 			<groupId>org.jsystemtest</groupId>
 			<artifactId>jsystemApp</artifactId>
 			<version>6.0.00-rc-3-SNAPSHOT</version>
+
 		</dependency>
 		<dependency>
 			<groupId>org.jsystemtest</groupId>
@@ -104,6 +111,13 @@
 			<version>1.7.0</version>
 			<type>zip</type>
 		</dependency>
+		<dependency>
+			<groupId>il.co.topq.jsystem</groupId>
+			<artifactId>publisher-plugin</artifactId>
+			<version>6.0.00-rc-3-SNAPSHOT</version>
+			<scope>runtime</scope>
+		</dependency>
+
 
 	</dependencies>
 </project>

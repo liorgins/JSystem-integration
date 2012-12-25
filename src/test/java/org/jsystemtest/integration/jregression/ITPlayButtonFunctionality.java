@@ -1,5 +1,6 @@
 package org.jsystemtest.integration.jregression;
 
+import jsystem.framework.TestProperties;
 import junit.framework.Assert;
 
 import org.jsystemtest.integration.AbstractITJSystem;
@@ -34,6 +35,7 @@ public class ITPlayButtonFunctionality extends AbstractITJSystem {
 	 * @throws Exception 
 	 */
 	@Test
+	@TestProperties(name = "Check play button enabled disabled")
 	public void checkPlayButtonEnabledDisabled() throws Exception{
 		
 		Assert.assertEquals(true, app.getToolBar().isPlayButtonEnable());
@@ -41,6 +43,7 @@ public class ITPlayButtonFunctionality extends AbstractITJSystem {
 		app.getTestTableController().removeAllTests();
 
 		Assert.assertEquals(false, app.getToolBar().isPlayButtonEnable());
+	
 	}
 	
 }

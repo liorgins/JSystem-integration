@@ -55,11 +55,15 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	public void postConstuct() {
 		System.out.println("***************************************JSYSTEMAPPLICATION: In POST CONSTRUCT");
 		
-		setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.DEFAULT_SUT_FILE);
+		setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY+"\\target", JSystemApplication.DEFAULT_SUT_FILE);
 		
 		setJSystemOptionalProperties(new PropertyPair(FrameworkOptions.AUTO_DELETE_NO_CONFIRMATION, JSystemApplication.TRUE),
 									 new PropertyPair(FrameworkOptions.AUTO_SAVE_NO_CONFIRMATION, JSystemApplication.TRUE),
-									 new PropertyPair(FrameworkOptions.SUB_SCENARIO_EDIT, JSystemApplication.TRUE));
+									 new PropertyPair(FrameworkOptions.SUB_SCENARIO_EDIT, JSystemApplication.TRUE),
+									 new PropertyPair(FrameworkOptions.GENERIC_TABS, "jsystem.publisher.plugin.PublisherView"),
+									 new PropertyPair(FrameworkOptions.REPORTS_PUBLISHER_CLASS, "jsystem.publisher.plugin.ReportsServerPublisher"),
+									 new PropertyPair(FrameworkOptions.REPORTS_PUBLISHER_HOST, "127.0.0.1"),
+									 new PropertyPair(FrameworkOptions.REPORTS_PUBLISHER_PORT, "8080"));
 	}
 
 	@PreDestroy

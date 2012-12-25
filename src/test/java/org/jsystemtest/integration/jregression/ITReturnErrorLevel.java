@@ -2,6 +2,7 @@ package org.jsystemtest.integration.jregression;
 
 import java.io.File;
 
+import jsystem.framework.TestProperties;
 import jsystem.framework.report.RunnerListenersManager;
 import junit.framework.Assert;
 
@@ -40,6 +41,7 @@ public class ITReturnErrorLevel extends AbstractITJSystem {
 	 * @throws Throwable
 	 */
 	@Test
+	@TestProperties(name = "Failure error level")
 	public void failureErrorLevel() throws Exception {
 
 		System.out.println("Creating and running scenario with error tests");
@@ -72,6 +74,7 @@ public class ITReturnErrorLevel extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
+	@TestProperties(name = "Warning error level")
 	public void warningErrorLevel() throws Exception {
 
 		System.out.println("Creating and running scenario with error tests");
@@ -102,6 +105,7 @@ public class ITReturnErrorLevel extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
+	@TestProperties(name = "Success error level")
 	public void successErrorLevel() throws Exception {
 
 		System.out.println("Creating and running scenario with only passing tests");

@@ -1,5 +1,6 @@
 package org.jsystemtest.integration.jregression;
 
+import jsystem.framework.TestProperties;
 import junit.framework.Assert;
 
 import org.jsystemtest.integration.AbstractITJSystem;
@@ -21,6 +22,7 @@ public class ITTestTreeFunctionality extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
+	@TestProperties(name = "Building block info view")
 	public void buildingBlockInfoView() throws Exception {
 		analyzeTestDocumentation();
 		analyzeScenarioDocumentation();
@@ -35,6 +37,7 @@ public class ITTestTreeFunctionality extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
+	@TestProperties(name = "Search box")
 	public void searchBox() throws Exception {
 
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();

@@ -1,6 +1,7 @@
 package org.jsystemtest.integration.jregression;
 
 import jsystem.extensions.report.xml.XmlReportHandler;
+import jsystem.framework.TestProperties;
 import junit.framework.Assert;
 
 import org.jsystemtest.integration.AbstractITJSystem;
@@ -25,6 +26,7 @@ public class ITScenarioFunctionality extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
+	@TestProperties(name = "Check prevent adding scenario to itself")
 	public void checkPreventAddingScenarioToItself() throws Exception {
 
 		app.createScenario("checkPreventAddingScenarioToItselfScnario");
@@ -52,6 +54,7 @@ public class ITScenarioFunctionality extends AbstractITJSystem {
 	 * @throws Exception
 	 * */
 	@Test
+	@TestProperties(name = "Save as")
 	public void saveAs() throws Exception {
 
 		app.createScenario(subScenarioName);

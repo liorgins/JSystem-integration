@@ -1,5 +1,6 @@
 package org.jsystemtest.integration;
 
+import org.jsystemtest.integration.database.DatabaseSystemModule;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
 import org.junit.After;
@@ -13,6 +14,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/applicationContext.xml" })
 public class AbstractITJSystem {
+	
+	@Autowired
+	protected DatabaseSystemModule db;
 
 	@Autowired
 	protected JSystemApplication app;

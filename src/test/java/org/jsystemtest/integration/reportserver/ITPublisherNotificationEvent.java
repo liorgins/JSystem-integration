@@ -1,4 +1,4 @@
-package org.jsystemtest.integration.jregression;
+package org.jsystemtest.integration.reportserver;
 
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.junit.Before;
@@ -15,6 +15,8 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 	 */
 	@Before
 	public void fixture() throws Exception {
+		
+		
 		
 		app.openScenario("default");
 		
@@ -37,6 +39,9 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 		app.getTestTableController().pushAddNotificationEvent();
 		
 		app.playAndWaitForRunEnd();
+		
+		int rowCount  = db.countRowsInTable("published_runs_01");
+		System.out.println(rowCount);
 	}
 
 }

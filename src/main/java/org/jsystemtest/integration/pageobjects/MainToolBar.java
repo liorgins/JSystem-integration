@@ -2,7 +2,11 @@ package org.jsystemtest.integration.pageobjects;
 
 import org.jsystemtest.integration.TooltipChooser;
 import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JComboBoxOperator;
+import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.Operator.StringComparator;
+import org.python.modules.thread;
 
 public class MainToolBar extends AbstractPageObject{
 	
@@ -69,6 +73,26 @@ public class MainToolBar extends AbstractPageObject{
 		
 		public boolean isPlayButtonEnable() {
 			return new JButtonOperator(app, new TooltipChooser(jmap.getPlayButton())).isEnabled();
+		}
+		
+		public void createNewSUTFile(final String sutName) throws InterruptedException {
+			JComboBoxOperator jcb = new JComboBoxOperator(app, 0);
+			Thread.sleep(200);
+			jcb.selectItem("Create a new SUT file...", new StringComparator() {
+				
+				@Override
+				public boolean equals(String caption, String match) {
+					if(caption.equals(match)) {
+						return true;
+					}
+					return false;
+				}
+			});
+			Thread.sleep(1000);
+			String.valueOf(System.currentTimeMillis());
+			JFileChooserOperator jfc = new JFileChooserOperator(app);
+			Thread.sleep(200);
+			jfc.chooseFile(sutName);
 		}
 
 }

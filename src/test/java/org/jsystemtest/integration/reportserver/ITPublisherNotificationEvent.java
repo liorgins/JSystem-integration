@@ -1,6 +1,13 @@
 package org.jsystemtest.integration.reportserver;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import junit.framework.Assert;
+
 import org.jsystemtest.integration.AbstractITJSystem;
+import org.jsystemtest.integration.pageobjects.TestInfoTab;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +22,6 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 	 */
 	@Before
 	public void fixture() throws Exception {
-		
 		
 		
 		app.openScenario("default");
@@ -42,6 +48,40 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 		
 		int rowCount  = db.countRowsInTable("published_runs_01");
 		System.out.println(rowCount);
+		
 	}
+	/**
+	 * /**
+	 * 1. create unique string for sut name, build and version values.
+	 * 2  create new sut with the unique name.	 
+	 * 3. add notification event to scenario tree.
+	 * 4. set notification event build and version to the unique string.
+	 * 5. play scenario and wait for execution to end.
+	 * 6. query the datebase and assert that version and build were published.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testPublisherBuildAndVersion() throws Exception {
+
+		String uniqueValue = String.valueOf(System.currentTimeMillis());
+		
+		app.getToolBar().createNewSUTFile(uniqueValue);
+		
+		app.getTestTableController().pushAddNotificationEvent();
+		
+		app.getTestTableController().getScenarioTree().selectTestByRow(4);
+		TestInfoTab testInfoTab = app.getTestsTreeController().getTestInfoTab();
+		testInfoTab.setTestParameter("general", "Build", String.valueOf(uniqueValue), false);
+		testInfoTab.setTestParameter("general", "Version", String.valueOf(uniqueValue), false);
+		
+		app.playAndWaitForRunEnd();
+		
+		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqueValue + "' and propertyKey='Build'").size());
+		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqueValue + "' and propertyKey='Version'").size());
+		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqueValue + ".xml' and propertyKey='setupName'").size());
+	}
+	
+	
 
 }

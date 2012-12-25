@@ -20,7 +20,7 @@ public class DatabaseSystemModule {
 		resultSetPrinterList.add(new ResultSetDefaultPrinter());
 	}
 
-	private List<Map<String, Object>> getResultList(String sql) {
+	public List<Map<String, Object>> getResultList(String sql) {
 		List<Map<String, Object>> resultList = template.queryForList(sql);
 		for (ResultSetPrinter printer : resultSetPrinterList) {
 			printer.print(resultList);

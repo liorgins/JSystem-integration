@@ -56,7 +56,7 @@ public class TestInfoTab extends AbstractPageObject {
 		return new JTableOperator(paramTab);
 	}
 
-	public void setTableCell(JTableOperator paramTable, int row, int column, String value, boolean isCombo) throws Exception {
+	private void setTableCell(JTableOperator paramTable, int row, int column, String value, boolean isCombo) throws Exception {
 		int i = 0;
 		String currentValue = "";
 

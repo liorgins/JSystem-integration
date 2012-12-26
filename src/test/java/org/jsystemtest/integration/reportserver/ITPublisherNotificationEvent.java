@@ -3,6 +3,8 @@ package org.jsystemtest.integration.reportserver;
 import java.util.List;
 import java.util.Map;
 
+import jsystem.extensions.report.html.Report;
+import jsystem.runner.agent.publisher.Publisher;
 import junit.framework.Assert;
 
 import org.jsystemtest.integration.AbstractITJSystem;
@@ -75,7 +77,7 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 		testsTreeTab.addTest("reportFailure", "Example", 3);
 		testsTreeTab.addTest("reportWarning", "Example", 2);
 		testsTreeTab.addTest("reportSuccess", "Example", 1);
-
+	
 		app.getTestTableController().pushAddNotificationEvent();
 		
 		app.playAndWaitForRunEnd();
@@ -89,6 +91,50 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 		Assert.assertEquals(new Integer(2), (Integer)resultList.get(0).get("warningTests"));
 		Assert.assertEquals(new Integer(1), (Integer)resultList.get(0).get("successTests"));
 	}
+	
+	/**
+	 * 1. create new scenario with unique identifier
+	 * 1  create new sut with the unique name.	 
+	 * 2. add notification event to scenario tree.
+	 * 3. set notification event build and version to the unique string.
+	 * 4. play scenario and wait for execution to end.
+	 * 5. query the datebase and assert that version, build and sut were published.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void publisherExecutionPropertiesAndDescription() throws Exception {
+
+		app.getTestTableController().pushAddNotificationEvent();
+		
+		app.getTestTableController().getScenarioTree().selectTestByRow(1);
+		TestInfoTab testInfoTab = app.getTestsTreeController().getTestInfoTab();
+		
+		String key1 = uniqeIdentifier + "_k1";
+		String key2 = uniqeIdentifier + "_k2";
+		String val1 = uniqeIdentifier + "_v1";
+		String val2 = uniqeIdentifier + "_v2";
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(key1);
+		sb.append("=");
+		sb.append(val1);
+		sb.append(";");
+		sb.append(key2);
+		sb.append("=");
+		sb.append(val2);
+		testInfoTab.setTestParameter("publish", "ExecutionPropertiesStr",sb.toString(), false);
+		testInfoTab.setTestParameter("Publish", "Description", uniqeIdentifier, false);
+		
+		app.playAndWaitForRunEnd();
+		
+		Assert.assertEquals(1, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyKey='" + key1 + "' and propertyValue='" + val1 + "'").size());
+		Assert.assertEquals(1, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyKey='" + key2 + "' and propertyValue='" + val2 + "'").size());
+		Assert.assertEquals(1, db.getResultList("SELECT * FROM jsystem.published_runs_01 WHERE description='" + uniqeIdentifier + "'").size());
+	}
+	
+	
+	
 	
 	
 	

@@ -1,6 +1,5 @@
 package org.jsystemtest.integration.reportserver;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,79 +7,89 @@ import junit.framework.Assert;
 
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.pageobjects.TestInfoTab;
+import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.junit.Before;
 import org.junit.Test;
 
+
+
 public class ITPublisherNotificationEvent extends AbstractITJSystem {
 	
+	private static String uniqeIdentifier = "";
+	
 	/**
-	 * 1. open the default scenario.
-	 * 2. clear it.
-	 * 3. add 5 tests that pass to scenario.
+	 *  get unique identifier to use in each test
 	 * 
 	 * @throws Exception
 	 */
 	@Before
 	public void fixture() throws Exception {
-		
-		
-		app.openScenario("default");
-		
-		app.clearCurrentRootScenario("default");
-		
-		app.getTestsTreeController().getTestsTreeTab().addTest("reportSuccess", "Example", 1);
-		app.getTestsTreeController().getTestsTreeTab().addTest("reportFailure", "Example", 1);
-		app.getTestsTreeController().getTestsTreeTab().addTest("reportWarning", "Example", 1);
+		uniqeIdentifier = String.valueOf(System.currentTimeMillis());
+		app.createScenario(uniqeIdentifier);
 	}
 	
 	/**
-	 * 1. add notification event to scenario tree.
-	 * 2. play scenario and wait for execution to end.
+	 * 1. create new scenario with unique identifier
+	 * 1  create new sut with the unique name.	 
+	 * 2. add notification event to scenario tree.
+	 * 3. set notification event build and version to the unique string.
+	 * 4. play scenario and wait for execution to end.
+	 * 5. query the datebase and assert that version, build and sut were published.
 	 * 
 	 * @throws Exception
 	 */
 	@Test
-	public void addNotificationEventTry() throws Exception {
-		
-		app.getTestTableController().pushAddNotificationEvent();
-		
-		app.playAndWaitForRunEnd();
-		
-		int rowCount  = db.countRowsInTable("published_runs_01");
-		System.out.println(rowCount);
-		
-	}
-	/**
-	 * /**
-	 * 1. create unique string for sut name, build and version values.
-	 * 2  create new sut with the unique name.	 
-	 * 3. add notification event to scenario tree.
-	 * 4. set notification event build and version to the unique string.
-	 * 5. play scenario and wait for execution to end.
-	 * 6. query the datebase and assert that version and build were published.
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void testPublisherBuildAndVersion() throws Exception {
+	public void publisherBuildVersionSut() throws Exception {
 
-		String uniqueValue = String.valueOf(System.currentTimeMillis());
+		app.addSutFile(uniqeIdentifier);
 		
-		app.getToolBar().createNewSUTFile(uniqueValue);
+		app.getToolBar().selectSUTFile(uniqeIdentifier+".xml");
 		
 		app.getTestTableController().pushAddNotificationEvent();
 		
-		app.getTestTableController().getScenarioTree().selectTestByRow(4);
+		app.getTestTableController().getScenarioTree().selectTestByRow(1);
 		TestInfoTab testInfoTab = app.getTestsTreeController().getTestInfoTab();
-		testInfoTab.setTestParameter("general", "Build", String.valueOf(uniqueValue), false);
-		testInfoTab.setTestParameter("general", "Version", String.valueOf(uniqueValue), false);
+		testInfoTab.setTestParameter("general", "Build", String.valueOf(uniqeIdentifier), false);
+		testInfoTab.setTestParameter("general", "Version", String.valueOf(uniqeIdentifier), false);
 		
 		app.playAndWaitForRunEnd();
 		
-		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqueValue + "' and propertyKey='Build'").size());
-		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqueValue + "' and propertyKey='Version'").size());
-		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqueValue + ".xml' and propertyKey='setupName'").size());
+		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqeIdentifier + "' and propertyKey='Build'").size());
+		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqeIdentifier + "' and propertyKey='Version'").size());
+		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqeIdentifier + ".xml' and propertyKey='setupName'").size());
 	}
+	
+	/**
+	 * 1. add 3 kind of tests to scenario, success, fail and warn.
+	 * 2. add notification event.
+	 * 3. play scenario and assert the database for the result.
+	 * 4. assert scenario name is published.
+	 * 5. assert test result published correctly. 
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void checkPublishedRunIsCorrect() throws Exception {
+		
+		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
+		testsTreeTab.addTest("reportFailure", "Example", 3);
+		testsTreeTab.addTest("reportWarning", "Example", 2);
+		testsTreeTab.addTest("reportSuccess", "Example", 1);
+
+		app.getTestTableController().pushAddNotificationEvent();
+		
+		app.playAndWaitForRunEnd();
+		String query = "SELECT * FROM jsystem.published_runs_01 WHERE scenarioName='" + uniqeIdentifier + "'";
+		List<Map<String, Object>> resultList = db.getResultList(query);
+		Assert.assertNotNull(resultList);
+		Assert.assertEquals(1, db.getResultList(query).size());
+		
+		Assert.assertEquals(new Integer(6), (Integer)resultList.get(0).get("runTest"));
+		Assert.assertEquals(new Integer(3), (Integer)resultList.get(0).get("failTests"));
+		Assert.assertEquals(new Integer(2), (Integer)resultList.get(0).get("warningTests"));
+		Assert.assertEquals(new Integer(1), (Integer)resultList.get(0).get("successTests"));
+	}
+	
 	
 	
 

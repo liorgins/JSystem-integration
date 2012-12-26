@@ -1,6 +1,7 @@
 package org.jsystemtest.integration.pageobjects;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +42,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	public static final String DEFAULT_SUT_FILE = "default.xml";
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
+	private static final String SUTDIR = "\\target\\test-classes\\jsystem-base-tests\\target\\classes\\sut\\";
 	private boolean isRunning = false;
 
 	public void setRunning(boolean isRunning) {
@@ -349,6 +351,16 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	public void playAndWaitForRunEnd() throws Exception{
 		getToolBar().pushPlayButton();
 		waitForRunEnd();
+	}
+	
+	public void addSutFile(String sutName) throws InterruptedException {
+		File file  = new File(JSystemApplication.CURRENT_WORKING_DIRECTORY + SUTDIR + sutName + ".xml");
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			System.out.println("Could not create new sut file " + sutName + ".xml");
+		}
+		getToolBar().pushRefreshButton();
 	}
 
 }

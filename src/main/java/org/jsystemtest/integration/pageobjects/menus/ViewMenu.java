@@ -7,11 +7,13 @@ import org.netbeans.jemmy.operators.JMenuOperator;
 public class ViewMenu extends AbstractPageObject {
 	
 	private JMenuOperator jMenuOperator;
-
+	public ToolbarsMenu toolbarsMenu;
+	
 	private static final String VIEW = "View";
 
 	public ViewMenu(JMenuBarOperator jMenuBarOperator) {
 		jMenuOperator = new JMenuOperator(jMenuBarOperator, VIEW);
+		toolbarsMenu = new ToolbarsMenu(jMenuOperator);
 	}
 	
 	public void log() {
@@ -22,8 +24,9 @@ public class ViewMenu extends AbstractPageObject {
 		jMenuOperator.pushMenuNoBlock(VIEW + "|View Test Code" );
 	}
 	
-	public void getToolBars() {
-		//no implementation yet
+	public ToolbarsMenu getToolbarsMenu() {
+		return toolbarsMenu;
 	}
+
 
 }

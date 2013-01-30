@@ -3,14 +3,34 @@ package org.jsystemtest.integration.utils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.io.StringWriter;
 import java.lang.management.ManagementFactory;
+import java.util.Properties;
 
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import jsystem.framework.FrameworkOptions;
+import jsystem.framework.JSystemProperties;
 import jsystem.framework.common.CommonResources;
+import jsystem.framework.scenario.ScenariosManager;
 import jsystem.utils.FileLock;
+import jsystem.utils.FileUtils;
+
+import org.apache.xpath.XPathAPI;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public class JSystemTestUtils {
 
@@ -141,12 +161,11 @@ public class JSystemTestUtils {
 
 		return sb.toString();
 	}
-	
-	
+
 	/**
-	 * Use this method if you shutdown jsystem but not the jvm.
-	 * In that case the the .runner.lock file will prevent you from starting jsystem again
-	 * there for you must release the lock on that file.
+	 * Use this method if you shutdown jsystem but not the jvm. In that case the
+	 * the .runner.lock file will prevent you from starting jsystem again there
+	 * for you must release the lock on that file.
 	 * 
 	 * @throws Exception
 	 */
@@ -154,24 +173,24 @@ public class JSystemTestUtils {
 		FileLock lock = FileLock.getFileLock(CommonResources.LOCK_FILE);
 		lock.releaseLock();
 	}
-	
+
 	public static boolean killRunnerProcess() throws Exception {
 
 		String pid = ManagementFactory.getRuntimeMXBean().getName();
 		pid = pid.split("@")[0];
-		//jemmySupport.report("pid is " + pid);
+		// jemmySupport.report("pid is " + pid);
 		if ("linux".equalsIgnoreCase(System.getProperty("os.name"))) {
 			String s = null;
 			Process p = Runtime.getRuntime().exec("kill -9 " + pid);
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
 			if ((s = stdError.readLine()) != null) {
-				//jemmySupport.report("an error occured trying to execute kill process.");
-				//jemmySupport.report("the error details are: " + s);
-				//jemmySupport.report("error were printed to error stream.");
+				// jemmySupport.report("an error occured trying to execute kill process.");
+				// jemmySupport.report("the error details are: " + s);
+				// jemmySupport.report("error were printed to error stream.");
 				return false;
 			}
-		//	jemmySupport.report("on linux, returning successfully after kill the process");
+			// jemmySupport.report("on linux, returning successfully after kill the process");
 			return true;
 		} else if ("windows".equalsIgnoreCase(System.getProperty("os.name"))) {
 			String s = null;
@@ -179,15 +198,139 @@ public class JSystemTestUtils {
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
 			if ((s = stdError.readLine()) != null) {
-				//jemmySupport.report("an error occured trying to execute kill process.");
-				//jemmySupport.report("the error details are: " + s);
-				//jemmySupport.report("error were printed to error stream.");
+				// jemmySupport.report("an error occured trying to execute kill process.");
+				// jemmySupport.report("the error details are: " + s);
+				// jemmySupport.report("error were printed to error stream.");
 				return false;
 			}
-			//jemmySupport.report("on linux, returning successfully after kill the process");
+			// jemmySupport.report("on linux, returning successfully after kill the process");
 			return true;
 		} else {
 			throw new Exception("system is not supported yes.\nonly Windows and Linux are supported");
+		}
+	}
+
+	/**
+	 * using ScenarionManager class and counts the enables tests
+	 * 
+	 * @return number of mapped tests
+	 */
+	public static int getMappedTestCount() {
+		return ScenariosManager.getInstance().getCurrentScenario().getEnabledTestsIndexes().length;
+	}
+
+	/**
+	 * using ScenarionManager class to get indexes array of tests that are
+	 * mapped
+	 * 
+	 * @return array representing the tests that are mapped
+	 */
+	public static int[] getMappedTestIndexes() {
+		return ScenariosManager.getInstance().getCurrentScenario().getEnabledTestsIndexes();
+	}
+
+	/**
+	 * get path for report dir
+	 */
+	public Properties getSummaryProperties() throws Exception {
+		String dir = System.getProperty("user.dir") + File.separator + "summary.properties";
+		return FileUtils.loadPropertiesFromFile(dir);
+	}
+
+	public static String getReportDir() throws Exception {
+		return System.getProperty("user.dir") + File.separator + JSystemProperties.getInstance().getPreference(FrameworkOptions.LOG_FOLDER)
+				+ File.separator + "current" + File.separator + "reports.0.xml";
+	}
+
+	public static boolean checkXmlTestAttribute(int testIndex, String attribute, String value) throws Exception {
+		File reportXml = new File(getReportDir());
+		if (!reportXml.exists()) {
+			System.out.println("checkXmlTestAttribute file, reporter xml file: " + reportXml.getAbsolutePath() + ", wasn't found");
+			throw new FileNotFoundException(reportXml.getAbsolutePath());
+		}
+		Document doc = FileUtils.readDocumentFromFile(reportXml);
+		return isXPathAttribContainText(doc, "/reports/test[" + testIndex + "]", attribute, value);
+	}
+
+	public static boolean checkNumberOfTestsPass(int numberOfTests) throws Exception {
+		File reportXml = new File(getReportDir());
+		if (!reportXml.exists()) {
+			System.out.println("checkTestPath file, reporter xml file: " + reportXml.getAbsolutePath() + ", wasn't found");
+
+			throw new FileNotFoundException(reportXml.getAbsolutePath());
+		}
+		Document doc = FileUtils.readDocumentFromFile(reportXml);
+		return isXPathNumberOfElementsEquals(doc, "/reports/test[@status=\"true\"]", numberOfTests);
+	}
+
+	private static boolean isXPathAttribContainText(Document doc, String xpath, String attrib, String value) {
+
+		String message = "XPathAttribContainText: xpath: " + xpath + ",attrib: " + attrib + ", value: " + value;
+
+		try {
+			Source source = new DOMSource(doc);
+			StringWriter stringWriter = new StringWriter();
+			Result result = new StreamResult(stringWriter);
+			Transformer xformer = TransformerFactory.newInstance().newTransformer();
+			// pretty format the XML output
+			xformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			xformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+			// get the XML in a String
+			xformer.transform(source, result);
+
+		} catch (Exception e) {
+			return false;
+		}
+
+		try {
+			NodeList nodeList = XPathAPI.selectNodeList(doc, xpath);
+			int elementsFound = nodeList.getLength();
+			if (elementsFound > 0) {
+				String text = ((Element) nodeList.item(0)).getAttribute(attrib);
+				if (text.indexOf(value) >= 0) {
+					return true;
+				} else {
+
+					System.out.println("message: " + message + " actual: " + text);
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	private static boolean isXPathNumberOfElementsEquals(Document doc, String xpath, int expectedNumber) {
+
+		try {
+			Source source = new DOMSource(doc);
+			StringWriter stringWriter = new StringWriter();
+			Result result = new StreamResult(stringWriter);
+			Transformer xformer = TransformerFactory.newInstance().newTransformer();
+			// pretty format the XML output
+			xformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			xformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+			// get the XML in a String
+			xformer.transform(source, result);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		try {
+			NodeList nodeList = XPathAPI.selectNodeList(doc, xpath);
+			int elementsFound = nodeList.getLength();
+			if (elementsFound == expectedNumber) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

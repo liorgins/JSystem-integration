@@ -71,6 +71,7 @@
 				<exclude>*:filters:*</exclude>
 				<exclude>*:commons-compress:*</exclude>
 				<exclude>*:xz:*</exclude>
+				<exclude>*:jsystem-integration-test:*</exclude>
 			</excludes>
 		</dependencySet>
 

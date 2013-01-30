@@ -1,22 +1,11 @@
 package org.jsystemtest.integration.pageobjects;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-
-import jsystem.utils.BackgroundRunnable;
-import jsystem.utils.StringUtils;
-
 import org.jsystemtest.integration.NameChooser;
 import org.jsystemtest.integration.TooltipChooser;
-import org.netbeans.jemmy.operators.DialogOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.Operator.StringComparator;
-import org.python.modules.thread;
 
 public class MainToolBar extends AbstractPageObject {
 
@@ -67,6 +56,10 @@ public class MainToolBar extends AbstractPageObject {
 
 	public void pushStopButton() {
 		new JButtonOperator(app, new TooltipChooser(jmap.getStopButton())).push();
+	}
+
+	public void clickFreezeOnFail() {
+		new JCheckBoxOperator(app, new TooltipChooser("Freeze on Fail")).push();
 	}
 
 	public void waitEnableAndClick(JButtonOperator jButtonOperator) throws InterruptedException {

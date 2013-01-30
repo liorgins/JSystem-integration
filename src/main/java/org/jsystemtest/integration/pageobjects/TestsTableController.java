@@ -2,6 +2,8 @@ package org.jsystemtest.integration.pageobjects;
 
 import jsystem.framework.FrameworkOptions;
 import jsystem.framework.JSystemProperties;
+import jsystem.treeui.params.ParametersPanel;
+import jsystem.treeui.teststable.ScenarioTreeNode;
 
 import org.jsystemtest.integration.TooltipChooser;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -70,4 +72,9 @@ public class TestsTableController extends AbstractPageObject {
 		new JButtonOperator(appOperator, new TooltipChooser(jmap.getPublishEventButton())).clickMouse();
 		Thread.sleep(500);
 	}
+	
+	public FlowControlToolbar getFlowControlToolbar() {
+		return new FlowControlToolbar(appOperator); 
+	}
+	
 }

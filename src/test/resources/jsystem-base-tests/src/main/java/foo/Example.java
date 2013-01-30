@@ -112,14 +112,29 @@ public class Example extends SystemTestCase4 {
 	}
 	
 	/**
-	 * test with javadoc
+	 * Test with javadoc
 	 */
 	@Test
 	@TestProperties(name = "Test with javadoc")
 	public void testWithJavadoc() {
 
 	}
-
+	
+	/**
+	 * test that runs 10 seconds
+	 */
+	@Test
+	@TestProperties(name = "Test that runs 10 seconds")
+	public void testForTenSec() throws Exception {
+		Thread.sleep(10000);
+	}
+	
+	@Test
+	@TestProperties(name = "test that getCurrentTestFolder works")
+	public void testGetCurrentTestFolder() {
+		report.step(report.getCurrentTestFolder());
+	}
+	
 
 	public File getFile() {
 		return file;

@@ -57,7 +57,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	public void postConstuct() {
 		System.out.println("***************************************JSYSTEMAPPLICATION: In POST CONSTRUCT");
 		
-		setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY+"\\target", JSystemApplication.DEFAULT_SUT_FILE);
+		setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY + File.separator  + "target" + File.separator  + "test-classes" + File.separator  + "jsystem-base-tests" + File.separator  + "target", JSystemApplication.DEFAULT_SUT_FILE);
 		
 		setJSystemOptionalProperties(new PropertyPair(FrameworkOptions.AUTO_DELETE_NO_CONFIRMATION, JSystemApplication.TRUE),
 									 new PropertyPair(FrameworkOptions.AUTO_SAVE_NO_CONFIRMATION, JSystemApplication.TRUE),
@@ -74,7 +74,6 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		
 		System.out.println("Cleanning generated scenarios");
 		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
-
 		System.out.println("Cleanning generated logs and properties files");
 		JSystemTestUtils.cleanPropertiesAndLogs(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}
@@ -98,6 +97,12 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		}
 	}
 
+	public void pressKey(int keyCode) throws InterruptedException {
+		app.pressKey(keyCode);
+		Thread.sleep(500);
+	}
+	
+	
 	public void exitThroughMenu()  {
 		getMenuBar().getFileMenu().Exit();
 
@@ -224,6 +229,10 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	public void endContainer(JTestContainer container) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public void waitSimple(long time) throws InterruptedException {
+		Thread.sleep(time);
 	}
 
 	public void waitForRunEnd() {
@@ -361,6 +370,13 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 			System.out.println("Could not create new sut file " + sutName + ".xml");
 		}
 		getToolBar().pushRefreshButton();
+	}
+	
+	public void waitForFreezeDialog() throws Exception {
+		
+		JDialogOperator dialog = new JDialogOperator(jmap.getFreezeDialogWin());
+		Thread.sleep(1000);
+		new JButtonOperator(dialog, new org.jsystemtest.integration.TipNameButtonFinder(jmap.getFreezeDialogButton())).push();
 	}
 
 }

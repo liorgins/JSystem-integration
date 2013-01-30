@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.swing.tree.TreePath;
 
+import jsystem.treeui.teststable.ScenarioTreeNode;
 import jsystem.utils.StringUtils;
 
 import org.jsystemtest.integration.TestType;
@@ -37,7 +38,13 @@ public class ScenarioTree extends AbstractPageObject {
 		String menuItem = mark ? jmap.getScenarioMarkAsKnownIssueMenuItem() : jmap.getScenarioUnMarkAsKnownIssueMenuItem();
 		pushMenuItemForTest(testIndex, menuItem);
 	}
+	
+	public void markAsEditLocalOnly(int testIndex) throws Exception {
+		pushMenuItemForTest(testIndex, jmap.getScenarioEditOnlyLocallyItem());
+	}
 
+	
+	
 	/**
 	 * will open the selected sub scenario in it's own root
 	 * 
@@ -190,6 +197,26 @@ public class ScenarioTree extends AbstractPageObject {
 			throw new Exception("Path not found node: " + node + ", parrent: " + parentNode);
 		}
 		return foundPath;
+	}
+	
+	/**
+	 * This method gets an array of indexes and go deep inside the scenario tree
+	 * according to the indexes and return the selected ScenarioTreeNode
+	 * 
+	 * @param indexes
+	 * @return
+	 */
+	public ScenarioTreeNode selectTestByIndexesPath(int... indexes) throws Exception {
+		ScenarioTreeNode currentScenarioTreeNode = (ScenarioTreeNode) scenarioTreeOperator.getRoot();
+		TreePath PathBuild = new TreePath(currentScenarioTreeNode);
+		for (int i = 0; i < indexes.length; i++) {
+
+			currentScenarioTreeNode = (ScenarioTreeNode) currentScenarioTreeNode.getChildAt(indexes[i]);
+			PathBuild = PathBuild.pathByAddingChild(currentScenarioTreeNode);
+		}
+		scenarioTreeOperator.clickOnPath(PathBuild);
+
+		return currentScenarioTreeNode;
 	}
 	
 }

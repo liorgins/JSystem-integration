@@ -1,5 +1,11 @@
 package org.jsystemtest.integration.pageobjects;
 
+import javax.swing.JTable;
+
+import jsystem.treeui.params.ParametersPanel;
+import jsystem.treeui.params.ParamsTableModel;
+import jsystem.treeui.teststable.ScenarioTreeNode;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
@@ -55,6 +61,27 @@ public class TestInfoTab extends AbstractPageObject {
 		paramTab.selectPage(tab);
 		return new JTableOperator(paramTab);
 	}
+	
+	
+	/**
+	 * Checks if the parameters of the scenario with the one based index are
+	 * editable
+	 * 
+	 * @param testIndexOneBased
+	 * @return
+	 * @throws Exception
+	 */
+	public Boolean isScenarioFieldsAreEditable(ScenarioTreeNode scenarioNode) throws Exception {
+		
+		JTableOperator paramTable = openParamTabAndGetParamTable("general", infoTabbedPaneOperator);
+		JTable jTable = (JTable) paramTable.getSource();
+		ParamsTableModel paramsTableModel = (ParamsTableModel) jTable.getModel();
+		ParametersPanel parametersPanel = paramsTableModel.getParameterPanel();
+		return !parametersPanel.isParametersDisable(scenarioNode);
+
+	}
+	
+	
 
 	private void setTableCell(JTableOperator paramTable, int row, int column, String value, boolean isCombo) throws Exception {
 		int i = 0;

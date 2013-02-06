@@ -19,6 +19,7 @@
 target
 lib
 thirdparty
+test-output
 
 #JSystem files
 jsystem.properties

@@ -1,14 +1,14 @@
 package org.jsystemtest.integration.jregression;
 
 import jsystem.extensions.report.xml.XmlReportHandler;
-import jsystem.framework.TestProperties;
-import junit.framework.Assert;
 
+import org.jsystemtest.infra.assertion.Assert;
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.TestType;
 import org.jsystemtest.integration.pageobjects.TestInfoTab;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
-import org.junit.Test;
+import org.testng.annotations.Test;
+
 
 public class ITScenarioFunctionality extends AbstractITJSystem {
 
@@ -26,7 +26,6 @@ public class ITScenarioFunctionality extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
-	@TestProperties(name = "Check prevent adding scenario to itself")
 	public void checkPreventAddingScenarioToItself() throws Exception {
 
 		app.createScenario("checkPreventAddingScenarioToItselfScnario");
@@ -36,7 +35,7 @@ public class ITScenarioFunctionality extends AbstractITJSystem {
 		testsTreeTab.addTest("checkPreventAddingScenarioToItselfScnario", TestType.SCENARIO.getType(), 1);
 
 		boolean isWarningOpened = app.checkIfWarningDialogOpenedAndCloseIt();
-		Assert.assertEquals(true, isWarningOpened);
+		Assert.assertEquals(isWarningOpened, true);
 	}
 
 	/**
@@ -54,7 +53,6 @@ public class ITScenarioFunctionality extends AbstractITJSystem {
 	 * @throws Exception
 	 * */
 	@Test
-	@TestProperties(name = "Save as")
 	public void saveAs() throws Exception {
 
 		app.createScenario(subScenarioName);
@@ -85,19 +83,19 @@ public class ITScenarioFunctionality extends AbstractITJSystem {
 		app.getTestTableController().getScenarioTree().selectTestByRow(0);
 		app.saveScenarioAs(newScenarioName);
 		final String currentScenario = app.getTestTableController().getCurrentScenarioName();
-		Assert.assertEquals(newScenarioName, currentScenario);
+		Assert.assertEquals(currentScenario, newScenarioName);
 
 		app.getTestTableController().getScenarioTree().selectTestByRow(4);
 		String actualValue = testInfoTab.getTestParameter("General", "str");
-		Assert.assertEquals(expectedNewValue, actualValue);
+		Assert.assertEquals(actualValue, expectedNewValue);
 
 		app.getTestsTreeController().getReporterTab().pushInitReportersButton();
 		app.playAndWaitForRunEnd();
-		Assert.assertEquals(7, XmlReportHandler.getInstance().getNumberOfTestsPass());
+		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsPass(),7);
 
 		app.openScenario(originalScenarioName);
 		app.getTestTableController().getScenarioTree().selectTestByRow(4);
 		actualValue = testInfoTab.getTestParameter("General", "str");
-		Assert.assertEquals(expectedOriginalValue, actualValue);
+		Assert.assertEquals(actualValue, expectedOriginalValue);
 	}
 }

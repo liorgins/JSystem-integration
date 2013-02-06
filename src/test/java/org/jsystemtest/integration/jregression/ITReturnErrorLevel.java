@@ -2,27 +2,29 @@ package org.jsystemtest.integration.jregression;
 
 import java.io.File;
 
-import jsystem.framework.TestProperties;
 import jsystem.framework.report.RunnerListenersManager;
-import junit.framework.Assert;
 
+import org.jsystemtest.infra.assertion.Assert;
+import org.jsystemtest.infra.report.Reporter;
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.NoExitSecurityManager;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 
 public class ITReturnErrorLevel extends AbstractITJSystem {
 
 	private static int errorLevelpos = -1;
 	private static File logFile;
 
-	@Before
+	@BeforeMethod
 	public void before() throws Exception {
-		System.out.println("**************** @Before From Test Class");
+		Reporter.log("Configure SecurityManager that we can catch the System.exit() exception");
+	
 		RunnerListenersManager.hadFailure = false;
 		RunnerListenersManager.hadWarning = false;
 		System.setSecurityManager(new NoExitSecurityManager());
@@ -41,10 +43,9 @@ public class ITReturnErrorLevel extends AbstractITJSystem {
 	 * @throws Throwable
 	 */
 	@Test
-	@TestProperties(name = "Failure error level")
 	public void failureErrorLevel() throws Exception {
 
-		System.out.println("Creating and running scenario with error tests");
+		Reporter.log("Creating and running scenario with error tests");
 		app.createScenario("FailureErrorLevel");
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
 		testsTreeTab.addTest("reportFailure", "Example", 1);
@@ -53,7 +54,7 @@ public class ITReturnErrorLevel extends AbstractITJSystem {
 
 		app.playAndWaitForRunEnd();
 
-		System.out.println("Exiting application and asserting error level");
+		Reporter.log("Exiting application and asserting error level");
 
 		logFile = new File(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.LOCAL_JSYSTEM_LOG_FILE_NAME);
 		long mark = logFile.length();
@@ -74,10 +75,9 @@ public class ITReturnErrorLevel extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
-	@TestProperties(name = "Warning error level")
 	public void warningErrorLevel() throws Exception {
 
-		System.out.println("Creating and running scenario with error tests");
+		Reporter.log("Creating and running scenario with error tests");
 		app.createScenario("WarningErrorLevel");
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
 		testsTreeTab.addTest("reportWarning", "Example", 1);
@@ -85,7 +85,7 @@ public class ITReturnErrorLevel extends AbstractITJSystem {
 
 		app.playAndWaitForRunEnd();
 
-		System.out.println("Exiting application and asserting error level");
+		Reporter.log("Exiting application and asserting error level");
 
 		logFile = new File(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.LOCAL_JSYSTEM_LOG_FILE_NAME);
 		long mark = logFile.length();
@@ -105,17 +105,16 @@ public class ITReturnErrorLevel extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
-	@TestProperties(name = "Success error level")
 	public void successErrorLevel() throws Exception {
 
-		System.out.println("Creating and running scenario with only passing tests");
+		Reporter.log("Creating and running scenario with only passing tests");
 		app.createScenario("PassErrorLevel");
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
 		testsTreeTab.addTest("reportSuccess", "Example", 3);
 
 		app.playAndWaitForRunEnd();
 
-		System.out.println("Exiting application and asserting error level");
+		Reporter.log("Exiting application and asserting error level");
 
 		logFile = new File(JSystemApplication.CURRENT_WORKING_DIRECTORY, JSystemApplication.LOCAL_JSYSTEM_LOG_FILE_NAME);
 		long mark = logFile.length();
@@ -135,7 +134,7 @@ public class ITReturnErrorLevel extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	private void checkErrorLevel(long mark, String exitCode) throws Exception {
-		System.out.println("************** Waiting for the logs to get updated");
+		Reporter.log("Waiting for the logs to get updated");
 		Thread.sleep(2000);
 
 		if (logFile.exists()) {
@@ -143,15 +142,16 @@ public class ITReturnErrorLevel extends AbstractITJSystem {
 			errorLevelpos = newText.indexOf("System exit " + exitCode);
 		}
 
-		System.out.println("**************** FOUND ERROR CODE AT: " + errorLevelpos);
-		Assert.assertNotSame(-1, errorLevelpos);
+		Reporter.log("Found error level code at: " + errorLevelpos + "as expected!");
+		Assert.assertNotSame(errorLevelpos, -1);
 
 	}
 
-	@After
+	@AfterMethod
 	public void after() throws Exception {
-		System.out.println("************* @After from Test Class");
+		Reporter.log("Setting SecurityManamger to null");
 		System.setSecurityManager(null);
+		Reporter.log("Relaese runner lock");
 		JSystemTestUtils.releaseRunnerLock();
 
 	}

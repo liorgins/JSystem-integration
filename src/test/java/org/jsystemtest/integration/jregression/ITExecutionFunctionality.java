@@ -1,12 +1,13 @@
 package org.jsystemtest.integration.jregression;
 
 import jsystem.extensions.report.xml.XmlReportHandler;
-import jsystem.framework.TestProperties;
-import junit.framework.Assert;
 
+
+import org.jsystemtest.infra.assertion.Assert;
 import org.jsystemtest.integration.AbstractITJSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 
 public class ITExecutionFunctionality extends AbstractITJSystem {
 
@@ -15,7 +16,7 @@ public class ITExecutionFunctionality extends AbstractITJSystem {
 	 * 
 	 * @throws Exception
 	 */
-	@Before
+	@BeforeMethod
 	public void fixture() throws Exception {
 
 		app.openScenario("default");
@@ -32,10 +33,8 @@ public class ITExecutionFunctionality extends AbstractITJSystem {
 	 * that 2 tests run and 0 passes.
 	 * 
 	 * @throws Exception
-	 * @params.include
 	 */
 	@Test
-	@TestProperties(name = "test freeze on fail functionlity")
 	public void FreezeOnFail() throws Exception {
 
 		
@@ -47,12 +46,12 @@ public class ITExecutionFunctionality extends AbstractITJSystem {
 
 		app.waitForFreezeDialog();
 		
-		Assert.assertEquals(1, XmlReportHandler.getInstance().getNumberOfTests());
+		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTests(), 1);
 		
 		app.getToolBar().clickFreezeOnFail();
 		app.playAndWaitForRunEnd();
 		
-		Assert.assertEquals(2, XmlReportHandler.getInstance().getNumberOfTests());
+		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTests(), 2);
 
 	}
 }

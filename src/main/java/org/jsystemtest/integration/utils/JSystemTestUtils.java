@@ -72,7 +72,8 @@ public class JSystemTestUtils {
 				return name.endsWith(".properties") || name.endsWith(".properties.bu") || name.endsWith(".log");
 			}
 		};
-		for (File file : projectDir.listFiles(genFilter)) {
+		for
+		(File file : projectDir.listFiles(genFilter)) {
 			System.out.println(file.getName() + " has been deleted seccessfuly from project root");
 			file.delete();
 

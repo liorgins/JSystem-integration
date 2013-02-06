@@ -1,11 +1,10 @@
 package org.jsystemtest.integration.jregression;
 
-import jsystem.framework.TestProperties;
-import junit.framework.Assert;
-
+import org.jsystemtest.infra.assertion.Assert;
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
-import org.junit.Test;
+import org.testng.annotations.Test;
+
 
 public class ITTestTreeFunctionality extends AbstractITJSystem {
 
@@ -22,7 +21,6 @@ public class ITTestTreeFunctionality extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
-	@TestProperties(name = "Building block info view")
 	public void buildingBlockInfoView() throws Exception {
 		analyzeTestDocumentation();
 		analyzeScenarioDocumentation();
@@ -37,21 +35,20 @@ public class ITTestTreeFunctionality extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
-	@TestProperties(name = "Search box")
 	public void searchBox() throws Exception {
 
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
 		int searchCount = testsTreeTab.search("report");
-		Assert.assertEquals(5, searchCount);
+		Assert.assertEquals(searchCount, 5);
 
 		searchCount = testsTreeTab.search("with");
-		Assert.assertEquals(5, searchCount);
+		Assert.assertEquals(searchCount, 4);
 
 		searchCount = testsTreeTab.search("with AND report");
-		Assert.assertEquals(1, searchCount);
+		Assert.assertEquals(searchCount, 1);
 
 		searchCount = testsTreeTab.search("with OR report OR default");
-		Assert.assertEquals(10, searchCount);
+		Assert.assertEquals(searchCount, 10);
 		testsTreeTab.search("");
 	}
 
@@ -70,7 +67,7 @@ public class ITTestTreeFunctionality extends AbstractITJSystem {
 		String bbInfo = testsTreeTab.getCurrentBuildingBlockInformation();
 		bbInfo = bbInfo.replaceAll("\n", "");
 
-		Assert.assertEquals(true, bbInfo.contains(expectedTestDocumentation));
+		Assert.assertEquals(bbInfo.contains(expectedTestDocumentation), true);
 	}
 
 	/**
@@ -94,7 +91,7 @@ public class ITTestTreeFunctionality extends AbstractITJSystem {
 
 		bbInfo = bbInfo.replaceAll("\n", "");
 		boolean contains = bbInfo.contains(expectedScenarioUserDoc);
-		Assert.assertEquals(true, contains);
+		Assert.assertEquals(contains, true);
 	}
 
 }

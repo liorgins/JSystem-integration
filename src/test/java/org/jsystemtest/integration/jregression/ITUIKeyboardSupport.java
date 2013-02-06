@@ -2,18 +2,15 @@ package org.jsystemtest.integration.jregression;
 
 import java.awt.event.KeyEvent;
 
-import jsystem.extensions.report.xml.XmlReportHandler;
-import jsystem.framework.TestProperties;
-import jsystem.framework.scenario.ScenariosManager;
-import junit.framework.Assert;
-
+import org.jsystemtest.infra.assertion.Assert;
+import org.jsystemtest.infra.report.Reporter;
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class ITUIKeyboardSupport extends AbstractITJSystem {
 	
@@ -23,7 +20,7 @@ public class ITUIKeyboardSupport extends AbstractITJSystem {
 	 * 
 	 * @throws Exception
 	 */
-	@Before
+	@BeforeMethod
 	public void fixture() throws Exception {
 		
 		app.openScenario("default");
@@ -46,19 +43,18 @@ public class ITUIKeyboardSupport extends AbstractITJSystem {
 	 */
 	
 	@Test
-	@TestProperties(name = "Map tests with 'Space' key")
 	public void mapTestsUsigKeys() throws Exception {
 		
 		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
 		int currentMappedTestCount = JSystemTestUtils.getMappedTestCount();
-		Assert.assertEquals(2, currentMappedTestCount);
+		Assert.assertEquals(currentMappedTestCount, 2);
 
 		scenarioTree.selectTestByRow(1);
 		app.pressKey(KeyEvent.VK_SPACE);
 		currentMappedTestCount--;
 		app.getToolBar().pushSaveScenarioButton();
 		
-		Assert.assertEquals(currentMappedTestCount, JSystemTestUtils.getMappedTestCount());
+		Assert.assertEquals(JSystemTestUtils.getMappedTestCount(), currentMappedTestCount);
 		
 		scenarioTree.selectTestByRow(1);
 		app.pressKey(KeyEvent.VK_SPACE);
@@ -66,14 +62,10 @@ public class ITUIKeyboardSupport extends AbstractITJSystem {
 		Thread.sleep(500);
 		app.getToolBar().pushSaveScenarioButton();
 		
-		Assert.assertEquals(currentMappedTestCount, JSystemTestUtils.getMappedTestCount());
+		Assert.assertEquals(JSystemTestUtils.getMappedTestCount(), currentMappedTestCount);
 	}
 
-	@After
-	public void clean() {
-		System.out.println("Cleanning generated scenarios");
-		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
-	}
+	
 	
 	/**
 	 * tests delete test using keys
@@ -86,20 +78,26 @@ public class ITUIKeyboardSupport extends AbstractITJSystem {
 	 */
 	
 	@Test
-	@TestProperties(name = "Map tests with 'Delete' key")
+
 	public void deleteTestUsingKeys() throws Exception {
 		
 		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
 		int currentMappedTestCount = JSystemTestUtils.getMappedTestCount();
-		Assert.assertEquals(2, currentMappedTestCount);
+		Assert.assertEquals(currentMappedTestCount, 2);
 
 		scenarioTree.selectTestByRow(1);
 		app.pressKey(KeyEvent.VK_DELETE);
 		currentMappedTestCount--;
 		app.getToolBar().pushSaveScenarioButton();
 		
-		Assert.assertEquals(currentMappedTestCount, JSystemTestUtils.getMappedTestCount());
+		Assert.assertEquals(JSystemTestUtils.getMappedTestCount(), currentMappedTestCount);
 		
+	}
+	
+	@AfterMethod
+	public void clean() {
+		Reporter.log("Cleanning generated scenarios");
+		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}
 	
 }

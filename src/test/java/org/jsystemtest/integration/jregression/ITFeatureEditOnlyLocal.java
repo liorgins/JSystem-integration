@@ -1,14 +1,16 @@
 package org.jsystemtest.integration.jregression;
 
-import jsystem.framework.TestProperties;
+
 import jsystem.framework.scenario.ScenariosManager;
 import jsystem.treeui.teststable.ScenarioTreeNode;
-import junit.framework.Assert;
 
+
+import org.jsystemtest.infra.assertion.Assert;
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.pageobjects.TestsTableController;
 import org.jsystemtest.integration.pageobjects.TestsTreeController;
-import org.junit.Test;
+import org.testng.annotations.Test;
+
 
 public class ITFeatureEditOnlyLocal extends AbstractITJSystem{
 
@@ -19,7 +21,6 @@ public class ITFeatureEditOnlyLocal extends AbstractITJSystem{
 	 * 7. Add the first scenario to this scenario 8. check if its uneditable
 	 */
 	@Test
-	@TestProperties(name = "Test local only edit feature basic operation.")
 	public void editOnlyLocalFeatureBasicOperation() throws Exception {
 	
 		final String subEditOnlyLocalScenarioName = "Local only editable scenario";
@@ -32,7 +33,7 @@ public class ITFeatureEditOnlyLocal extends AbstractITJSystem{
 		TestsTableController testsTableController = app.getTestTableController();
 		testsTableController.getScenarioTree().markAsEditLocalOnly(0);
 		
-		Assert.assertEquals(true, ScenariosManager.getInstance().getCurrentScenario().isEditLocalOnly());
+		Assert.assertEquals(ScenariosManager.getInstance().getCurrentScenario().isEditLocalOnly(), true);
 		
 		app.getToolBar().pushSaveScenarioButton();
 		
@@ -43,7 +44,7 @@ public class ITFeatureEditOnlyLocal extends AbstractITJSystem{
 		ScenarioTreeNode scenarioTreeNode = testsTableController.getScenarioTree().selectTestByIndexesPath(0);
 		
 		boolean isEditable = testsTreeController.getTestInfoTab().isScenarioFieldsAreEditable(scenarioTreeNode);
-		Assert.assertEquals(false, isEditable);
+		Assert.assertEquals(isEditable, false);
 	
 	}
 }

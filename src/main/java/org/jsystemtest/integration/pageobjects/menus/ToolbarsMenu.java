@@ -13,8 +13,9 @@ public class ToolbarsMenu extends AbstractPageObject{
 		this.jMenuOperator = jMenuOperator;
 	}
 	
-	public void changeToolbarState(String toolbarName) {
+	public void changeToolbarState(String toolbarName) throws InterruptedException {
 		jMenuOperator.pushMenuNoBlock("View|" + TOOLBARS + "|" + toolbarName);
+		Thread.sleep(1000);
 	}
 	
 	public boolean getToolbarState(String toolbarName) throws Exception {

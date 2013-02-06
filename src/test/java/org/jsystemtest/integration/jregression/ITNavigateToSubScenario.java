@@ -1,17 +1,18 @@
 package org.jsystemtest.integration.jregression;
 
-import jsystem.framework.TestProperties;
-import junit.framework.Assert;
 
+
+import org.jsystemtest.infra.assertion.Assert;
+import org.jsystemtest.infra.report.Reporter;
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.TestType;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestsTableController;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class ITNavigateToSubScenario extends AbstractITJSystem {
 
@@ -22,7 +23,7 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 	private final String scenario4 = "Scenario4";
 	private final String midScenario = "midSceanrio";
 
-	@Before
+	@BeforeMethod
 	public void classfixture() throws Exception {
 		app.createScenario(scenario1);
 		app.createScenario(scenario2);
@@ -49,36 +50,35 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 	 */
 	
 	@Test
-	@TestProperties(name = "Move between created scenarios")
 	public void moveBetweenCreatedScenarios() throws Exception {
 
 		TestsTableController testsTableController = app.getTestTableController();
 		testsTableController.getScenarioTree().selectTestByRow(0);
-		Assert.assertEquals(scenario4, testsTableController.getCurrentScenarioName());
-		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD));
-		Assert.assertEquals(false, testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD));
+		Assert.assertEquals(testsTableController.getCurrentScenarioName(), scenario4);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD), true);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD), false);
 
 		testsTableController.pushNavigateToScenarioButton(TestsTableController.BACKWARD);
 		testsTableController.pushNavigateToScenarioButton(TestsTableController.BACKWARD);
-		Assert.assertEquals(scenario2, testsTableController.getCurrentScenarioName());
-		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD));
-		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD));
-
-		testsTableController.pushNavigateToScenarioButton(TestsTableController.FORWARD);
-		Assert.assertEquals(scenario3, testsTableController.getCurrentScenarioName());
-		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD));
-		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD));
+		Assert.assertEquals(testsTableController.getCurrentScenarioName(),scenario2);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD), true);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD), true);
 
 		testsTableController.pushNavigateToScenarioButton(TestsTableController.FORWARD);
-		Assert.assertEquals(scenario4, testsTableController.getCurrentScenarioName());
-		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD));
-		Assert.assertEquals(false, testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD));
+		Assert.assertEquals(testsTableController.getCurrentScenarioName(),scenario3);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD), true);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD), true);
+
+		testsTableController.pushNavigateToScenarioButton(TestsTableController.FORWARD);
+		Assert.assertEquals(testsTableController.getCurrentScenarioName(), scenario4);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD), true);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD), false);
 
 		testsTableController.pushNavigateToScenarioButton(TestsTableController.BACKWARD);
 		testsTableController.pushNavigateToScenarioButton(TestsTableController.BACKWARD);
-		Assert.assertEquals(scenario2, testsTableController.getCurrentScenarioName());
-		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD));
-		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD));
+		Assert.assertEquals(testsTableController.getCurrentScenarioName(), scenario2);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD), true);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD), true);
 	}
 
 	/**
@@ -90,7 +90,6 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 	 */
 	
 	@Test
-	@TestProperties(name = "Go to dcenario2 and create new scenario and check that 3 and 4 no longer exist")
 	public void goToScenario2AndCreateNewScenarioAndCheckThat3and4NoLongerExist() throws Exception {
 
 		TestsTableController testsTableController = app.getTestTableController();
@@ -98,17 +97,17 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 		testsTableController.pushNavigateToScenarioButton(TestsTableController.BACKWARD);
 		testsTableController.pushNavigateToScenarioButton(TestsTableController.BACKWARD);
 		
-		Assert.assertEquals(scenario2, testsTableController.getCurrentScenarioName());
+		Assert.assertEquals(testsTableController.getCurrentScenarioName(), scenario2);
 
 		app.createScenario(midScenario);
-		Assert.assertEquals(false, testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD));
-		Assert.assertEquals(true, testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD));
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.FORWARD), false);
+		Assert.assertEquals(testsTableController.isNavigateButtonEnabled(TestsTableController.BACKWARD), true);
 
 		testsTableController.pushNavigateToScenarioButton(TestsTableController.BACKWARD);
-		Assert.assertEquals(scenario2, testsTableController.getCurrentScenarioName());
+		Assert.assertEquals(testsTableController.getCurrentScenarioName(), scenario2);
 
 		testsTableController.pushNavigateToScenarioButton(TestsTableController.FORWARD);
-		Assert.assertEquals(midScenario, testsTableController.getCurrentScenarioName());
+		Assert.assertEquals(testsTableController.getCurrentScenarioName(), midScenario);
 	}
 
 	/**
@@ -121,7 +120,6 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
-	@TestProperties(name = "Create scenario in sceanrio select child scenario and navigate to subScenario")
 	public void createScenarioInSceanrioSelectChildScenarioAndNavigateToSubScenario() throws Exception {
 
 		app.openScenario(scenario1);
@@ -134,18 +132,18 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 		scenarioTree.selectTestByRow(1);
 		scenarioTree.navigateToSubScenario(1);
 
-		Assert.assertEquals(scenario2, testTableController.getCurrentScenarioName());
+		Assert.assertEquals(testTableController.getCurrentScenarioName(), scenario2);
 
 		testTableController.pushNavigateToScenarioButton(TestsTableController.BACKWARD);
-		Assert.assertEquals(scenario1, testTableController.getCurrentScenarioName());
+		Assert.assertEquals(testTableController.getCurrentScenarioName(), scenario1);
 
 		testTableController.pushNavigateToScenarioButton(TestsTableController.FORWARD);
-		Assert.assertEquals(scenario2, testTableController.getCurrentScenarioName());
+		Assert.assertEquals(testTableController.getCurrentScenarioName(), scenario2);
 	}
 	
-	@After
+	@AfterMethod
 	public void cleanGeneratedScenarios() {
-		System.out.println("Cleanning generated scenarios");
+		Reporter.log("Cleanning generated scenarios");
 		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}
 

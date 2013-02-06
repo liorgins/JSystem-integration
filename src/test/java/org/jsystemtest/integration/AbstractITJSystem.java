@@ -1,47 +1,42 @@
 package org.jsystemtest.integration;
 
+import org.jsystemtest.infra.report.Reporter;
 import org.jsystemtest.integration.database.DatabaseSystemModule;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/applicationContext.xml" })
-public class AbstractITJSystem {
-	
+public class AbstractITJSystem extends AbstractTestNGSpringContextTests {
+
 	@Autowired
 	protected DatabaseSystemModule db;
 
 	@Autowired
 	protected JSystemApplication app;
-	
-	@Before
+
+	@BeforeMethod
 	public void setup() throws Exception {
-		
-		System.out.println("@Before from Abstaract Class*****************Try Launch()");
+		Reporter.log("Try Launch()");
 		app.launch();
-	
 	}
-	
+
 	@AfterClass
 	public static void cleanClass() {
-		System.out.println("@AfterClass");
 
-		System.out.println("Cleanning generated scenarios");
+		Reporter.log("Cleanning generated scenarios");
 		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 
-		System.out.println("Cleanning generated logs and properties files");
+		Reporter.log("Cleanning generated logs and properties files");
 		JSystemTestUtils.cleanPropertiesAndLogs(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}
-	
-	@After
+
+	@AfterMethod
 	public void afterFromAbstract() {
-		System.out.println("************* @After from abstarct class");
 	}
 }

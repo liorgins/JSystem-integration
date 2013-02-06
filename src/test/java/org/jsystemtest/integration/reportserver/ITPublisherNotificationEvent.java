@@ -3,13 +3,15 @@ package org.jsystemtest.integration.reportserver;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Assert;
 
+
+import org.jsystemtest.infra.assertion.Assert;
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.pageobjects.TestInfoTab;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class ITPublisherNotificationEvent extends AbstractITJSystem {
 
@@ -20,7 +22,7 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 	 * 
 	 * @throws Exception
 	 */
-	@Before
+	@BeforeMethod
 	public void fixture() throws Exception {
 		uniqeIdentifier = String.valueOf(System.currentTimeMillis());
 		app.createScenario(uniqeIdentifier);
@@ -51,9 +53,9 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 
 		app.playAndWaitForRunEnd();
 
-		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqeIdentifier + "' and propertyKey='Build'").size());
-		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqeIdentifier + "' and propertyKey='Version'").size());
-		Assert.assertNotSame(0, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqeIdentifier + ".xml' and propertyKey='setupName'").size());
+		Assert.assertNotSame(db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqeIdentifier + "' and propertyKey='Build'").size(), 0);
+		Assert.assertNotSame(db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqeIdentifier + "' and propertyKey='Version'").size(), 0);
+		Assert.assertNotSame(db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyValue='" + uniqeIdentifier + ".xml' and propertyKey='setupName'").size(), 0);
 
 	}
 
@@ -80,10 +82,10 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 		List<Map<String, Object>> resultList = db.getResultList(query);
 		Assert.assertNotNull(resultList);
 		Assert.assertEquals(1, db.getResultList(query).size());
-		Assert.assertEquals(new Integer(6), (Integer) resultList.get(0).get("runTest"));
-		Assert.assertEquals(new Integer(3), (Integer) resultList.get(0).get("failTests"));
-		Assert.assertEquals(new Integer(2), (Integer) resultList.get(0).get("warningTests"));
-		Assert.assertEquals(new Integer(1), (Integer) resultList.get(0).get("successTests"));
+		Assert.assertEquals((Integer) resultList.get(0).get("runTest"), new Integer(6));
+		Assert.assertEquals((Integer) resultList.get(0).get("failTests"), new Integer(3));
+		Assert.assertEquals((Integer) resultList.get(0).get("warningTests"), new Integer(2));
+		Assert.assertEquals((Integer) resultList.get(0).get("successTests"),new Integer(1));
 
 	}
 
@@ -111,7 +113,7 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 		String query = "SELECT * FROM jsystem.published_runs_01 WHERE scenarioName='" + uniqeIdentifier + "'";
 		List<Map<String, Object>> resultList = db.getResultList(query);
 		Assert.assertNotNull(resultList);
-		Assert.assertEquals(2, db.getResultList(query).size());
+		Assert.assertEquals(db.getResultList(query).size(), 2);
 
 	}
 
@@ -144,8 +146,8 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 
 		app.playAndWaitForRunEnd();
 
-		Assert.assertEquals(1, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyKey='" + key1 + "' and propertyValue='" + val1 + "'").size());
-		Assert.assertEquals(1, db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyKey='" + key2 + "' and propertyValue='" + val2 + "'").size());
-		Assert.assertEquals(1, db.getResultList("SELECT * FROM jsystem.published_runs_01 WHERE description='" + uniqeIdentifier + "'").size());
+		Assert.assertEquals(db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyKey='" + key1 + "' and propertyValue='" + val1 + "'").size(), 1);
+		Assert.assertEquals(db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyKey='" + key2 + "' and propertyValue='" + val2 + "'").size(), 1);
+		Assert.assertEquals(db.getResultList("SELECT * FROM jsystem.published_runs_01 WHERE description='" + uniqeIdentifier + "'").size(), 1);
 	}
 }

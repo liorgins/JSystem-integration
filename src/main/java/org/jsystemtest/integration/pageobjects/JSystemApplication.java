@@ -56,9 +56,11 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	@PostConstruct
 	public void postConstuct() {
 		System.out.println("***************************************JSYSTEMAPPLICATION: In POST CONSTRUCT");
-		
-		setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY + File.separator  + "target" + File.separator  + "test-classes" + File.separator  + "jsystem-base-tests" + File.separator  + "target", JSystemApplication.DEFAULT_SUT_FILE);
-		
+		if(!CURRENT_WORKING_DIRECTORY.contains("target")){
+			setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY + File.separator  + "target" + File.separator  + "test-classes" + File.separator  + "jsystem-base-tests" + File.separator  + "target", JSystemApplication.DEFAULT_SUT_FILE);
+		} else {
+			setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY + File.separator  + "test-classes" + File.separator  + "jsystem-base-tests" + File.separator  + "target", JSystemApplication.DEFAULT_SUT_FILE);
+		}
 		setJSystemOptionalProperties(new PropertyPair(FrameworkOptions.AUTO_DELETE_NO_CONFIRMATION, JSystemApplication.TRUE),
 									 new PropertyPair(FrameworkOptions.AUTO_SAVE_NO_CONFIRMATION, JSystemApplication.TRUE),
 									 new PropertyPair(FrameworkOptions.SUB_SCENARIO_EDIT, JSystemApplication.TRUE),

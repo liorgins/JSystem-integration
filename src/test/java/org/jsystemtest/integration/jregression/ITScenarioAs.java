@@ -1,9 +1,9 @@
 package org.jsystemtest.integration.jregression;
 
 import jsystem.extensions.report.xml.XmlReportHandler;
-import jsystem.framework.TestProperties;
-import junit.framework.Assert;
 
+import org.jsystemtest.infra.assertion.Assert;
+import org.jsystemtest.infra.report.Reporter;
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.TestType;
 import org.jsystemtest.integration.pageobjects.JSystemApplication;
@@ -11,9 +11,9 @@ import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestsTableController;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 import org.jsystemtest.integration.utils.JSystemTestUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class ITScenarioAs extends AbstractITJSystem {
 
@@ -26,9 +26,9 @@ public class ITScenarioAs extends AbstractITJSystem {
 	 * 
 	 * @throws Exception
 	 */
-	@Before
+	@BeforeMethod
 	public void classFixture() throws Exception {
-		System.out.println("**************** Running Class fixture for ITScenarioAsTest");
+		Reporter.log("Running Class fixture for ITScenarioAsTest");
 		app.createScenario(sonScenario);
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
 		testsTreeTab.addTest("reportSuccess", "Example", 3);
@@ -45,7 +45,6 @@ public class ITScenarioAs extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
-	@TestProperties(name = "Check negative scenario as test")
 	public void checkNegativeScenarioAs() throws Exception {
 
 		app.openScenario(sonScenario);
@@ -58,7 +57,7 @@ public class ITScenarioAs extends AbstractITJSystem {
 		scenarioTree.markAsNegative(1, true);
 
 		app.playAndWaitForRunEnd();
-		Assert.assertEquals(1, XmlReportHandler.getInstance().getNumberOfTestsPass());
+		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsPass(), 1);
 	}
 
 	/**
@@ -69,12 +68,9 @@ public class ITScenarioAs extends AbstractITJSystem {
 	 * @see addTestToSonAndAnalyze(boolean markedAsTest) for documentation
 	 * 
 	 * @throws Exception
-	 * 
-	 * 
 	 */
 
 	@Test
-	@TestProperties(name = "Check adding test to scenario as test")
 	public void checkAddingTestToScenarioAs() throws Exception {
 
 		addTestToSonAndAnalyze(false);
@@ -110,14 +106,14 @@ public class ITScenarioAs extends AbstractITJSystem {
 		int newSonCount = scenarioTree.getScenarioDirectChildrenCount(1);
 
 		if (markedAsTest) {
-			Assert.assertEquals(initialParentCount + 1, newParentCount);
+			Assert.assertEquals(newParentCount, initialParentCount + 1);
 		} else {
-			Assert.assertEquals(initialParentCount, newParentCount);
+			Assert.assertEquals(newParentCount, initialParentCount);
 		}
 		if (markedAsTest) {
-			Assert.assertEquals(initialSonCount, newSonCount);
+			Assert.assertEquals(newSonCount, initialSonCount);
 		} else {
-			Assert.assertEquals(initialSonCount + 1, newSonCount);
+			Assert.assertEquals( newSonCount, initialSonCount + 1);
 		}
 	}
 
@@ -132,7 +128,6 @@ public class ITScenarioAs extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
-	@TestProperties(name = "Check mapping test count")
 	public void checkMappingAndTestCount() throws Exception {
 		app.openScenario(sonScenario);
 		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
@@ -146,7 +141,7 @@ public class ITScenarioAs extends AbstractITJSystem {
 		app.getToolBar().pushSaveScenarioButton();
 		int numOfParentTests = scenarioTree.getScenarioDirectChildrenCount(0);
 		numOfSonTests = scenarioTree.getScenarioDirectChildrenCount(1);
-		Assert.assertEquals(4, numOfParentTests - 1 + numOfSonTests);
+		Assert.assertEquals(numOfParentTests - 1 + numOfSonTests, 4);
 
 		scenarioTree.markScenarioAsTest(1, true);
 		scenarioTree.mapTest(1, false, false);
@@ -181,12 +176,12 @@ public class ITScenarioAs extends AbstractITJSystem {
 		app.getToolBar().pushPlayButton();
 		app.waitForRunEnd();
 
-		Assert.assertEquals(expectedTest, XmlReportHandler.getInstance().getNumberOfTests());
+		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTests(), expectedTest);
 	}
 
-	@After
+	@AfterMethod
 	public void clean() {
-		System.out.println("Cleanning generated scenarios");
+		Reporter.log("Cleanning generated scenarios");
 		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}
 

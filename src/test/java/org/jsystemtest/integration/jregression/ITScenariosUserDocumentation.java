@@ -1,13 +1,12 @@
 package org.jsystemtest.integration.jregression;
 
-import jsystem.framework.TestProperties;
-import junit.framework.Assert;
-
+import org.jsystemtest.infra.assertion.Assert;
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestInfoTab;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
-import org.junit.Test;
+import org.testng.annotations.Test;
+
 
 public class ITScenariosUserDocumentation extends AbstractITJSystem {
 
@@ -24,7 +23,6 @@ public class ITScenariosUserDocumentation extends AbstractITJSystem {
 	 * 10.Loads the root scenario and asserts the user documentation.<br>
 	 */
 	@Test
-	@TestProperties(name = "Scenario user doc sanity")
 	public void scenarioUserDocSanity() throws Exception {
 
 		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
@@ -54,19 +52,19 @@ public class ITScenariosUserDocumentation extends AbstractITJSystem {
 
 		scenarioTree.selectTestByRow(1);
 		String actualSubScenarioDoc = testInfoTab.getTestUserDocumentationForSelectedBlock();
-		Assert.assertEquals(sonOriginalExpectedDoc, actualSubScenarioDoc);
+		Assert.assertEquals(actualSubScenarioDoc, sonOriginalExpectedDoc);
 		scenarioTree.selectTestByRow(1);
 		testInfoTab.setTestUserDocumentation(expectedSonUserDocPrefix + "1");
 
 		scenarioTree.selectTestByRow(2);
 		actualSubScenarioDoc = testInfoTab.getTestUserDocumentationForSelectedBlock();
-		Assert.assertEquals(sonOriginalExpectedDoc, actualSubScenarioDoc);
+		Assert.assertEquals(actualSubScenarioDoc, sonOriginalExpectedDoc);
 		scenarioTree.selectTestByRow(2);
 		testInfoTab.setTestUserDocumentation(expectedSonUserDocPrefix + "2");
 
 		scenarioTree.selectTestByRow(6);
 		actualSubScenarioDoc = testInfoTab.getTestUserDocumentationForSelectedBlock();
-		Assert.assertEquals(sonOriginalExpectedDoc, actualSubScenarioDoc);
+		Assert.assertEquals(actualSubScenarioDoc, sonOriginalExpectedDoc);
 		scenarioTree.selectTestByRow(6);
 		testInfoTab.setTestUserDocumentation(expectedSonUserDocPrefix + "3");
 
@@ -76,18 +74,18 @@ public class ITScenariosUserDocumentation extends AbstractITJSystem {
 		app.openScenario(subScenarioName);
 		scenarioTree.selectTestByRow(0);
 		final String actualUserDoc = testInfoTab.getTestUserDocumentationForSelectedBlock();
-		Assert.assertEquals(sonOriginalExpectedDoc, actualUserDoc);
+		Assert.assertEquals(actualUserDoc, sonOriginalExpectedDoc);
 
 		System.out.println("Loading root scenario and asserting sub scenarios documentation");
 		app.openScenario(rootScenarioName);
 		scenarioTree.selectTestByRow(1);
 		actualSubScenarioDoc = testInfoTab.getTestUserDocumentationForSelectedBlock();
-		Assert.assertEquals(expectedSonUserDocPrefix + "1", actualSubScenarioDoc);
+		Assert.assertEquals( actualSubScenarioDoc, expectedSonUserDocPrefix + "1");
 		scenarioTree.selectTestByRow(2);
 		actualSubScenarioDoc = testInfoTab.getTestUserDocumentationForSelectedBlock();
-		Assert.assertEquals(expectedSonUserDocPrefix + "2", actualSubScenarioDoc);
+		Assert.assertEquals( actualSubScenarioDoc, expectedSonUserDocPrefix + "2");
 		scenarioTree.selectTestByRow(6);
 		actualSubScenarioDoc = testInfoTab.getTestUserDocumentationForSelectedBlock();
-		Assert.assertEquals(expectedSonUserDocPrefix + "3", actualSubScenarioDoc);
+		Assert.assertEquals(actualSubScenarioDoc, expectedSonUserDocPrefix + "3");
 	}
 }

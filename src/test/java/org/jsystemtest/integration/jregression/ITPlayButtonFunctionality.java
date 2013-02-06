@@ -1,11 +1,9 @@
 package org.jsystemtest.integration.jregression;
 
-import jsystem.framework.TestProperties;
-import junit.framework.Assert;
-
+import org.jsystemtest.infra.assertion.Assert;
 import org.jsystemtest.integration.AbstractITJSystem;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 
 public class ITPlayButtonFunctionality extends AbstractITJSystem {
@@ -17,7 +15,7 @@ public class ITPlayButtonFunctionality extends AbstractITJSystem {
 	 * 
 	 * @throws Exception
 	 */
-	@Before
+	@BeforeMethod
 	public void fixture() throws Exception {
 		
 		app.openScenario("default");
@@ -35,14 +33,13 @@ public class ITPlayButtonFunctionality extends AbstractITJSystem {
 	 * @throws Exception 
 	 */
 	@Test
-	@TestProperties(name = "Check play button enabled disabled")
 	public void checkPlayButtonEnabledDisabled() throws Exception{
 		
-		Assert.assertEquals(true, app.getToolBar().isPlayButtonEnable());
+		Assert.assertEquals(app.getToolBar().isPlayButtonEnable(), true);
 
 		app.getTestTableController().removeAllTests();
 
-		Assert.assertEquals(false, app.getToolBar().isPlayButtonEnable());
+		Assert.assertEquals(app.getToolBar().isPlayButtonEnable(), false);
 	
 	}
 	

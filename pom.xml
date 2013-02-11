@@ -19,9 +19,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<!-- DO NOT REMOVE: This works only with when we explicity specify the 
 					version -->
-				<configuration>
-					<forkMode>never</forkMode>
-				</configuration>
+				
 				<version>2.12</version>
 				<dependencies>
 					<dependency>

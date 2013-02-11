@@ -1,10 +1,15 @@
 package org.jsystemtest.integration.jregression;
 
-import jsystem.framework.TestProperties;
-import junit.framework.Assert;
 
+
+import org.jsystemtest.infra.assertion.Assert;
+import org.jsystemtest.infra.report.Reporter;
 import org.jsystemtest.integration.AbstractITJSystem;
-import org.junit.Test;
+import org.jsystemtest.integration.pageobjects.JSystemApplication;
+import org.jsystemtest.integration.utils.JSystemTestUtils;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
+
 
 public class ITFlowControl extends AbstractITJSystem {
 
@@ -18,7 +23,6 @@ public class ITFlowControl extends AbstractITJSystem {
 	 * @throws Exception
 	 */
 	@Test
-	@TestProperties(name = "Test Flow Control toolbar enable/disable")
 	public void FlowControlToolBar() throws Exception {
 		
 		boolean startState = app.getMenuBar().getViewMenu().getToolbarsMenu().getToolbarState("Flow Control Toolbar");
@@ -27,8 +31,14 @@ public class ITFlowControl extends AbstractITJSystem {
 		
 		boolean endState = app.getMenuBar().getViewMenu().getToolbarsMenu().getToolbarState("Flow Control Toolbar");
 		
-		Assert.assertEquals(false, startState == endState );
+		Assert.assertEquals(startState == endState, false);
 		
+	}
+	
+	@AfterMethod
+	public void clean() {
+		Reporter.log("Cleanning generated scenarios");
+		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}
 	
 }

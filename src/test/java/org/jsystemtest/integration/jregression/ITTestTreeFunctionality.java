@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class ITTestTreeFunctionality extends AbstractITJSystem {
 
-	final String expectedTestDocumentation = "test     with javadoc";
+	final String expectedTestDocumentation = "Test     with javadoc";
 	final String expectedScenarioUserDoc = "scenario     expected documentation";
 	final String subScenarioName = "scenarioWithUserDoc";
 	final String userDoc = "scenario expected documentation";

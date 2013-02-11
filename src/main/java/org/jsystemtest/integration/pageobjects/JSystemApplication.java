@@ -21,6 +21,7 @@ import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 
+import org.jsystemtest.infra.report.Reporter;
 import org.jsystemtest.integration.ExitException;
 import org.jsystemtest.integration.NoExitSecurityManager;
 import org.jsystemtest.integration.PropertyPair;
@@ -55,7 +56,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 
 	@PostConstruct
 	public void postConstuct() {
-		System.out.println("***************************************JSYSTEMAPPLICATION: In POST CONSTRUCT");
+		Reporter.log("JSYSTEMAPPLICATION: In POST CONSTRUCT");
 		if(!CURRENT_WORKING_DIRECTORY.contains("target")){
 			setJSystemStandartProperties(JSystemApplication.CURRENT_WORKING_DIRECTORY + File.separator  + "target" + File.separator  + "test-classes" + File.separator  + "jsystem-base-tests" + File.separator  + "target", JSystemApplication.DEFAULT_SUT_FILE);
 		} else {
@@ -72,11 +73,11 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 
 	@PreDestroy
 	public void preDestroy() {
-		System.out.println("***************************************JSYSTEMAPPLICATION: In PRE DESTROY");
+		Reporter.log("JSYSTEMAPPLICATION: In PRE DESTROY");
 		
-		System.out.println("Cleanning generated scenarios");
+		Reporter.log("Cleanning generated scenarios");
 		JSystemTestUtils.cleanScenarios(JSystemApplication.CURRENT_WORKING_DIRECTORY);
-		System.out.println("Cleanning generated logs and properties files");
+		Reporter.log("Cleanning generated logs and properties files");
 		JSystemTestUtils.cleanPropertiesAndLogs(JSystemApplication.CURRENT_WORKING_DIRECTORY);
 	}
 
@@ -114,14 +115,14 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		System.setSecurityManager(new NoExitSecurityManager());
 		int errorLevel = -1;
 		try {
-			System.out.println("*************** performing exit");
+			Reporter.log("performing exit");
 			exitThroughMenu();
 		} catch (Exception e) {
-			System.out.println("SecurityException cought");
+			Reporter.log("SecurityException cought");
 			errorLevel = ((ExitException)e).getStatus();
 		} finally {
 			setRunning(false);
-			System.out.println("**************Removing the noExitSecurityManager");
+			Reporter.log("Removing the noExitSecurityManager");
 			
 		}
 		
@@ -205,7 +206,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 
 	@Override
 	public void endRun() {
-		System.out.println("endRun Event has fired");
+		Reporter.log("endRun Event has fired");
 		runEnd = true;
 	}
 
@@ -252,7 +253,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		long entry = new Date().getTime();
 		while (!isRunEnd()) {
 			if (new Date().getTime() - entry > milliseconds) {
-				System.out.println("waitForRunEnd has timed out");
+				Reporter.log("waitForRunEnd has timed out");
 				return -1;
 			}
 		}
@@ -320,18 +321,18 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 	public boolean setScenarioFilesReadable(final String scenarioName, final boolean readable) throws Exception {
 		List<File> scenarioFiles = getScenarioFiles(scenarioName);
 		for (File scenarioFile : scenarioFiles) {
-			System.out.println("Setting scenario file " + scenarioFile + " permissions");
+			Reporter.log("Setting scenario file " + scenarioFile + " permissions");
 			if (!scenarioFile.exists()) {
-				System.out.println("Scenario file " + scenarioFile + " is not exist");
+				Reporter.log("Scenario file " + scenarioFile + " is not exist");
 				return false;
 			}
 			if (!readable) {
 				if (!scenarioFile.setReadOnly()) {
-					System.out.println("Failed to set file to read only");
+					Reporter.log("Failed to set file to read only");
 					return false;
 				}
 			} else {
-				System.out.println("Unsupported operation");
+				Reporter.log("Unsupported operation");
 				return false;
 			}
 		}
@@ -369,7 +370,7 @@ public class JSystemApplication extends AbstractPageObject implements ExtendTest
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
-			System.out.println("Could not create new sut file " + sutName + ".xml");
+			Reporter.log("Could not create new sut file " + sutName + ".xml");
 		}
 		getToolBar().pushRefreshButton();
 	}

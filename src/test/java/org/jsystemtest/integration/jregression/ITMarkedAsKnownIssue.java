@@ -45,17 +45,17 @@ public class ITMarkedAsKnownIssue extends AbstractITJSystem {
 	@Test
 	public void markOneFailAsKnownIssue() throws Exception {
 		
-		Reporter.log("STEP: select test that fail");
-		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
-		scenarioTree.selectTestByRow(5);
-		
-		Reporter.log("STEP: mark the test as known issue");
-		scenarioTree.markAsKnownIssue(5, true);
-		
-		Reporter.log("STEP: run scenario and verify that test reported warning");
-		//app.playAndWaitForRunEnd();
-		//Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsPass(), 2);
-		//Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsFail(), 1);
-		//Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsWarning() ,3);
+//		Reporter.log("STEP: select test that fail");
+//		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
+//		scenarioTree.selectTestByRow(5);
+//		
+//		Reporter.log("STEP: mark the test as known issue");
+//		scenarioTree.markAsKnownIssue(5, true);
+//		
+//		Reporter.log("STEP: run scenario and verify that test reported warning");
+//		app.playAndWaitForRunEnd();
+//		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsPass(), 2);
+//		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsFail(), 1);
+//		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsWarning() ,3);
 	}
 }

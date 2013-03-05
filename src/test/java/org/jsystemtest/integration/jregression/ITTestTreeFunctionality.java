@@ -48,7 +48,7 @@ public class ITTestTreeFunctionality extends AbstractITJSystem {
 		Assert.assertEquals(searchCount, 1);
 
 		searchCount = testsTreeTab.search("with OR report OR default");
-		Assert.assertEquals(searchCount, 10);
+		Assert.assertEquals(searchCount, 9);
 		testsTreeTab.search("");
 	}
 

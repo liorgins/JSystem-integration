@@ -15,8 +15,8 @@ import org.testng.annotations.Test;
 public class ITUIKeyboardSupport extends AbstractITJSystem {
 	
 	/**
-	 * 1. open the default scenario.
-	 * 2. clear it add 2 tests that pass to scenario.
+	 * 1. open the default scenario.<br>
+	 * 2. clear it add 2 tests that pass to scenario.<br>
 	 * 
 	 * @throws Exception
 	 */
@@ -36,8 +36,8 @@ public class ITUIKeyboardSupport extends AbstractITJSystem {
 	 * 
 	 * 1. assert that 2 tests are mapped.<br>
 	 * 2. unMap first test using keys.<br>
-	 * 3. assert that only 1 test is mapped. <br>
-	 * 4. reMap first test using keys <br>
+	 * 3. assert that only 1 test is mapped.<br>
+	 * 4. reMap first test using keys.<br>
 	 * 5. assert that 2 tests are mapped.<br>
 	 * @throws Exception
 	 */
@@ -72,7 +72,7 @@ public class ITUIKeyboardSupport extends AbstractITJSystem {
 	 * 
 	 * 1. assert that 2 tests are mapped.<br>
 	 * 2. delete first test using keys.<br>
-	 * 3. assert that only 1 test exist. <br>
+	 * 3. assert that only 1 test exist.<br>
 
 	 * @throws Exception
 	 */

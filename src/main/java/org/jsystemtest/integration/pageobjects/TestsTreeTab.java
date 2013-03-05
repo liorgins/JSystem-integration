@@ -1,5 +1,6 @@
 package org.jsystemtest.integration.pageobjects;
 
+import org.jsystemtest.infra.report.Reporter;
 import org.jsystemtest.integration.TooltipChooser;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
@@ -23,7 +24,9 @@ public class TestsTreeTab extends AbstractPageObject {
 	
 	public void pushAddTestsButton() throws InterruptedException {
 		testsTreeTab.selectPage(0);
-		new JButtonOperator(testsTreeTab, new TooltipChooser(jmap.getAddTestsButton())).clickMouse();
+		JButtonOperator jButtonOperator = new JButtonOperator(testsTreeTab, new TooltipChooser(jmap.getAddTestsButton()));
+		
+		jButtonOperator.clickMouse();
 		Thread.sleep(1250);
 	}
 	

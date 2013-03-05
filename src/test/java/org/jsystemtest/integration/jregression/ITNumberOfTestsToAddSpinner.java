@@ -9,7 +9,8 @@ import org.testng.annotations.Test;
 public class ITNumberOfTestsToAddSpinner extends AbstractITJSystem {
 
 	/**
-	 * 1. open the default scenario. 2. clear it.
+	 * 1. open the default scenario.<br>
+	 * 2. clear it.<br>
 	 * 
 	 * @throws Exception
 	 */
@@ -25,8 +26,9 @@ public class ITNumberOfTestsToAddSpinner extends AbstractITJSystem {
 	/**
 	 * Tests number of test to add JSpinner
 	 * 
-	 * 1. Add one test 20 times 2. Add one test 10 times 3. Assert that the test
-	 * appears 30 times in the scenario
+	 * 1. Add one test 20 times.<br>
+	 * 2. Add one test 10 times.<br>
+	 * 3. Assert that the test appears 30 times in the scenario.<br>
 	 * 
 	 * @throws Exception
 	 */

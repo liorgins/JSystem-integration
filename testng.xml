@@ -1,10 +1,31 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Sanity" verbose="1">
+<!-- <suite name="Sanity" verbose="1"> <test name="Regression"> <groups></groups> 
+	<packages> <package name="org.jsystemtest.integration.jregression" /> </packages> 
+	</test> </suite> -->
+
+<suite name="Sanity">
 	<test name="Regression">
-		<packages>
-			<package name="org.jsystemtest.integration.jregression" />
-		</packages>
+		<classes>
+			<class name="org.jsystemtest.integration.jregression.ITFeatureEditOnlyLocal"></class>
+			<class name="org.jsystemtest.integration.jregression.ITScenarioFunctionality"></class>
+			<class name="org.jsystemtest.integration.jregression.ITUIKeyboardSupport"></class>
+			<class name="org.jsystemtest.integration.jregression.ITPlayButtonFunctionality"></class>
+			<class name="org.jsystemtest.integration.jregression.ITScenarioAs"></class>
+			<class name="org.jsystemtest.integration.jregression.ITTestTreeFunctionality"></class>
+			<class name="org.jsystemtest.integration.jregression.ITScenariosUserDocumentation"></class>
+			<class name="org.jsystemtest.integration.jregression.ITReporterFunctionality"></class>
+			<class name="org.jsystemtest.integration.jregression.ITMarkedAsKnownIssue"></class>
+			<class name="org.jsystemtest.integration.jregression.ITFlowControl"></class>
+			<class name="org.jsystemtest.integration.jregression.ITExecutionFunctionality"></class>
+			<class name="org.jsystemtest.integration.jregression.ITNavigateToSubScenario"></class> 
+			<class name="org.jsystemtest.integration.jregression.ITNumberOfTestsToAddSpinner"></class> 
+			<class name="org.jsystemtest.integration.jregression.ITReturnErrorLevel"></class>
+		</classes>
 	</test>
+<!-- 	<test name="ReportServer"> -->
+<!-- 		<packages> -->
+<!-- 		    <package name="org.jsystemtest.integration.reportserver"/> -->
+<!-- 		</packages> -->
+<!-- 	</test> -->
 </suite>
- 

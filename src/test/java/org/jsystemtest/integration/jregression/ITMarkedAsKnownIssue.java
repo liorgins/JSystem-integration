@@ -16,9 +16,9 @@ public class ITMarkedAsKnownIssue extends AbstractITJSystem {
 	private final String rootScenario = "markedAsTestScenario";
 
 	/**
-	 * 1. open new scenario.
-	 * 2. add some test to it.
-	 * 3. save scenario.
+	 * 1. open new scenario.<br>
+	 * 2. add some test to it.<br>
+	 * 3. save scenario.<br>
 	 */
 	@BeforeMethod
 	public void testFixture() throws Exception {
@@ -35,9 +35,9 @@ public class ITMarkedAsKnownIssue extends AbstractITJSystem {
 	}
 	
 	/**
-	 * 1. select test that fail.
-	 * 2. mark the test as known issue.
-	 * 3. run scenario and verify that test reported warning.
+	 * 1. select test that fail.<br>
+	 * 2. mark the test as known issue.<br>
+	 * 3. run scenario and verify that test reported warning.<br>
 	 * 
 	 * @throws Exception
 	 */
@@ -45,17 +45,17 @@ public class ITMarkedAsKnownIssue extends AbstractITJSystem {
 	@Test
 	public void markOneFailAsKnownIssue() throws Exception {
 		
-//		Reporter.log("STEP: select test that fail");
-//		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
-//		scenarioTree.selectTestByRow(5);
-//		
-//		Reporter.log("STEP: mark the test as known issue");
-//		scenarioTree.markAsKnownIssue(5, true);
-//		
-//		Reporter.log("STEP: run scenario and verify that test reported warning");
-//		app.playAndWaitForRunEnd();
-//		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsPass(), 2);
-//		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsFail(), 1);
-//		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsWarning() ,3);
+		Reporter.log("STEP: select test that fail");
+		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
+		scenarioTree.selectTestByRow(5);
+		
+		Reporter.log("STEP: mark the test as known issue");
+		scenarioTree.markAsKnownIssue(5, true);
+		
+		Reporter.log("STEP: run scenario and verify that test reported warning");
+		app.playAndWaitForRunEnd();
+		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsPass(), 2);
+		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsFail(), 1);
+		Assert.assertEquals(XmlReportHandler.getInstance().getNumberOfTestsWarning() ,3);
 	}
 }

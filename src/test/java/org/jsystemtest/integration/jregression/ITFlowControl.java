@@ -15,10 +15,10 @@ public class ITFlowControl extends AbstractITJSystem {
 
 
 	/**
-	 * 1. get "Flow Control Toolbar" start state.
-	 * 2. change "Flow Control Toolbar" state.
-	 * 3. get "Flow Control Toolbar" end state after change.
-	 * 4. assert start and end states not equal.
+	 * 1. get "Flow Control Toolbar" start state.<br>
+	 * 2. change "Flow Control Toolbar" state.<br>
+	 * 3. get "Flow Control Toolbar" end state after change.<br>
+	 * 4. assert start and end states not equal.<br>
 	 * 
 	 * @throws Exception
 	 */

@@ -23,6 +23,7 @@ public class Example extends SystemTestCase4 {
 	private String[] strArr;
 	private Account account;
 	private Account[] accountArr;
+	private String result = "success";
 
 	/**
 	 * Test with success report
@@ -101,6 +102,22 @@ public class Example extends SystemTestCase4 {
 			report.stopLevel();
 		}
 	}
+	
+	/**
+	 * Test with different parameters
+	 */
+	@Test
+	@TestProperties(name = "Test that result by param", paramsInclude = {"result" })
+	public void testDynamivResultByParam() {
+		if(result.equals("success")){
+			report.report("success", Reporter.PASS);
+		}else if (result.equals("failure")) {
+			report.report("failure", Reporter.FAIL);
+		}else if (result.equals("warning")) {
+			report.report("warnnig", Reporter.WARNING);
+		}
+	}
+	
 
 	/**
 	 * Test with parameter provider
@@ -135,7 +152,15 @@ public class Example extends SystemTestCase4 {
 		report.step(report.getCurrentTestFolder());
 	}
 	
-
+	public String getResult() {
+		return result;
+	}
+	
+	@ParameterProperties(description = "result param")
+	public void setResult(String result) {
+		this.result = result;
+	}
+	
 	public File getFile() {
 		return file;
 	}

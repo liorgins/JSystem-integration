@@ -82,9 +82,9 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 	}
 
 	/**
-	 * 1. to two steps back to scenario 2 and check it's really 2 as expected.
+	 * 1. to two steps back to scenario 2 and check it's really 2 as expected.<br>
 	 * 2. create a scenario midScenario, and check that scenario3 and scenario4
-	 *    can't be navigated to anymore
+	 *    can't be navigated to anymore.<br>
 	 * 
 	 * @throws Exception
 	 */
@@ -111,11 +111,11 @@ public class ITNavigateToSubScenario extends AbstractITJSystem {
 	}
 
 	/**
-	 * 1. open scenario1 and add to it as sub scenario the scenario2
-	 * 2. select scenario2 and choose, Navigate to sub scenario
-	 * 3. check that current scenario opened is scenario2 as expected.
-	 * 4. navigate left once and check that current scenario is scenario1 
-	 * 5. navigate right once and check that current scenario is scenario2
+	 * 1. open scenario1 and add to it as sub scenario the scenario2.<br>
+	 * 2. select scenario2 and choose, Navigate to sub scenario.<br>
+	 * 3. check that current scenario opened is scenario2 as expected.<br>
+	 * 4. navigate left once and check that current scenario is scenario1.<br> 
+	 * 5. navigate right once and check that current scenario is scenario2.<br>
 	 * 
 	 * @throws Exception
 	 */

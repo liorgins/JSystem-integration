@@ -2,11 +2,13 @@ package org.jsystemtest.integration.reportserver;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 
 import org.jsystemtest.infra.assertion.Assert;
 import org.jsystemtest.integration.AbstractITJSystem;
+import org.jsystemtest.integration.pageobjects.ScenarioTree;
 import org.jsystemtest.integration.pageobjects.TestInfoTab;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
 
@@ -16,6 +18,7 @@ import org.testng.annotations.Test;
 public class ITPublisherNotificationEvent extends AbstractITJSystem {
 
 	private static String uniqeIdentifier = "";
+	
 
 	/**
 	 * get unique identifier to use in each test
@@ -71,8 +74,9 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 
 		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
 		testsTreeTab.addTest("reportSuccess", "Example", 1);
-		testsTreeTab.addTest("reportWarning", "Example", 2);
 		testsTreeTab.addTest("reportFailure", "Example", 3);
+		testsTreeTab.addTest("reportWarning", "Example", 3);
+		
 
 		app.getTestTableController().pushAddNotificationEvent();
 
@@ -87,6 +91,43 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 		Assert.assertEquals((Integer) resultList.get(0).get("warningTests"), new Integer(2));
 		Assert.assertEquals((Integer) resultList.get(0).get("successTests"),new Integer(1));
 
+	}
+	
+	
+
+	@Test
+	public void simplePublish() throws Exception {
+
+		String[] results = {"success", "failure", "warning"};
+		
+		app.createScenario("scenariofirst");
+		
+		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
+		testsTreeTab.addTest("testDynamivResultByParam", "Example", 16);
+	
+		
+		TestInfoTab testInfoTab = app.getTestsTreeController().getTestInfoTab();
+		ScenarioTree scenarioTree = app.getTestTableController().getScenarioTree();
+		Random rand = new Random();
+		
+		for(int i=1; i< 17; i++) {
+			scenarioTree.selectTestByRow(i);
+		
+			scenarioTree.updateMeaningfulName(i, "testNumber " + i);
+			
+			
+			testInfoTab.setTestParameter("general", "Result",results[rand.nextInt(3)], false);
+		
+		}
+		app.getTestTableController().pushAddNotificationEvent();
+		app.getTestTableController().pushAddNotificationEvent();
+
+		
+		app.getToolBar().pushSaveScenarioButton();
+		
+		app.playAndWaitForRunEnd();
+		
+		System.out.println("wait here in debug");
 	}
 
 	/**
@@ -150,4 +191,28 @@ public class ITPublisherNotificationEvent extends AbstractITJSystem {
 		Assert.assertEquals(db.getResultList("SELECT * FROM jsystem.scenario_properties WHERE propertyKey='" + key2 + "' and propertyValue='" + val2 + "'").size(), 1);
 		Assert.assertEquals(db.getResultList("SELECT * FROM jsystem.published_runs_01 WHERE description='" + uniqeIdentifier + "'").size(), 1);
 	}
+	
+	/**
+	 * 1. add 3 kind of tests to scenario, success, fail and warn.<br/>
+	 * 2. add notification event. <br/>
+	 * 3. play scenario and assert the database for the result.<br/>
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void checkPublishWithDifferentTestsTwoRuns() throws Exception {
+
+		TestsTreeTab testsTreeTab = app.getTestsTreeController().getTestsTreeTab();
+		testsTreeTab.addTest("reportSuccess", "Example", 1);
+	
+		testsTreeTab.addTest("reportWarning", "Example", 2);
+		
+
+		app.getTestTableController().pushAddNotificationEvent();
+
+		app.playAndWaitForRunEnd();
+
+	}
+	
+	
 }

@@ -18,9 +18,9 @@ public class ITReporterFunctionality extends AbstractITJSystem {
 	
 	
 	/**
-	 * 1. open the default scenario.
-	 * 2. clear it.
-	 * 3. init reporter
+	 * 1. open the default scenario.<br>
+	 * 2. clear it.<br>
+	 * 3. init reporter.<br>
 	 * 
 	 * @throws Exception
 	 */
@@ -36,8 +36,9 @@ public class ITReporterFunctionality extends AbstractITJSystem {
 	}
 	
 	/**
-	 * Check that the method getCurrentTestFolder works.
-	 * Also check that it works after init of the reports.
+	 * Check that the method getCurrentTestFolder works.<br>
+	 * Also check that it works after init of the reports.<br>
+	 * 
 	 * @throws Exception
 	 */
 	@Test

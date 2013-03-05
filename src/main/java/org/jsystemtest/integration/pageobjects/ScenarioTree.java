@@ -2,14 +2,18 @@ package org.jsystemtest.integration.pageobjects;
 
 import java.util.Random;
 
+import javax.swing.JTextField;
 import javax.swing.tree.TreePath;
 
 import jsystem.treeui.teststable.ScenarioTreeNode;
 import jsystem.utils.StringUtils;
 
 import org.jsystemtest.integration.TestType;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
 
 public class ScenarioTree extends AbstractPageObject {
@@ -43,7 +47,13 @@ public class ScenarioTree extends AbstractPageObject {
 		pushMenuItemForTest(testIndex, jmap.getScenarioEditOnlyLocallyItem());
 	}
 
-	
+	public void updateMeaningfulName(int testIndex, String name) throws Exception {
+		pushMenuItemForTest(testIndex, jmap.getUpdateMeaningfulNameMenuItem());
+		JDialogOperator input = new JDialogOperator("Input");
+		new JTextFieldOperator(input, 0).setText(name);
+		new JButtonOperator(input, "OK").clickMouse();
+		Thread.sleep(3000);
+	}
 	
 	/**
 	 * will open the selected sub scenario in it's own root

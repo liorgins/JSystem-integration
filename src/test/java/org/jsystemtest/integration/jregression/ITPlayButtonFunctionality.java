@@ -9,9 +9,9 @@ import org.testng.annotations.Test;
 public class ITPlayButtonFunctionality extends AbstractITJSystem {
 	
 	/**
-	 * 1. open the default scenario.
-	 * 2. clear it.
-	 * 3. add 5 tests that pass to scenario.
+	 * 1. open the default scenario.<br>
+	 * 2. clear it.<br>
+	 * 3. add 5 tests that pass to scenario.<br>
 	 * 
 	 * @throws Exception
 	 */
@@ -26,9 +26,9 @@ public class ITPlayButtonFunctionality extends AbstractITJSystem {
 	}
 	
 	/**
-	 * 1. check that play button is enabled
-	 * 2. delete the tests 
-	 * 3. check that play button is disabled
+	 * 1. check that play button is enabled.<br>
+	 * 2. delete the tests.<br>
+	 * 3. check that play button is disabled.<br>
 	 * 
 	 * @throws Exception 
 	 */

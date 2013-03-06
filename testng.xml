@@ -5,27 +5,104 @@
 	</test> </suite> -->
 
 <suite name="Sanity">
-	<test name="Regression">
+	<test name="Edit Only Locally">
 		<classes>
-			<class name="org.jsystemtest.integration.jregression.ITFeatureEditOnlyLocal"></class>
-			<class name="org.jsystemtest.integration.jregression.ITScenarioFunctionality"></class>
-			<class name="org.jsystemtest.integration.jregression.ITUIKeyboardSupport"></class>
-			<class name="org.jsystemtest.integration.jregression.ITPlayButtonFunctionality"></class>
-			<class name="org.jsystemtest.integration.jregression.ITScenarioAs"></class>
-			<class name="org.jsystemtest.integration.jregression.ITTestTreeFunctionality"></class>
-			<class name="org.jsystemtest.integration.jregression.ITScenariosUserDocumentation"></class>
-			<class name="org.jsystemtest.integration.jregression.ITReporterFunctionality"></class>
-			<class name="org.jsystemtest.integration.jregression.ITMarkedAsKnownIssue"></class>
-			<class name="org.jsystemtest.integration.jregression.ITFlowControl"></class>
-			<class name="org.jsystemtest.integration.jregression.ITExecutionFunctionality"></class>
-			<class name="org.jsystemtest.integration.jregression.ITNavigateToSubScenario"></class> 
-			<class name="org.jsystemtest.integration.jregression.ITNumberOfTestsToAddSpinner"></class> 
-			<class name="org.jsystemtest.integration.jregression.ITReturnErrorLevel"></class>
+			<class
+				name="org.jsystemtest.integration.jregression.ITFeatureEditOnlyLocal">
+			</class>
 		</classes>
 	</test>
-<!-- 	<test name="ReportServer"> -->
-<!-- 		<packages> -->
-<!-- 		    <package name="org.jsystemtest.integration.reportserver"/> -->
-<!-- 		</packages> -->
-<!-- 	</test> -->
+	<test name="ITScenarioFunctionality">
+		<classes>
+			<class
+				name="org.jsystemtest.integration.jregression.ITScenarioFunctionality"></class>
+
+		</classes>
+	</test>
+	<test name="ITUIKeyboardSupport">
+		<classes>
+			<class name="org.jsystemtest.integration.jregression.ITUIKeyboardSupport"></class>
+
+		</classes>
+	</test>
+	<test name="ITPlayButtonFunctionality">
+		<classes>
+			<class
+				name="org.jsystemtest.integration.jregression.ITPlayButtonFunctionality"></class>
+
+		</classes>
+	</test>
+	<test name="ITScenarioAs">
+		<classes>
+			<class name="org.jsystemtest.integration.jregression.ITScenarioAs"></class>
+
+		</classes>
+	</test>
+	<test name="ITTestTreeFunctionality">
+		<classes>
+
+			<class
+				name="org.jsystemtest.integration.jregression.ITTestTreeFunctionality"></class>
+		</classes>
+	</test>
+	<test name="ITScenariosUserDocumentation">
+		<classes>
+			<class
+				name="org.jsystemtest.integration.jregression.ITScenariosUserDocumentation"></class>
+
+		</classes>
+	</test>
+	<test name="ITReporterFunctionality">
+		<classes>
+			<class
+				name="org.jsystemtest.integration.jregression.ITReporterFunctionality"></class>
+
+		</classes>
+	</test>
+	<test name="ITMarkedAsKnownIssue">
+		<classes>
+			<class name="org.jsystemtest.integration.jregression.ITMarkedAsKnownIssue"></class>
+
+		</classes>
+	</test>
+	<test name="ITFlowControl">
+		<classes>
+			<class name="org.jsystemtest.integration.jregression.ITFlowControl"></class>
+
+		</classes>
+	</test>
+	<test name="ITExecutionFunctionality">
+		<classes>
+			<class
+				name="org.jsystemtest.integration.jregression.ITExecutionFunctionality"></class>
+
+		</classes>
+	</test>
+	<test name="ITNavigateToSubScenario">
+		<classes>
+			<class
+				name="org.jsystemtest.integration.jregression.ITNavigateToSubScenario"></class>
+
+		</classes>
+	</test>
+	<test name="ITNumberOfTestsToAddSpinner">
+		<classes>
+
+			<class
+				name="org.jsystemtest.integration.jregression.ITNumberOfTestsToAddSpinner"></class>
+		</classes>
+	</test>
+	<test name="ITReturnErrorLevel">
+		<classes>
+			<class name="org.jsystemtest.integration.jregression.ITReturnErrorLevel"></class>
+
+		</classes>
+	</test>
+
+	<!-- <test name="ReportServer"> -->
+	<!-- <packages> -->
+	<!-- <package name="org.jsystemtest.integration.reportserver"/> -->
+	<!-- </packages> -->
+	<!-- </test> -->
 </suite>
+

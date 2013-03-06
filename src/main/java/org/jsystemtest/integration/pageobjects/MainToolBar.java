@@ -6,6 +6,7 @@ import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.python.modules.thread;
 
 public class MainToolBar extends AbstractPageObject {
 
@@ -29,10 +30,13 @@ public class MainToolBar extends AbstractPageObject {
 
 	public void pushSaveAsScenarioButton() {
 		new JButtonOperator(app, new TooltipChooser(jmap.getCopyScenarioButton())).push();
+
 	}
 
-	public void pushDeleteScenarioButton() {
+	public void pushDeleteScenarioButton() throws InterruptedException {
 		new JButtonOperator(app, new TooltipChooser(jmap.getClearScenarioButton())).push();
+		Thread.sleep(500);
+	
 	}
 
 	public void pushFaildSequenceButton() {
@@ -41,6 +45,7 @@ public class MainToolBar extends AbstractPageObject {
 
 	public void pushRefreshButton() throws InterruptedException {
 		new JButtonOperator(app, new TooltipChooser(jmap.getRefreshButton())).push();
+		
 		Thread.sleep(2000);
 	}
 

@@ -53,28 +53,33 @@ public class TestsTableController extends AbstractPageObject {
 	}
 
 	public void pushNavigateToScenarioButton(String direction) throws InterruptedException {
+
 		String navButtonDirection = null;
 		if (direction.equals(BACKWARD)) {
 			navButtonDirection = jmap.getScenarioNavigateBackword();
 		} else if (direction.equals(FORWARD)) {
 			navButtonDirection = jmap.getScenarioNavigateForward();
 		}
-		
+
 		new JButtonOperator(appOperator, new TooltipChooser(navButtonDirection)).clickMouse();
 		Thread.sleep(750);
+
+		new JButtonOperator(appOperator, new TooltipChooser(navButtonDirection)).clickMouse();
+		Thread.sleep(750);
+
 	}
 
 	public String getCurrentScenarioName() {
 		return JSystemProperties.getInstance().getPreference(FrameworkOptions.CURRENT_SCENARIO).substring("scenarios".length() + 1);
 	}
-	
+
 	public void pushAddNotificationEvent() throws InterruptedException {
 		new JButtonOperator(appOperator, new TooltipChooser(jmap.getPublishEventButton())).clickMouse();
 		Thread.sleep(500);
 	}
-	
+
 	public FlowControlToolbar getFlowControlToolbar() {
-		return new FlowControlToolbar(appOperator); 
+		return new FlowControlToolbar(appOperator);
 	}
-	
+
 }

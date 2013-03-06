@@ -3,6 +3,7 @@ package org.jsystemtest.integration.jregression;
 import org.jsystemtest.infra.assertion.Assert;
 import org.jsystemtest.integration.AbstractITJSystem;
 import org.jsystemtest.integration.pageobjects.TestsTreeTab;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 
@@ -42,7 +43,7 @@ public class ITTestTreeFunctionality extends AbstractITJSystem {
 		Assert.assertEquals(searchCount, 5);
 
 		searchCount = testsTreeTab.search("with");
-		Assert.assertEquals(searchCount, 4);
+		Assert.assertEquals(searchCount, 5);
 
 		searchCount = testsTreeTab.search("with AND report");
 		Assert.assertEquals(searchCount, 1);
@@ -94,4 +95,9 @@ public class ITTestTreeFunctionality extends AbstractITJSystem {
 		Assert.assertEquals(contains, true);
 	}
 
+	@AfterMethod
+	public void clearSearchBox() throws Exception {
+		app.getTestsTreeController().getTestsTreeTab().search("");
+	}
+	
 }
